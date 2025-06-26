@@ -1,0 +1,7 @@
+{
+  "name": "DroneLeaf",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
