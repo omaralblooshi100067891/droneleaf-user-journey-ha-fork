@@ -1,0 +1,61 @@
+<ion-content class="bg-white relative">
+<div class="relative sm:absolute top-4 left-4 z-50 w-14 sm:w-16">
+  <img src="../../../assets/logo.png" alt="Logo" class="w-full h-auto" />
+</div>
+  <div class="flex flex-col lg:flex-row min-h-screen">
+
+    <!-- Left Side: Form -->
+    <div class="flex-1 flex items-center justify-center p-4">
+      <div class="w-full max-w-xl">
+        <h2 class="text-center text-2xl font-semibold mb-2">How would you like to proceed?</h2>
+        <p class="text-center text-gray-500 mb-6">We'll be sure to fit the experience to your needs.</p>
+
+        <div class="flex flex-col items-center gap-4">
+          <!-- Private Account -->
+          <div
+            class="w-full max-w-md border border-[#009169] rounded-lg p-6 cursor-pointer transition duration-200 hover:shadow-lg text-center"
+            [ngClass]="{
+      'ring-2 ring-[#009169] bg-gray-100': selectedType === 'private'
+    }" (click)="selectType('private')">
+            <img src="../../../assets/personal.png" alt="Private" class="mx-auto mb-3 object-contain" />
+            <h3 class="font-roboto font-bold text-[18px] leading-none tracking-normal text-center">
+              Private Account
+            </h3>
+            <p class="font-roboto font-normal text-[16px] leading-none tracking-normal text-gray-500 text-center mt-1">
+              Manage your own drone projects with a personal account
+            </p>
+          </div>
+
+          <!-- Business Account -->
+          <div
+            class="w-full max-w-md border border-[#009169] rounded-lg p-6 cursor-pointer transition duration-200 hover:shadow-lg text-center"
+            [ngClass]="{
+      'ring-2 ring-[#009169] bg-gray-100': selectedType === 'business'
+    }" (click)="selectType('business')">
+            <img src="../../../assets/group.png" alt="Business" class="mx-auto mb-3 object-contain" />
+            <h3 class="font-roboto font-bold text-[18px] leading-none tracking-normal text-center">
+              Business Account
+            </h3>
+            <p class="font-roboto font-normal text-[16px] leading-none tracking-normal text-gray-500 text-center mt-1">
+              Coordinate teams and fleets under a centralized business account
+            </p>
+          </div>
+        </div>
+
+
+
+        <button
+          class="mt-6 w-[37.5rem] max-w-full h-12 bg-[#009169] text-white rounded-md border border-[#009169] disabled:opacity-50 disabled:cursor-not-allowed"
+          [disabled]="!selectedType" (click)="onContinue()">
+          Continue
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Right Side: Image -->
+    <div class="hidden lg:block w-[33rem] h-screen">
+      <img src="../../../assets/Frame 16.png" alt="auth image" class="object-cover w-full h-full" />
+    </div>
+  </div>
+</ion-content>

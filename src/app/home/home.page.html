@@ -3,7 +3,12 @@
     <ion-title>
       Blank
     </ion-title>
+     <ion-buttons slot="end">
+        <button routerLink="/auth/account-type" mat-raised-button color="primary">Sign up</button>
+
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -13,12 +18,21 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
+  <div id="container" class="p-4 flex flex-col items-center gap-4">
     <button mat-raised-button color="primary">Primary</button>
+
+    <!-- 👇 New Sign Up Button -->
+
     <h1 class="text-3xl font-bold text-blue-600 text-center mt-8">
       Hello Tailwind CSS in Angular!
     </h1>
+
     <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <p>
+      Start with Ionic
+      <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">
+        UI Components
+      </a>
+    </p>
   </div>
 </ion-content>
