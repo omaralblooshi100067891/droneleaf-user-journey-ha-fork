@@ -1,27 +1,27 @@
 <ion-content class="bg-white relative">
+
   <!-- Logo -->
   <div class="relative sm:absolute top-4 left-4 z-50 w-10 sm:w-16">
     <img src="../../../assets/logo.png" alt="Logo" class="w-full h-auto" />
   </div>
 
-  <div class="flex flex-col lg:flex-row">
+  <!-- Main Wrapper -->
+  <div class="main-wrapper flex flex-col lg:flex-row min-h-[100dvh] max-h-screen overflow-auto">
+
     <!-- Left Section -->
-    <div class="flex-1 flex items-center justify-center px-4 py-6 min-h-screen">
-      <div class="w-full max-w-lg space-y-6">
+    <div class="form-section flex-1 flex items-center justify-center px-4 py-6 min-h-screen">
+      <div class="form-inner w-full max-w-lg space-y-6">
 
         <!-- Stepper -->
         <div class="flex items-center justify-between w-full max-w-full mx-auto mb-4 px-2 sm:px-4">
-          <!-- Step 1 -->
           <div class="flex items-center flex-1">
             <div class="w-4 h-4 rounded-full bg-[#009169] z-10"></div>
             <div class="flex-1 h-[3px] bg-gray-300 rounded-[3px] mx-1"></div>
           </div>
-          <!-- Step 2 -->
           <div class="flex items-center flex-1">
             <div class="w-4 h-4 rounded-full border-2 border-[#009169] bg-white z-10"></div>
             <div class="flex-1 h-[3px] bg-gray-300 rounded-[3px] mx-1"></div>
           </div>
-          <!-- Step 3 -->
           <div class="w-4 h-4 rounded-full border-2 border-[#009169] bg-white z-10 flex-shrink-0"></div>
         </div>
 
@@ -36,63 +36,39 @@
 
         <!-- Form -->
         <form class="space-y-4">
-          <!-- Name Fields -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="flex flex-col">
-              <label class="text-sm font-medium mb-1">First Name*</label>
-              <input type="text" placeholder="Enter first name"
-                class="border bg-white border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#009169]" />
-            </div>
-            <div class="flex flex-col">
-              <label class="text-sm font-medium mb-1">Last Name*</label>
-              <input type="text" placeholder="Enter last name"
-                class="border bg-white border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#009169]" />
-            </div>
+            <app-input label="First Name*" placeholder="Enter first name" name="firstName"
+              [(model)]="formData.firstName"></app-input>
+            <app-input label="Last Name*" placeholder="Enter last name" name="lastName"
+              [(model)]="formData.lastName"></app-input>
           </div>
 
-          <!-- Phone Field -->
           <div class="flex flex-col">
             <label class="text-sm font-medium mb-1">Phone Number*</label>
-            <div class="flex flex-wrap items-center border border-gray-300 rounded-md px-2 py-2 bg-white gap-2">
-              <!-- Country Selector -->
+            <div class="flex flex-wrap items-center border border-gray-300 rounded-md px-2 bg-white gap-2">
               <select name="country" [(ngModel)]="selectedCountry" [ngModelOptions]="{ standalone: true }"
                 (change)="onCountryChange()"
                 class="bg-white text-sm px-1 py-1 outline-none border-none w-auto flex-shrink-0">
                 <option *ngFor="let country of countries" [ngValue]="country">
-                  {{ country.flag }} {{ country.code }}
+                  {{ country.flag }}
                 </option>
               </select>
-
-              <!-- Code -->
-              <!-- <span class="text-sm">{{ selectedCountry.code }}</span> -->
-
-              <!-- Phone input -->
-              <input type="tel" placeholder="Enter phone number" class="flex-1 min-w-0 bg-white text-sm outline-none" />
+              <span class="text-sm">{{ selectedCountry.code }}</span>
+              <ion-input type="tel" [(ngModel)]="formData.phone" name="phone"
+                class="flex-1 min-w-0 bg-white text-sm outline-none" [ngModelOptions]="{ standalone: true }"
+                placeholder="Enter phone number"></ion-input>
             </div>
           </div>
 
-          <!-- Email -->
-          <div class="flex flex-col">
-            <label class="text-sm font-medium mb-1">Email Address*</label>
-            <input type="email" placeholder="Enter email address"
-              class="border bg-white border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#009169]" />
-          </div>
+          <app-input label="Email Address*" placeholder="Enter email address" type="email" name="email"
+            [(model)]="formData.email"></app-input>
 
-          <!-- Password -->
-          <div class="flex flex-col">
-            <label class="text-sm font-medium mb-1">Password*</label>
-            <input type="password" placeholder="Enter password"
-              class="border bg-white border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#009169]" />
-          </div>
+          <app-input label="Password*" placeholder="Enter password" type="password" name="password"
+            [(model)]="formData.password"></app-input>
 
-          <!-- Re-type Password -->
-          <div class="flex flex-col">
-            <label class="text-sm font-medium mb-1">Re-type password*</label>
-            <input type="password" placeholder="Enter password again"
-              class="border bg-white border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#009169]" />
-          </div>
+          <app-input label="Re-type password*" placeholder="Enter password again" type="password"
+            name="confirmPassword" [(model)]="formData.confirmPassword"></app-input>
 
-          <!-- Checkboxes -->
           <div class="space-y-2">
             <label class="flex items-start space-x-2 text-sm">
               <input type="checkbox" class="mt-1 accent-[#009169]" />
@@ -104,31 +80,27 @@
             </label>
           </div>
 
-          <!-- Submit Button -->
-          <button type="submit"
-            class="w-full h-12 bg-[#009169] text-white font-semibold rounded-md mt-2 hover:bg-[#007f5c] transition">
-            Register
-          </button>
+          <app-button type="submit" label="Register"></app-button>
         </form>
       </div>
     </div>
 
-    <!-- Right Side Image -->
-    <div class="hidden lg:block w-[33rem] h-screen">
+    <!-- Right Image -->
+    <div class=" hidden lg:block w-[33rem]">
       <img src="../../../assets/Frame 16.png" alt="auth image" class="object-cover w-full h-full" />
     </div>
   </div>
 
-
-  <!-- Help Button (positioned under logo on mobile) -->
+  <!-- Help Button -->
   <div class="block relative sm:absolute bottom-6 left-4 z-50 pt-2">
-    <button
-      class="flex bg-slate-200 items-center gap-3 w-[11.25rem] h-11 px-6 py-3 text-sm border-2  rounded-full text-[#009169] hover:bg-[#f0fdfa] transition">
-      <ion-icon name="help-circle" class="text-xl"></ion-icon>
+<ion-button
+  fill="clear"
+  class="custom-help-button flex bg-slate-200 items-center gap-3 w-[11.25rem] h-11 px-6 py-3 text-sm border-2 rounded-full text-[#009169] hover:bg-[#f0fdfa] transition"
+>
+  <ion-icon name="help-circle" class="text-xl"></ion-icon>
+  <span class="font-medium text-[12px] text-[#9A9A9A]">Need some help?</span>
+</ion-button>
 
-      <span class="font-medium text-[12px] text-[##9A9A9A]">Need some help?</span>
-    </button>
   </div>
-
 
 </ion-content>

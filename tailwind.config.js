@@ -3,7 +3,11 @@ module.exports = {
   mode: 'jit',
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+       screens: {
+        'short': { raw: '(max-height: 700px)' },
+      },
+    },
   },
   plugins: [],
 }

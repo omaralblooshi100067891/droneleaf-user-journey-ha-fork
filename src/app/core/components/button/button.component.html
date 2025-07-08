@@ -1,0 +1,10 @@
+<ion-button
+  [type]="type"
+  [disabled]="disabled"
+  class="custom-btn"
+  [style.width]="fullWidth ? width : 'auto'"
+  (click)="clicked.emit()"
+  expand="block">
+  <ng-content *ngIf="!label"></ng-content>
+  <span *ngIf="label">{{ label }}</span>
+</ion-button>

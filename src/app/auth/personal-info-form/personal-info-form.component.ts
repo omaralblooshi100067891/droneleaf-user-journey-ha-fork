@@ -9,6 +9,16 @@ export class PersonalInfoFormComponent  implements OnInit {
 
   constructor() { }
 
+formData = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+};
+
+
   ngOnInit() {}
 
 countries = [

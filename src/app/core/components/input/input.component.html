@@ -1,0 +1,13 @@
+<div class="flex flex-col">
+  <label class="text-sm font-medium mb-1">{{ label }}</label>
+  <ion-input
+    [type]="type"
+    [placeholder]="placeholder"
+    [name]="name"
+    [ngModel]="model"
+    (ngModelChange)="modelChange.emit($event)"
+
+    shape="round"
+    mode="md">
+  </ion-input>
+</div>

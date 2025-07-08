@@ -6,17 +6,19 @@ import { AccountTypeComponent } from '../account-type.component/account-type.com
 import { IonicModule } from '@ionic/angular';
 import { PersonalInfoFormComponent } from '../personal-info-form/personal-info-form.component';
 import { FormsModule } from '@angular/forms';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [
     AccountTypeComponent,
-    PersonalInfoFormComponent
+    PersonalInfoFormComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     AuthRoutingModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ]
 })
 export class AuthModule { }
