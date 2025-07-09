@@ -5,7 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AccountTypeComponent } from '../account-type.component/account-type.component.component';
 import { IonicModule } from '@ionic/angular';
 import { PersonalInfoFormComponent } from '../personal-info-form/personal-info-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
@@ -18,7 +18,8 @@ import { CoreModule } from 'src/app/core/core.module';
     IonicModule,
     AuthRoutingModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

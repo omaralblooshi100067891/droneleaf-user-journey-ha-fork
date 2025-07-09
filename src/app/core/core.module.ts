@@ -4,6 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -13,7 +15,8 @@ import { ButtonComponent } from './components/button/button.component';
     CommonModule,
     IonicModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule,
   ],
   exports: [
     InputComponent,
