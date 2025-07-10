@@ -38,7 +38,29 @@
   <!-- Inside your form -->
 <form [formGroup]="personalInfoForm" (ngSubmit)="onSubmit()" class="space-y-4">
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    <!-- First Name -->
+
+    <!-- New text input usage-->
+    <!-- FirstName  -->
+    <app-text-input
+      [control]="personalInfoForm.controls['firstName']"
+      label="First Name"
+      placeholder="Enter your first name"
+      [required]="true"
+      >
+    </app-text-input>
+
+    <!-- Email -->
+    <app-text-input
+      [control]="personalInfoForm.get('email')"
+      label="Email Address"
+      placeholder="Enter your email"
+      type="email"
+      [required]="true"
+      errorMessage="Please provide a valid email address"
+      icon="mail-outline">
+    </app-text-input>
+    <!-- End New text input usage-->
+
     <div>
       <app-input label="First Name*" placeholder="Enter first name"
         formControlName="firstName" [showPasswordToggle]="false"></app-input>
