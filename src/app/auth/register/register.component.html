@@ -1,0 +1,22 @@
+<ion-content class="bg-white relative">
+  <ng-container [ngSwitch]="currentStep">
+
+    <!-- Step 1: Personal Info -->
+    <app-personal-info-form *ngSwitchCase="1" (formSubmitted)="nextStep()">
+    </app-personal-info-form>
+
+    <!-- Step 2: Email Verification -->
+    <app-email-verification *ngSwitchCase="2" (verified)="nextStep()" (goBack)="prevStep()">
+    </app-email-verification>
+
+    <!-- Step 3: Optional Success Step -->
+    <app-custom-drone-details>
+      *ngSwitchCase="3"
+      (formSubmitted)="nextStep()"
+      (goBack)="prevStep()">
+    </app-custom-drone-details>
+
+
+
+  </ng-container>
+</ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PersonalInfoFormComponent implements OnInit {
   personalInfoForm!: FormGroup;
-
+@Output() formSubmitted = new EventEmitter<void>();
    constructor(private fb: FormBuilder) {
     this.personalInfoForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -100,14 +100,11 @@ passwordMatchValidator(form: FormGroup) {
     console.log('Selected Country:', this.selectedCountry);
   }
 
-  onSubmit() {
-    console.log(this.personalInfoForm.value);
-    console.log(this.personalInfoForm.valid);
-
-    if (this.personalInfoForm.valid) {
-      console.log('Form Data:', this.personalInfoForm.value);
-    } else {
-      console.log('Form Invalid');
-    }
+onSubmit() {
+  if (this.personalInfoForm.valid) {
+    this.formSubmitted.emit();
+  } else {
+    this.personalInfoForm.markAllAsTouched();
   }
+}
 }

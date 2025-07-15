@@ -1,0 +1,58 @@
+<div class="flex flex-col gap-1 pb-4">
+  <label class="text-sm font-medium mb-1" [class.required]="required">
+    {{ label }}
+    <span *ngIf="required" class="required-asterisk">*</span>
+  </label>
+
+  <div class="relative">
+    <select
+      class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none appearance-none pr-10 bg-white"
+      [ngClass]="{
+        'border-red-500': isInvalid,
+        'border-green-500': isValid
+      }"
+      [formControl]="control"
+      [attr.aria-invalid]="isInvalid"
+      [attr.aria-describedby]="
+        showError ? 'error-' + generateId() : helperText ? 'helper-' + generateId() : null
+      ">
+      <option value="">{{ placeholder }}</option>
+      <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+    </select>
+
+    <!-- Custom dropdown icon -->
+    <div class="absolute right-3 top-1/2 transform -translate-y-1/2 z-10">
+      <ion-icon *ngIf="icon" [name]="icon" class="text-gray-400 text-lg"></ion-icon>
+
+      <!-- Validation icons -->
+      <ng-container *ngIf="!icon && control?.touched">
+        <ion-icon
+          *ngIf="showError"
+          name="alert-circle"
+          class="text-red-500 text-lg">
+        </ion-icon>
+        <ion-icon
+          *ngIf="isValid"
+          name="checkmark-circle"
+          class="text-green-500 text-lg">
+        </ion-icon>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Helper text -->
+  <div *ngIf="helperText && !showError"
+       class="text-xs text-gray-400 mt-1"
+       [id]="'helper-' + generateId()">
+    {{ helperText }}
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="showError"
+       class="text-xs text-red-500 mt-1"
+       [id]="'error-' + generateId()"
+       role="alert">
+    <ion-icon name="alert-circle" class="mr-1 text-sm"></ion-icon>
+    {{ getErrorMessage() }}
+  </div>
+</div>

@@ -6,12 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './components/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import {TextInputComponent} from "./components/inputs/text-input/text-input.component";
+import { SelectInputComponent } from './components/select-input/select-input.component';
 
 
 
 
 @NgModule({
-  declarations: [InputComponent,ButtonComponent,TextInputComponent],
+  declarations: [InputComponent,ButtonComponent,TextInputComponent,SelectInputComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -22,7 +23,8 @@ import {TextInputComponent} from "./components/inputs/text-input/text-input.comp
   exports: [
     InputComponent,
     ButtonComponent,
-    TextInputComponent
+    TextInputComponent,
+    SelectInputComponent
   ],
 })
 export class CoreModule { }

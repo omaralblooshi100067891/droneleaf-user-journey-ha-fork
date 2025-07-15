@@ -20,11 +20,10 @@ export class AccountTypeComponent  implements OnInit {
 
   onContinue() {
     if (this.selectedType === 'private') {
-      this.router.navigate(['/auth/personal-info']);
+      this.router.navigate(['/auth/register']);
     } else {
-      // Later route to business-info if needed
+      // Implement this later
       console.log('Business flow not implemented yet');
     }
   }
-
 }
