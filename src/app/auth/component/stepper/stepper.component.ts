@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StepperComponent   {
    @Input() step: number = 1;
-  @Input() totalSteps: number = 3;
+  @Input() totalSteps: number = 4;
 
   get steps(): number[] {
     return Array(this.totalSteps).fill(0);

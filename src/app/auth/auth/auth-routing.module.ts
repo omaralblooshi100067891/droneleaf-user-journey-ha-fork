@@ -4,6 +4,7 @@ import { AccountTypeComponent } from '../account-type.component/account-type.com
 import { PersonalInfoFormComponent } from '../register-steps/personal-info-form/personal-info-form.component';
 import { EmailVerificationComponent } from '../register-steps/email-verification/email-verification.component';
 import { RegisterComponent } from '../register/register.component';
+import { BusinessRegisterComponent } from '../business-register/business-register.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent,
+      },
+      {
+        path: 'business-register',
+        component: BusinessRegisterComponent,
       },
 
       { path: '', redirectTo: 'account-type', pathMatch: 'full' },

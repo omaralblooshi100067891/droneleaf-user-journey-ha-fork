@@ -32,7 +32,7 @@ export class ButtonComponent {
     } else {
       if (this.variant === 'primary') {
         sizeClasses = this.hasBackButton
-          ? 'w-full sm:w-auto px-6 md:min-w-[400px]'
+          ? 'w-full sm:w-auto px-6 md:min-w-[680px]'
           : 'w-full sm:w-auto px-6 md:min-w-[510px]';
       } else {
         sizeClasses = 'w-full sm:w-auto px-6';

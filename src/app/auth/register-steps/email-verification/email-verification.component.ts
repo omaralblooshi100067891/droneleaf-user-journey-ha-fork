@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   OnInit,
   Output,
   QueryList,
@@ -25,6 +26,9 @@ export class EmailVerificationComponent implements OnInit {
   @Output() verified = new EventEmitter<void>();
   @Output() goBack = new EventEmitter<void>();
   otpForm!: FormGroup;
+  @Input() step: number = 2;           // default for private
+@Input() totalSteps: number = 3;     // default for private
+@Input() context: 'private' | 'business' = 'private';
 
   @ViewChildren('otpInput') otpInputs!: QueryList<IonInput>;
 
@@ -62,8 +66,10 @@ export class EmailVerificationComponent implements OnInit {
       event.preventDefault();
     }
   }
+  focusedIndex: number | null = null;
 
   onOtpFocus(index: number): void {
+    this.focusedIndex = index;
     // When focusing on a field, select its content for easy replacement
     const input = this.otpInputs.get(index);
     if (input) {
@@ -74,6 +80,10 @@ export class EmailVerificationComponent implements OnInit {
       }, 0);
     }
   }
+
+  onOtpBlur(index: number): void {
+    this.focusedIndex = null;
+}
 
 onOtpIonInput(event: any, index: number): void {
   const input = event.target as HTMLInputElement;

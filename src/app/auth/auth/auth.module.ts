@@ -11,6 +11,10 @@ import { StepperComponent } from '../component/stepper/stepper.component';
 import { EmailVerificationComponent } from '../register-steps/email-verification/email-verification.component';
 import { RegisterComponent } from '../register/register.component';
 import { CustomDroneDetailsComponent } from '../register-steps/custom-drone-details/custom-drone-details.component';
+import { BusinessRegisterComponent } from '../business-register/business-register.component';
+import { BusinessInfoComponent } from '../business-register-steps/business-info/business-info.component';
+import { CustomDroneDetailComponent } from '../business-register-steps/custom-drone-detail/custom-drone-detail.component';
+import { CompanyDetailComponent } from '../business-register-steps/company-detail/company-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { CustomDroneDetailsComponent } from '../register-steps/custom-drone-deta
     StepperComponent,
     EmailVerificationComponent,
     RegisterComponent,
-    CustomDroneDetailsComponent
+    CustomDroneDetailsComponent,
+    BusinessRegisterComponent,
+    BusinessInfoComponent,
+    CustomDroneDetailComponent,
+    CompanyDetailComponent,
   ],
   imports: [
     CommonModule,

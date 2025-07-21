@@ -79,9 +79,9 @@ ion-input {
   // Success state
   &.success {
     --border-color: #10b981; // green-500
-    --highlight-color-focused: #10b981;
+    --highlight-color-focused: white;
     border-color: #10b981;
-    background-color: #f0fdf4; // green-50
+
 
     &:focus-within,
     &.ion-focused {
@@ -172,6 +172,15 @@ ion-icon {
   &.text-lg {
     font-size: 1.125rem;
   }
+}
+
+input.ng-valid.ng-touched {
+  border-color: #22c55e; // ✅ Tailwind green-500 or use your custom color
+  background-color: white !important; // 🛑 override accidental green bg
+}
+
+.native-input.sc-ion-input-md {
+  background-color: white !important; // Ensure background is white
 }
 
 // Responsive adjustments

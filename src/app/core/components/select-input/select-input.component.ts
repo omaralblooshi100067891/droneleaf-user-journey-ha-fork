@@ -6,21 +6,36 @@ import { AbstractControl, FormControl } from '@angular/forms';
   templateUrl: './select-input.component.html',
   styleUrls: ['./select-input.component.scss'],
 })
-export class SelectInputComponent  implements OnInit {
- @Input() control!: FormControl | AbstractControl | any;
+export class SelectInputComponent implements OnInit {
+  @Input() control!: FormControl | AbstractControl | any;
   @Input() label: string = '';
   @Input() options: string[] = [];
   @Input() placeholder: string = 'Select an option';
   @Input() errorMessage: string = '';
   @Input() helperText: string = '';
   @Input() required: boolean = false;
-  @Input() icon: string = ''; // 🆕 like "chevron-down-outline"
+  @Input() icon: string = ''; // custom fallback if needed
 
-
+  isOpen: boolean = false;
   private componentId: string = '';
 
   ngOnInit() {
     this.componentId = this.generateUniqueId();
+  }
+
+  // When user clicks on select
+  onMouseDown() {
+    this.isOpen = true;
+  }
+
+  // When user picks value or dropdown loses focus
+  onCloseEvent() {
+    this.isOpen = false;
+  }
+
+  get currentIcon(): string {
+    if (this.icon) return this.icon;
+    return this.isOpen ? 'chevron-up-outline' : 'chevron-down-outline';
   }
 
   get isInvalid(): boolean {
@@ -55,5 +70,4 @@ export class SelectInputComponent  implements OnInit {
 
     return 'Invalid selection.';
   }
-
 }

@@ -24,7 +24,7 @@
           </div>
           <div class="w-4 h-4 rounded-full border-2 border-[#009169] bg-white z-10 flex-shrink-0"></div>
         </div> -->
-        <app-stepper [step]="1" [totalSteps]="3"></app-stepper>
+        <app-stepper [step]="1" [totalSteps]="4"></app-stepper>
 
         <!-- Heading -->
         <div class="text-center">
@@ -39,24 +39,30 @@
         <!-- Inside your form -->
         <form [formGroup]="personalInfoForm" (ngSubmit)="onSubmit()" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
             <app-text-input [control]="personalInfoForm.get('firstName')" [label]="'First Name*'"
               placeholder="Enter first name" [required]="true"></app-text-input>
+
             <!-- Last Name -->
             <app-text-input [control]="personalInfoForm.get('lastName')" [label]="'Last Name*'"
               placeholder="Enter last name" [required]="true"></app-text-input>
           </div>
+
           <!-- Phone Number -->
-       <app-phone-input [control]="phoneControl" [label]="'Phone Number*'" [required]="true"></app-phone-input>
+        <app-phone-input [control]="phoneControl" [label]="'Phone Number*'" [required]="true"></app-phone-input>
+
+
           <!-- Email -->
           <app-text-input [control]="personalInfoForm.get('email')" label="Email*" placeholder="Enter email"
             [required]="true"></app-text-input>
+
           <!-- Password -->
-          <app-text-input [control]="personalInfoForm.get('password')" [label]="'Password*'" type="password" placeholder="Enter password"
-            [required]="true"></app-text-input>
+          <app-text-input [control]="personalInfoForm.get('password')" [label]="'Password*'" type="password"
+            placeholder="Enter password" [required]="true"></app-text-input>
+
           <!-- Confirm Password -->
-          <app-text-input [control]="personalInfoForm.get('confirmPassword')" type="password" [label]="'Confirme Password*'"
-            placeholder="Enter confirme Password" [required]="true"></app-text-input>
+          <app-text-input [control]="personalInfoForm.get('confirmPassword')" type="password"
+            [label]="'Confirme Password*'" placeholder="Enter confirme Password" [required]="true"></app-text-input>
+
           <!-- Terms and Marketing -->
           <div class="space-y-2">
             <label class="flex items-start space-x-2 text-sm">
@@ -72,7 +78,9 @@
               <span>I agree to receive marketing promotions from Drone Leaf Team.</span>
             </label>
           </div>
-          <app-button type="submit" label="Register" [hasBackButton]="false" [disabled]="personalInfoForm.invalid" [responsive]="true"></app-button>
+
+          <app-button type="submit" label="Register" [disabled]="personalInfoForm.invalid" [hasBackButton]="false"
+            [responsive]="true"></app-button>
         </form>
 
       </div>

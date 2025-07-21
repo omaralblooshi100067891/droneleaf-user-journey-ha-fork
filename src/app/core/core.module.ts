@@ -7,12 +7,13 @@ import { ButtonComponent } from './components/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import {TextInputComponent} from "./components/inputs/text-input/text-input.component";
 import { SelectInputComponent } from './components/select-input/select-input.component';
+import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 
 
 
 
 @NgModule({
-  declarations: [InputComponent,ButtonComponent,TextInputComponent,SelectInputComponent],
+  declarations: [InputComponent,ButtonComponent,TextInputComponent,SelectInputComponent,PhoneInputComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -24,7 +25,8 @@ import { SelectInputComponent } from './components/select-input/select-input.com
     InputComponent,
     ButtonComponent,
     TextInputComponent,
-    SelectInputComponent
+    SelectInputComponent,
+    PhoneInputComponent,
   ],
 })
 export class CoreModule { }

@@ -11,6 +11,3 @@ input[type='number']::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
-input.ng-valid.ng-touched {
-  background-color: #22c55e; // ← green
-}

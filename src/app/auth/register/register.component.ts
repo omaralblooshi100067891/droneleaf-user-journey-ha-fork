@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
- currentStep = 1;
+  currentStep = 1;
+  steps = [1, 2, 3];
+  totalSteps = this.steps.length;
 
   nextStep(): void {
-    if (this.currentStep < 3) {
+    if (this.currentStep < this.totalSteps) {
       this.currentStep++;
     }
   }
@@ -21,9 +23,8 @@ export class RegisterComponent {
   }
 
   goToStep(step: number): void {
-    if (step >= 1 && step <= 3) {
+    if (step >= 1 && step <= this.totalSteps) {
       this.currentStep = step;
     }
   }
-
 }

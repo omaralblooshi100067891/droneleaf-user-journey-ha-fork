@@ -24,6 +24,19 @@ export class TextInputComponent implements OnInit {
     this.componentId = this.generateUniqueId();
   }
 
+    showPassword: boolean = false;
+
+  get inputType(): string {
+    if (this.type === 'password') {
+      return this.showPassword ? 'text' : 'password';
+    }
+    return this.type;
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
   get isInvalid(): boolean {
     return this.control ? this.control.invalid && this.control.touched : false;
   }

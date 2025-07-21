@@ -7,7 +7,7 @@
     <div class="form-section flex-1 flex items-center justify-center px-4 py-6 min-h-screen">
       <div class="form-inner w-full max-w-[50rem] space-y-6">
 
-        <app-stepper [step]="3" [totalSteps]="3"></app-stepper>
+        <app-stepper [step]="3" [totalSteps]="4"></app-stepper>
 
         <div class="text-center">
           <h2 class="text-xl sm:text-2xl font-semibold">Finalize Your Account</h2>
@@ -19,30 +19,30 @@
 
         <form [formGroup]="finalForm" (ngSubmit)="onSubmit()" class="space-y-4">
 
-          <app-text-input [control]="f['customDroneCount']" label="How many custom drones do you have?*"
-            placeholder="e.g 3" type="number" [required]="true">
+          <app-text-input [control]="f['customDroneCount']" label="Organization Name*"
+            placeholder="e.g Tesla" type="text" [required]="true" class="bg-white">
           </app-text-input>
 
           <app-select-input [control]="f['primaryUse']" [label]="'What is your primary drone application'"
-            [options]="primaryUseOptions" [required]="true" placeholder="Select an answer" >
+            [options]="primaryUseOptions" [required]="true" placeholder="Select an answer">
           </app-select-input>
 
           <app-select-input [control]="f['howDidYouHear']" [label]="'How did you hear about us'" [options]="hearOptions"
-            [required]="true" placeholder="Select an answer" >
+            [required]="true" placeholder="Select an answer">
           </app-select-input>
 
           <app-select-input [control]="f['experienceLevel']"
-            [label]="'Do you already have drone activities or are you just starting?'" [options]="experienceOptions"
-            [required]="false" placeholder="Select an answer" >
+            [label]="'Do you already have drone activities or are you just starting?*'" [options]="experienceOptions"
+            [required]="false" placeholder="Select an answer">
           </app-select-input>
 
-          <app-text-input [control]="f['reason']" label="Why did you get into custom drones?"
+          <app-text-input [control]="f['reason']" label="Why did you get into custom drones?*"
             placeholder="e.g. I love building things" type="text" [required]="false">
           </app-text-input>
 
           <div class="flex flex-col sm:flex-row gap-4 w-full">
             <!-- Back Button -->
-            <app-button type="button" label="Back" variant="secondary" [showBackArrow]="true" (click)="goBack()">
+            <app-button type="button" label="Back" variant="secondary" [showBackArrow]="true" (click)="goBack.emit()">
             </app-button>
 
             <!-- Verify Button -->
