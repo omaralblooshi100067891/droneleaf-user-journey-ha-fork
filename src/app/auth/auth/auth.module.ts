@@ -15,6 +15,7 @@ import { BusinessRegisterComponent } from '../business-register/business-registe
 import { BusinessInfoComponent } from '../business-register-steps/business-info/business-info.component';
 import { CustomDroneDetailComponent } from '../business-register-steps/custom-drone-detail/custom-drone-detail.component';
 import { CompanyDetailComponent } from '../business-register-steps/company-detail/company-detail.component';
+import { LoginComponent } from '../login/login.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CompanyDetailComponent } from '../business-register-steps/company-detai
     BusinessInfoComponent,
     CustomDroneDetailComponent,
     CompanyDetailComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

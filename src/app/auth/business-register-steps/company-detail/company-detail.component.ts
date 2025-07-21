@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-detail',
@@ -13,7 +14,7 @@ export class CompanyDetailComponent implements OnInit {
 
   finalForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private location: Location) {}
+  constructor(private fb: FormBuilder, private location: Location,private router: Router) {}
 
   goBack() {
     this.location.back();
@@ -42,6 +43,12 @@ export class CompanyDetailComponent implements OnInit {
 
   get f() {
     return this.finalForm.controls;
+  }
+
+
+  goToLogin(){
+   this.router.navigate(['auth/login']);
+
   }
 
   onSubmit(): void {

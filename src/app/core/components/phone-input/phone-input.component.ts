@@ -44,8 +44,9 @@ export class PhoneInputComponent  implements OnInit {
   }
 
   get showError(): boolean {
-    return this.isInvalid && (!!this.errorMessage || !!this.control?.errors);
-  }
+  return this.isInvalid && (!!this.errorMessage || !!this.control?.errors);
+}
+
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
@@ -54,6 +55,21 @@ export class PhoneInputComponent  implements OnInit {
       this.searchQuery = '';
     }
   }
+
+
+  allowOnlyNumbers(event: KeyboardEvent): void {
+  const charCode = event.charCode;
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
+preventNonNumericPaste(event: ClipboardEvent): void {
+  const pastedText = event.clipboardData?.getData('text') || '';
+  if (!/^\d+$/.test(pastedText)) {
+    event.preventDefault();
+  }
+}
 
   onCountryChange(country: Country) {
     this.selectedCountry = country;

@@ -31,7 +31,7 @@
           <h2 class="text-xl sm:text-3xl font-[400]">Your Personal information</h2>
           <p class="text-sm text-gray-500 mt-1">
             Already have an account?
-            <a href="#" class="text-[#009169] font-medium">Sign in</a>
+            <span class="text-[#009169] font-medium" (click)="goToLogin()">Sign in</span>
           </p>
         </div>
 
@@ -48,9 +48,7 @@
           </div>
 
           <!-- Phone Number -->
-        <app-phone-input [control]="phoneControl" [label]="'Phone Number*'" [required]="true"></app-phone-input>
-
-
+          <app-phone-input [control]="phoneControl" [label]="'Phone Number*'" [required]="true"></app-phone-input>
           <!-- Email -->
           <app-text-input [control]="personalInfoForm.get('email')" label="Email*" placeholder="Enter email"
             [required]="true"></app-text-input>

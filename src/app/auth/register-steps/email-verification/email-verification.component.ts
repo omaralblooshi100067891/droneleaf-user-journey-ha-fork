@@ -15,6 +15,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonInput } from '@ionic/angular';
 
 @Component({
@@ -32,7 +33,7 @@ export class EmailVerificationComponent implements OnInit {
 
   @ViewChildren('otpInput') otpInputs!: QueryList<IonInput>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private router:Router) {}
 
   ngOnInit(): void {
     this.otpForm = this.fb.group({
@@ -84,6 +85,11 @@ export class EmailVerificationComponent implements OnInit {
   onOtpBlur(index: number): void {
     this.focusedIndex = null;
 }
+
+
+  goToLogin(){
+    this.router.navigate(['/auth/login']);
+  }
 
 onOtpIonInput(event: any, index: number): void {
   const input = event.target as HTMLInputElement;

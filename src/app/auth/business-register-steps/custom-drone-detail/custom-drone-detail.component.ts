@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-custom-drone-detail',
@@ -12,7 +13,7 @@ export class CustomDroneDetailComponent  implements OnInit {
  @Output() goBack = new EventEmitter<void>();
   finalForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private location: Location) {}
+  constructor(private fb: FormBuilder, private location: Location,private router:Router) {}
 
 
 
@@ -28,6 +29,10 @@ export class CustomDroneDetailComponent  implements OnInit {
 
   get f() {
     return this.finalForm.controls;
+  }
+
+  goToLogin(){
+    this.router.navigate(['auth/login']);
   }
 
 onSubmit() {
