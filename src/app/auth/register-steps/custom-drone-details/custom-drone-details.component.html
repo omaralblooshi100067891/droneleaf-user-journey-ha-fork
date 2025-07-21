@@ -42,7 +42,7 @@
 
           <div class="flex flex-col sm:flex-row gap-4 w-full">
             <!-- Back Button -->
-            <app-button type="button" label="Back" variant="secondary" [showBackArrow]="true" (click)="goBack()">
+            <app-button type="button" label="Back" variant="secondary" [showBackArrow]="true" (click)="goBack.emit()">
             </app-button>
 
             <!-- Verify Button -->
