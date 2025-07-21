@@ -1,0 +1,74 @@
+<ion-content class="bg-white relative">
+  <div class="relative sm:absolute top-4 left-4 z-50 w-10 sm:w-16">
+    <img src="../../../assets/logo.png" alt="Logo" class="w-full h-auto" />
+  </div>
+
+  <div class="main-wrapper flex flex-col lg:flex-row min-h-[100dvh] max-h-screen overflow-auto">
+    <div class="form-section flex-1 flex items-center justify-center px-4 py-6 min-h-screen">
+      <div class="form-inner w-full max-w-[50rem] space-y-6">
+
+        <app-stepper [step]="4" [totalSteps]="4"></app-stepper>
+
+        <div class="text-center">
+          <h2 class="text-xl sm:text-2xl font-semibold">Finalize Your Account</h2>
+          <p class="text-sm text-gray-500 mt-1">
+            Already have an account?
+            <a routerLink="/auth/login" class="text-[#009169] font-medium">Sign in</a>
+          </p>
+        </div>
+
+        <form [formGroup]="finalForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+          <app-text-input [control]="f['organizationName']" label="Organization Name*" placeholder="e.g Tesla"
+            type="text" [required]="true">
+          </app-text-input>
+
+          <app-select-input [control]="f['primaryUse']" [label]="'What is your primary drone application*'"
+            [options]="primaryUseOptions" [required]="true" placeholder="Select an answer">
+          </app-select-input>
+
+
+          <app-text-input *ngIf="f['primaryUse'].value === 'Other'" [control]="f['otherPrimaryUse']"
+             placeholder="Type your answer">
+          </app-text-input>
+
+          <app-text-input [control]="f['collaborators']" label="How many collaborators? *" placeholder="e.g 1"
+            type="number" [required]="true">
+          </app-text-input>
+
+          <app-text-input [control]="f['pilots']" label="How many pilots?*" placeholder="e.g 3" type="number"
+            [required]="true">
+          </app-text-input>
+
+
+
+          <div class="flex flex-col sm:flex-row gap-4 w-full">
+            <!-- Back Button -->
+            <app-button type="button" label="Back" variant="secondary" [showBackArrow]="true" (click)="goBack()">
+            </app-button>
+
+            <!-- Verify Button -->
+            <app-button type="submit" label="Register" [hasBackButton]="true" [responsive]="true" variant="primary"
+              [disabled]="finalForm.invalid">
+            </app-button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+    <div class="hidden lg:block w-[33rem]">
+      <img src="../../../assets/Frame 16.png" alt="auth image" class="object-cover w-full h-full" />
+    </div>
+  </div>
+
+  <!-- Help Button -->
+  <div class="block relative sm:absolute bottom-6 left-4 z-50 pt-2">
+    <ion-button fill="clear"
+      class="custom-help-button flex bg-slate-200 items-center gap-3 w-[11.25rem] h-11 px-6 py-3 text-sm border-2 rounded-full text-[#009169] hover:bg-[#f0fdfa] transition">
+      <ion-icon name="help-circle" class="text-xl"></ion-icon>
+      <span class="font-medium text-[12px] text-[#9A9A9A]">Need some help?</span>
+    </ion-button>
+  </div>
+</ion-content>

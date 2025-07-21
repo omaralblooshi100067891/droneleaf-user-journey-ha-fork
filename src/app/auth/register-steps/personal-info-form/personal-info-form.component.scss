@@ -1,0 +1,70 @@
+/* global.scss */
+
+@media screen and (max-width: 360px) {
+  .form-section {
+    padding: 1rem !important;
+  }
+
+  .form-inner {
+    font-size: 0.9rem;
+  }
+
+  .side-image {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .form-inner {
+    font-size: 0.95rem;
+  }
+
+  .side-image {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form-section {
+    padding: 1.5rem !important;
+  }
+
+  .form-inner {
+    font-size: 1rem;
+  }
+
+  .side-image {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 1024px) and (max-height: 600px) {
+  .form-inner {
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  .side-image {
+    height: 250px !important;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .form-inner {
+    max-height: calc(100vh - 4rem);
+    // overflow-y: auto;
+  }
+
+  .side-image {
+    height: 300px !important;
+  }
+}
+/* Hide spinner arrows for Chrome, Safari, Edge */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Hide spinner arrows for Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}

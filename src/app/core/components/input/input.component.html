@@ -1,0 +1,17 @@
+<div class="flex flex-col">
+  <label class="text-sm font-medium mb-1">{{ label }}</label>
+  <div class="relative">
+    <ion-input
+      [type]="type"
+      [placeholder]="placeholder"
+      [value]="value"
+      (ionInput)="handleInput($event)"
+      (blur)="onTouched()"
+      [disabled]="disabled"
+      shape="round"
+      mode="md"
+      class="border border-gray-300 rounded-md px-3 py-2 w-full pr-10"
+    ></ion-input>
+
+  </div>
+</div>

@@ -1,0 +1,27 @@
+  <!-- ✅ Stepper at the Top -->
+  <div class="flex items-center justify-between w-full max-w-full mx-auto px-4 sm:px-6 mb-6 mt-6">
+    <ng-container *ngFor="let step of steps; let i = index">
+      <div class="flex items-center flex-1" [class.flex-none]="i === totalSteps - 1">
+
+        <!-- Step Circle -->
+        <div
+          class="w-4 h-4 rounded-full z-10"
+          [ngClass]="{
+            'bg-[#009169]': i < currentStep,
+            'border-2 border-[#009169] bg-white': i >= currentStep
+          }"
+        ></div>
+
+        <!-- Step Line -->
+        <div
+          *ngIf="i < totalSteps - 1"
+          class="flex-1 h-[3px] mx-1 rounded-[3px]"
+          [ngClass]="{
+            'bg-[#009169]': i < currentStep - 1,
+            'bg-gray-300': i >= currentStep - 1
+          }"
+        ></div>
+
+      </div>
+    </ng-container>
+  </div>

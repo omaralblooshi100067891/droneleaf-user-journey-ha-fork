@@ -1,0 +1,10 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  [class]="buttonClasses"
+  class="custom-btn"
+  (click)="clicked.emit()">
+  <span *ngIf="showBackArrow" class="mr-1"><</span>
+  <ng-content *ngIf="!label"></ng-content>
+  <span *ngIf="label">{{ label }}</span>
+</button>

@@ -1,0 +1,14 @@
+/* Add these to your component's CSS or global styles */
+.border-1 {
+  border: 1px solid #D9D9D9; /* Grey border for empty fields */
+}
+
+.border-2 {
+  border: 1px solid #009169; /* Green border for valid input */
+  box-shadow: 0 0 0 2px rgba(0, 145, 105, 0.2); /* Green ring */
+}
+
+.border-red-500 {
+  border: 1px solid #FF0000; /* Red border for invalid input */
+  box-shadow: 0 0 0 1px rgba(255, 0, 0, 0.2); /* Red ring */
+}

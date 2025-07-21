@@ -1,0 +1,22 @@
+<ion-content class="bg-white relative">
+  <ng-container [ngSwitch]="step">
+
+    <app-business-info *ngSwitchCase="BusinessSteps.Info" (formSubmitted)="next()">
+    </app-business-info>
+
+    <app-custom-drone-detail *ngSwitchCase="BusinessSteps.Details" (formSubmitted)="next()" (goBack)="prev()">
+    </app-custom-drone-detail>
+
+    <app-email-verification *ngSwitchCase="BusinessSteps.Email" [step]="2" [totalSteps]="4" (verified)="next()"
+      (goBack)="prev()">
+    </app-email-verification>
+
+<app-company-detail *ngSwitchCase="BusinessSteps.Company" (formSubmitted)="next()" (goBack)="prev()">
+    </app-company-detail>
+<div *ngSwitchDefault class="text-red-500 text-center py-6">
+  Step not found: {{ step }}
+</div>
+
+
+  </ng-container>
+</ion-content>

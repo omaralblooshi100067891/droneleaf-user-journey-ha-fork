@@ -1,0 +1,216 @@
+:host {
+  display: block;
+  margin-bottom: 1rem;
+
+  .text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .mb-1 {
+    margin-bottom: 0.25rem;
+  }
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+  color: #111827; // Tailwind's gray-900
+  transition: color 0.2s ease;
+
+  &.required {
+    color: #374151; // Slightly darker for required fields
+  }
+
+  .required-asterisk {
+    color: #ef4444; // Red for asterisk
+    margin-left: 2px;
+  }
+}
+
+ion-input {
+  --border-color: #d1d5db; // Tailwind's gray-300
+  --background: white;
+  --padding-start: 1rem;
+  --padding-end: 2.5rem; // Extra space for icons
+  --padding-top: 0.5rem;
+  --padding-bottom: 0.5rem;
+  --border-radius: 0.375rem !important;
+  --highlight-color-focused: #009169; // green accent
+  --box-shadow: none;
+  font-size: 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    --border-color: #9ca3af; // gray-400
+    border-color: #9ca3af;
+  }
+
+  &:focus-within,
+  &.ion-focused {
+    --border-color: #009169;
+    --highlight-color-focused: #009169;
+    border-color: #009169;
+    box-shadow: 0 0 0 2px rgba(0, 145, 105, 0.1);
+    outline: none;
+  }
+
+  // Error state
+  &.error {
+    --border-color: #ef4444; // red-500
+    --highlight-color-focused: #ef4444;
+    border-color: #ef4444;
+    background-color: #fef2f2; // red-50
+
+    &:focus-within,
+    &.ion-focused {
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  // Success state
+  &.success {
+    --border-color: #10b981; // green-500
+    --highlight-color-focused: white;
+    border-color: #10b981;
+
+
+    &:focus-within,
+    &.ion-focused {
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.1);
+    }
+  }
+
+  // Disabled state
+  &.ion-input-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #f9fafb; // gray-50
+  }
+}
+
+// Helper text styling
+.helper-text {
+  font-size: 0.75rem; // text-xs
+  color: #6b7280; // gray-500
+  margin-top: 0.25rem;
+  line-height: 1.25;
+}
+
+// Error message styling
+.error-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  font-size: 0.75rem; // text-xs
+  color: #ef4444; // red-500
+  margin-top: 0.25rem;
+  line-height: 1.25;
+
+  .error-icon {
+    font-size: 0.875rem;
+    margin-top: 0.125rem;
+    flex-shrink: 0;
+  }
+}
+
+// Character count styling
+.character-count {
+  font-size: 0.75rem; // text-xs
+  color: #6b7280; // gray-500
+  text-align: right;
+  margin-top: 0.25rem;
+
+  &.near-limit {
+    color: #f59e0b; // amber-500
+  }
+
+  &.at-limit {
+    color: #ef4444; // red-500
+  }
+}
+
+// Icon positioning
+.absolute {
+  position: absolute;
+
+  &.right-3 {
+    right: 0.75rem;
+  }
+
+  &.top-1\/2 {
+    top: 50%;
+  }
+
+  &.transform.-translate-y-1\/2 {
+    transform: translateY(-50%);
+  }
+}
+
+// Icon styling
+ion-icon {
+  &.text-gray-400 {
+    color: #9ca3af;
+  }
+
+  &.text-red-500 {
+    color: #ef4444;
+  }
+
+  &.text-green-500 {
+    color: #10b981;
+  }
+
+  &.text-lg {
+    font-size: 1.125rem;
+  }
+}
+
+input.ng-valid.ng-touched {
+  border-color: #22c55e; // ✅ Tailwind green-500 or use your custom color
+  background-color: white !important; // 🛑 override accidental green bg
+}
+
+.native-input.sc-ion-input-md {
+  background-color: white !important; // Ensure background is white
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  ion-input {
+    --padding-start: 0.75rem;
+    --padding-end: 2rem;
+  }
+
+  .absolute.right-3 {
+    right: 0.5rem;
+  }
+}
+
+// Animation for error state
+@keyframes shake {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-2px);
+  }
+}
+
+.error-message {
+  animation: shake 0.5s ease-in-out;
+}
+
+// Focus trap for accessibility
+ion-input:focus-visible {
+  outline: 2px solid #009169;
+  outline-offset: 2px;
+}
