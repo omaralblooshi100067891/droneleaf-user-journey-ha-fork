@@ -4,58 +4,35 @@
     <!-- <span *ngIf="required" class="required-asterisk">*</span> -->
   </label>
 
-<div class="relative">
-  <ion-input
-    [formControl]="control"
-    [placeholder]="placeholder"
-    [type]="inputType"
-    [clearInput]="clearInput"
-    [maxlength]="maxlength"
-    shape="round"
-    mode="md"
-    class="border rounded-md px-3 py-2 w-full pr-10"
-    [class.error]="showError"
-    [class.success]="isValid"
-    [attr.aria-invalid]="isInvalid"
-    [attr.aria-describedby]="showError ? 'error-' + generateId() : helperText ? 'helper-' + generateId() : null"
-  ></ion-input>
+  <div class="relative">
+    <ion-input [formControl]="control" [placeholder]="placeholder" [type]="inputType" [clearInput]="clearInput"
+      [maxlength]="maxlength" shape="round" mode="md" class="border rounded-md px-3 py-2 w-full pr-10"
+      [class.error]="showError" [class.success]="isValid" [attr.aria-invalid]="isInvalid"
+      [attr.aria-describedby]="showError ? 'error-' + generateId() : helperText ? 'helper-' + generateId() : null"></ion-input>
 
-  <!-- 👁 Password visibility toggle -->
-  <ion-icon
-    *ngIf="type === 'password'"
-    [name]="showPassword ? 'eye-off' : 'eye'"
-    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer z-10"
-    (click)="togglePasswordVisibility()">
-  </ion-icon>
+    <!-- 👁 Password visibility toggle -->
+    <ion-icon *ngIf="type === 'password'" [name]="showPassword ? 'eye-off' : 'eye'"
+      class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer z-10"
+      (click)="togglePasswordVisibility()">
+    </ion-icon>
 
-  <!-- ✅ Validation status icons -->
-  <div class="absolute right-8 top-1/2 transform -translate-y-1/2" *ngIf="control?.touched">
-    <ion-icon
-      *ngIf="showError"
-      name="alert-circle"
-      class="text-red-500 text-lg">
-    </ion-icon>
-    <ion-icon
-      *ngIf="isValid"
-      name="checkmark-circle"
-      class="text-green-500 text-lg">
-    </ion-icon>
+    <!-- ✅ Validation status icons -->
+    <div class="absolute right-8 top-1/2 transform -translate-y-1/2" *ngIf="control?.touched">
+      <ion-icon *ngIf="showError" name="alert-circle" class="text-red-500 text-lg">
+      </ion-icon>
+      <ion-icon *ngIf="isValid" name="checkmark-circle" class="text-green-500 text-lg">
+      </ion-icon>
+    </div>
   </div>
-</div>
 
 
   <!-- Helper text -->
-  <div *ngIf="helperText && !showError"
-       class="helper-text"
-       [id]="'helper-' + generateId()">
+  <div *ngIf="helperText && !showError" class="helper-text" [id]="'helper-' + generateId()">
     {{ helperText }}
   </div>
 
   <!-- Error message -->
-  <div *ngIf="showError"
-       class="error-message"
-       [id]="'error-' + generateId()"
-       role="alert">
+  <div *ngIf="showError" class="error-message" [id]="'error-' + generateId()" role="alert">
     <ion-icon name="alert-circle" class="error-icon"></ion-icon>
     {{ getErrorMessage() }}
   </div>

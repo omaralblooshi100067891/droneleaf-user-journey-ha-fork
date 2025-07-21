@@ -3,11 +3,8 @@
     {{ label }}
   </label>
 
-  <div
-    class="flex items-center gap-2 border rounded-md px-2 py-2 bg-white"
-    [class.border-red-500]="isInvalid"
-    [class.border-green-500]="isValid"
-  >
+  <div class="relative flex items-center gap-2 border rounded-md px-2 py-2 bg-white" [class.border-red-500]="isInvalid"
+    [class.border-green-500]="isValid">
     <!-- Country dropdown button -->
     <div class="relative">
       <button type="button" (click)="toggleDropdown()" class="flex items-center gap-1 text-sm">
@@ -15,17 +12,11 @@
         <span class="text-xs">▼</span>
       </button>
 
-      <div *ngIf="showDropdown"
-        class="absolute z-50 mt-1 w-64 bg-white shadow-lg rounded-md border border-gray-200">
+      <div *ngIf="showDropdown" class="absolute z-50 mt-1 w-64 bg-white shadow-lg rounded-md border border-gray-200">
         <div class="p-2 border-b">
-          <input
-            type="text"
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange($event)"
-            placeholder="Search country..."
-            class="w-full p-1 text-sm border rounded bg-white"
-            [ngModelOptions]="{ standalone: true }"
-          />
+          <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)"
+            placeholder="Search country..." class="w-full p-1 text-sm border rounded bg-white"
+            [ngModelOptions]="{ standalone: true }" />
         </div>
         <div class="max-h-60 overflow-y-auto">
           <div *ngFor="let country of filteredCountries" (click)="onCountryChange(country)"
@@ -42,16 +33,29 @@
     <span class="text-sm">{{ selectedCountry?.dial_code }}</span>
 
     <!-- Phone Input -->
-    <input
-      type="tel"
-      [formControl]="control"
-      placeholder="Enter phone number"
-      class="flex-1 text-sm outline-none px-2 bg-white"
-    />
+    <input type="tel" [formControl]="control" placeholder="Enter phone number"
+      class="flex-1 text-sm outline-none px-2 bg-white" (keypress)="allowOnlyNumbers($event)"
+      (paste)="preventNonNumericPaste($event)" />
+
+
+    <!-- Validation icon -->
+    <!-- <div class="absolute right-3 top-1/2 transform -translate-y-1/2" *ngIf="control?.touched">
+      <ion-icon
+        *ngIf="showError"
+        name="alert-circle"
+        class="text-red-500 text-lg">
+      </ion-icon>
+      <ion-icon
+        *ngIf="isValid"
+        name="checkmark-circle"
+        class="text-green-500 text-lg">
+      </ion-icon>
+    </div> -->
   </div>
 
   <!-- Error messages -->
-  <div *ngIf="showError" class="text-red-500 text-xs mt-1">
+  <div *ngIf="showError" class="text-red-500 text-xs mt-1 flex items-center gap-1">
+    <ion-icon name="alert-circle" class="text-red-500 text-sm"></ion-icon>
     {{ getErrorMessage() }}
   </div>
 </div>

@@ -1,5 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   Country,
   CountryPhoneService,
@@ -15,15 +21,16 @@ export class BusinessInfoComponent implements OnInit {
   countries: Country[] = [];
   filteredCountries: Country[] = [];
   selectedCountry!: Country;
-   searchQuery: string = '';
-   search = new FormControl('');
+  searchQuery: string = '';
+  search = new FormControl('');
 
-    showDropdown: boolean = false;
+  showDropdown: boolean = false;
   personalInfoForm!: FormGroup;
   @Output() formSubmitted = new EventEmitter<void>();
   constructor(
     private fb: FormBuilder,
-    private countryService: CountryPhoneService
+    private countryService: CountryPhoneService,
+    private router: Router
   ) {
     this.personalInfoForm = this.fb.group(
       {
@@ -70,24 +77,22 @@ export class BusinessInfoComponent implements OnInit {
       },
     });
 
-    this.search.valueChanges.subscribe((query:any) => {
-  this.onSearchChange(query);
-});
-
+    this.search.valueChanges.subscribe((query: any) => {
+      this.onSearchChange(query);
+    });
   }
 
   get phoneControl(): FormControl {
-  return this.personalInfoForm.get('phone') as FormControl;
-}
+    return this.personalInfoForm.get('phone') as FormControl;
+  }
 
-
-   onSearchChange(query: string) {
+  onSearchChange(query: string) {
     this.searchQuery = query;
     if (query) {
       this.countryService.searchCountries(query).subscribe({
         next: (filtered) => {
           this.filteredCountries = filtered;
-        }
+        },
       });
     } else {
       this.filteredCountries = this.countries;
@@ -107,6 +112,11 @@ export class BusinessInfoComponent implements OnInit {
     this.showDropdown = false;
     this.searchQuery = '';
     this.filteredCountries = this.countries;
+  }
+
+  goToLogin(){
+   this.router.navigate(['auth/login']); // ✅ Relative path from inside AuthModule
+
   }
 
   onSearchCountry(event: any) {

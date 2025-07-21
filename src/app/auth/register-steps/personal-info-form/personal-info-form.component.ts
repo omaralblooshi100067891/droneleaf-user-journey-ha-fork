@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-info-form',
@@ -9,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class PersonalInfoFormComponent implements OnInit {
   personalInfoForm!: FormGroup;
   @Output() formSubmitted = new EventEmitter<void>();
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,  private router: Router) {
     this.personalInfoForm = this.fb.group(
       {
         firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -69,7 +70,10 @@ export class PersonalInfoFormComponent implements OnInit {
     return this.personalInfoForm.get('phone') as FormControl;
   }
 
+  goToLogin(){
+   this.router.navigate(['auth/login']); // ✅ Relative path from inside AuthModule
 
+  }
 
   onSubmit() {
     if (this.personalInfoForm.valid) {
