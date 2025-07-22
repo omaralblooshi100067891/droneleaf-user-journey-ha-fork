@@ -214,3 +214,14 @@ ion-input:focus-visible {
   outline: 2px solid #009169;
   outline-offset: 2px;
 }
+
+::ng-deep input[type="number"]::-webkit-inner-spin-button,
+::ng-deep input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+
+::ng-deep input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
