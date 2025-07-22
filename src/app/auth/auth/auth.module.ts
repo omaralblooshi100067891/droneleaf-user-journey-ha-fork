@@ -16,6 +16,7 @@ import { BusinessInfoComponent } from '../business-register-steps/business-info/
 import { CustomDroneDetailComponent } from '../business-register-steps/custom-drone-detail/custom-drone-detail.component';
 import { CompanyDetailComponent } from '../business-register-steps/company-detail/company-detail.component';
 import { LoginComponent } from '../login/login.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LoginComponent } from '../login/login.component';
     AuthRoutingModule,
     FormsModule,
     CoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ]
 })
 export class AuthModule { }

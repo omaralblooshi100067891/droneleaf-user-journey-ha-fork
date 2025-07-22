@@ -9,14 +9,14 @@ import { Location } from '@angular/common';
 })
 export class CustomDroneDetailsComponent implements OnInit {
   @Output() submitted = new EventEmitter<void>();
-
+@Output() goBack = new EventEmitter<void>();
   finalForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private location: Location) {}
 
-  goBack() {
-    this.location.back();
-  }
+  // goBack() {
+  //   this.location.back();
+  // }
 
   ngOnInit(): void {
     this.finalForm = this.fb.group({
