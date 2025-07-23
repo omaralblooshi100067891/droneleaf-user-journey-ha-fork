@@ -1,0 +1,19 @@
+ .custom-btn {          // Active background
+  --background-hover: #007f5c;
+  --color: white;
+  --border-radius: 0.375rem;
+  --border-color: #009169;
+  height: 3rem;                    // 48px = h-12
+  font-weight: 600;
+  margin-top: 1.5rem;              // mt-6
+  max-width: 100%;
+  width: 100%;
+  transition: all 0.3s ease;
+
+  // Disabled State Override
+  &[disabled] {
+    --background: #80c8b4;
+    cursor: not-allowed;
+  }
+}
+
