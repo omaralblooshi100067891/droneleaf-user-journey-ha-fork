@@ -11,7 +11,9 @@ export class AccountTypeComponent  implements OnInit {
  selectedType: 'private' | 'business' | null = null;
 
   constructor(private router: Router) {}
-  ngOnInit(): void {
+
+    ngOnInit() {
+
   }
 
   selectType(type: 'private' | 'business') {

@@ -8,30 +8,15 @@ import { BusinessRegisterComponent } from '../business-register/business-registe
 import { LoginComponent } from '../login/login.component';
 
 const routes: Routes = [
-  {
-    path: 'auth',
-    children: [
-      { path: 'account-type', component: AccountTypeComponent },
-      { path: 'personal-info', component: PersonalInfoFormComponent },
-      { path: 'email-verification', component: EmailVerificationComponent },
-      {
-        path: 'register',
-        component: RegisterComponent,
-      },
-      {
-        path: 'business-register',
-        component: BusinessRegisterComponent,
-      },
-      {
-        path: 'login',
-        component: LoginComponent,
-      },
-
-      { path: '', redirectTo: 'account-type', pathMatch: 'full' },
-    ],
-  },
-  { path: '', redirectTo: 'auth/account-type', pathMatch: 'full' },
+  { path: 'account-type', component: AccountTypeComponent },
+  { path: 'personal-info', component: PersonalInfoFormComponent },
+  { path: 'email-verification', component: EmailVerificationComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'business-register', component: BusinessRegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'account-type', pathMatch: 'full' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

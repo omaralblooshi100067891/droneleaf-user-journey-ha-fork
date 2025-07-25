@@ -1,0 +1,26 @@
+<div class="flex h-screen overflow-hidden">
+  <!-- Sidebar -->
+  <app-sidebar
+    class="hidden md:block w-64"
+    *ngIf="!isMobile"
+    [isMobileOpen]="isSidebarOpen"
+    (close)="closeSidebar()">
+  </app-sidebar>
+
+  <!-- Mobile Sidebar -->
+  <app-sidebar
+    class="md:hidden"
+    *ngIf="isMobile"
+    [isMobileOpen]="isSidebarOpen"
+    (close)="closeSidebar()">
+  </app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <app-navbar (toggle)="toggleSidebar()"></app-navbar>
+
+    <main class="flex-1 overflow-y-auto bg-gray-100 p-4">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

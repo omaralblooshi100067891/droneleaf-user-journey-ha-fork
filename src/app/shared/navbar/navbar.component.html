@@ -1,0 +1,35 @@
+<!-- navbar.component.html -->
+<nav class="bg-white w-full px-4 py-3 flex items-center justify-between md:justify-end shadow-md z-30">
+
+  <button
+    class="text-black text-2xl md:hidden"
+    (click)="toggle.emit()"
+    aria-label="Toggle Sidebar">
+    <ion-icon name="menu-outline"></ion-icon>
+  </button>
+
+  <div class="flex items-center gap-4">
+    <!-- User Info -->
+    <div class="text-right">
+      <h3 class="text-sm font-semibold text-black">John Doe</h3>
+      <p class="text-xs text-gray-500">johndoeemail.com</p>
+    </div>
+
+    <!-- Dropdown -->
+    <div class="relative">
+      <button (click)="toggleDropdown()" class="text-black">
+        <ion-icon name="person-circle-outline" class="text-3xl"></ion-icon>
+      </button>
+
+      <div
+        *ngIf="dropdownOpen"
+        class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
+        <a
+          routerLink="/switch-account"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          🔄 Switch Account
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
