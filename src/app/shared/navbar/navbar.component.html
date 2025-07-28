@@ -1,12 +1,13 @@
 <!-- navbar.component.html -->
 <nav class="bg-white w-full px-4 py-3 flex items-center justify-between md:justify-end shadow-md z-30">
 
-  <button
-    class="text-black text-2xl md:hidden"
-    (click)="toggle.emit()"
-    aria-label="Toggle Sidebar">
-    <ion-icon name="menu-outline"></ion-icon>
-  </button>
+<button
+  class="text-black text-2xl md:hidden"
+  (click)="toggleSidebar()"
+  aria-label="Toggle Sidebar">
+  <ion-icon name="menu-outline"></ion-icon>
+</button>
+
 
   <div class="flex items-center gap-4">
     <!-- User Info -->

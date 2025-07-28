@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { LayoutService } from 'src/app/core/services/layout.service';
 
 interface SidebarItem {
   label: string;
@@ -14,39 +14,29 @@ interface SidebarItem {
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  @Input() isMobileOpen = false;
-  userRole: 'private' | 'business' | null = null;
-  @Output() close = new EventEmitter<void>();
-  isSidebarOpen = false;
- @Input() isMobile: boolean = false; // ✅ ADD THIS
-
-
-
-toggleSidebar() {
-  this.isSidebarOpen = !this.isSidebarOpen;
-}
-
-closeSidebar() {
-  this.isSidebarOpen = false;
-}
+  isSidebarOpen: boolean = false;
+  isMobile: boolean = false;
   sidebarItems: SidebarItem[] = [];
+  userRole: 'private' | 'business' | null = null;
+
+  constructor(
+    public layoutService: LayoutService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole') as 'private' | 'business';
     this.setSidebarItems();
-    this.checkScreen();
-    window.addEventListener('resize', this.checkScreen.bind(this));
-  }
 
-  handleMenuClick() {
-    // Auto-close sidebar only if on mobile
-    if (this.isMobileOpen) {
-      this.closeSidebar();
-    }
-  }
+    this.layoutService.isMobile$.subscribe((val) => (this.isMobile = val));
+    this.layoutService.isSidebarOpen$.subscribe((val) => (this.isSidebarOpen = val));
 
-  checkScreen() {
-    this.isMobile = window.innerWidth < 768;
+    // Optional: auto-close sidebar on route change (mobile only)
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && this.isMobile) {
+        this.layoutService.closeSidebar();
+      }
+    });
   }
 
   setSidebarItems() {
@@ -118,6 +108,12 @@ closeSidebar() {
       this.userRole === 'private'
         ? [...privateItems, ...common]
         : [...businessItems, ...common];
+  }
+
+  handleMenuClick() {
+    if (this.isMobile) {
+      this.layoutService.closeSidebar();
+    }
   }
 
   logout() {

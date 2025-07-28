@@ -1,18 +1,8 @@
 <div class="flex h-screen overflow-hidden">
-  <!-- Sidebar -->
-<app-sidebar
-  class="w-64"
-  [isMobileOpen]="isSidebarOpen"
-  [isMobile]="isMobile"
-  (close)="closeSidebar()">
-</app-sidebar>
+  <app-sidebar></app-sidebar>
 
-
-
-  <!-- Main Content -->
   <div class="flex flex-col flex-1 overflow-hidden">
-    <app-navbar (toggle)="toggleSidebar()"></app-navbar>
-
+    <app-navbar></app-navbar>
     <main class="flex-1 overflow-y-auto bg-gray-100 p-4">
       <router-outlet></router-outlet>
     </main>

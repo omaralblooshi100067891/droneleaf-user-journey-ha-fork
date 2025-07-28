@@ -1,4 +1,5 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { LayoutService } from 'src/app/core/services/layout.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ export class NavbarComponent  implements OnInit {
 
 
 
-  constructor() { }
+  constructor(private layoutService: LayoutService) { }
 
   ngOnInit() {}
    dropdownOpen = false;
@@ -25,6 +26,11 @@ export class NavbarComponent  implements OnInit {
     if (!target.closest('ion-icon') && !target.closest('.relative')) {
       this.dropdownOpen = false;
     }
+  }
+
+  toggleSidebar() {
+    console.log('Toggle clicked ✅');
+    this.layoutService.toggleSidebar();
   }
 
   logout() {

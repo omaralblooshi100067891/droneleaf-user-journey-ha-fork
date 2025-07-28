@@ -1,13 +1,22 @@
-<aside
-  class="z-50 bg-[#003224] text-white w-64 h-full flex flex-col justify-between p-4 min-h-screen transition-transform duration-300 ease-in-out"
-  [ngClass]="{
-    'fixed top-0 left-0 transform': isMobile,
-    'translate-x-0': isMobile && isMobileOpen,
-    '-translate-x-full': isMobile && !isMobileOpen,
-    'md:relative md:translate-x-0': !isMobile
-  }">
+<!-- BACKDROP for Mobile -->
+<div
+  *ngIf="isMobile && isSidebarOpen"
+  class="fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300"
+  (click)="layoutService.closeSidebar()">
+</div>
 
-  <!-- HEADER -->
+<!-- SIDEBAR -->
+<aside
+  class="bg-[#003224] text-white h-full flex flex-col justify-between p-4 min-h-screen
+         fixed md:relative z-50 transition-transform duration-300 ease-in-out"
+  [ngClass]="{
+    'w-64 -translate-x-full md:translate-x-0 md:w-64': isMobile && !isSidebarOpen,
+    'w-64 translate-x-0': isMobile && isSidebarOpen,
+    'md:translate-x-0': !isMobile
+  }"
+>
+
+  <!-- Header -->
   <div>
     <div class="text-2xl font-bold mb-10 mt-3 items-center gap-2 mx-auto">
       <img src="../../../assets/logo.png" class="mx-auto" alt="" />
@@ -15,36 +24,26 @@
       <p class="text-[12px] text-center font-light">Unlimited Autonomy</p>
     </div>
 
-    <!-- MENU -->
+    <!-- Navigation -->
     <nav class="flex flex-col gap-4">
-      <a *ngFor="let item of sidebarItems" [routerLink]="item.link" routerLinkActive="bg-[#99D3C3] text-black"
-        (click)="handleMenuClick()" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] transition">
+      <a
+        *ngFor="let item of sidebarItems"
+        [routerLink]="item.link"
+        routerLinkActive="bg-[#99D3C3] text-black"
+        class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] transition"
+        (click)="handleMenuClick()">
         <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px]" />
         <span>{{ item.label }}</span>
       </a>
-
     </nav>
   </div>
 
-  <!-- LOGOUT -->
+  <!-- Logout -->
   <div>
-    <a (click)="logout()"
+    <a
+      (click)="logout()"
       class="flex items-center gap-3 p-2 mt-8 rounded text-red-300 hover:text-white hover:bg-red-600 cursor-pointer">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M5.24958 8.04634C5.24958 7.77301 5.47625 7.54634 5.74958 7.54634H9.40292V1.90634C9.39625 1.58634 9.14292 1.33301 8.82292 1.33301C4.89625 1.33301 2.15625 4.07301 2.15625 7.99967C2.15625 11.9263 4.89625 14.6663 8.82292 14.6663C9.13625 14.6663 9.39625 14.413 9.39625 14.093V8.53967H5.74958C5.46958 8.54634 5.24958 8.31967 5.24958 8.04634Z"
-          fill="white" />
-        <path
-          d="M13.6918 7.69344L11.7984 5.79344C11.6051 5.6001 11.2851 5.6001 11.0918 5.79344C10.8984 5.98677 10.8984 6.30677 11.0918 6.5001L12.1318 7.5401H9.39844V8.5401H12.1251L11.0851 9.5801C10.8918 9.77344 10.8918 10.0934 11.0851 10.2868C11.1851 10.3868 11.3118 10.4334 11.4384 10.4334C11.5651 10.4334 11.6918 10.3868 11.7918 10.2868L13.6851 8.38677C13.8851 8.2001 13.8851 7.88677 13.6918 7.69344Z"
-          fill="white" />
-      </svg>
-
-      <span>Log Out</span>
+      <span>🚪 Log Out</span>
     </a>
   </div>
 </aside>
-
-
-<!-- Mobile backdrop -->
-<div *ngIf="isMobile && isMobileOpen" class="fixed inset-0 z-40 bg-black bg-opacity-50" (click)="closeSidebar()">
-</div>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LayoutService } from 'src/app/core/services/layout.service';
 
 @Component({
   selector: 'app-layout',
@@ -6,29 +7,26 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent  {
-isSidebarOpen = false;
-  @Input() isMobileOpen = false;
-@Input() isMobile = false; // 👈 Add this
-@Output() close = new EventEmitter<void>();
+isMobile: boolean = false;
+  isSidebarOpen: boolean = true;
 
+  constructor(private layoutService: LayoutService) {}
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
+  ngOnInit() {
+    this.layoutService.isMobile$.subscribe((val) => (this.isMobile = val));
+    this.layoutService.isSidebarOpen$.subscribe(
+      (val) => (this.isSidebarOpen = val)
+    );
+  }
+
+  handleMenuClick() {
+    if (this.isMobile) {
+      this.layoutService.closeSidebar();
+    }
   }
 
   closeSidebar() {
-    this.isSidebarOpen = false;
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-    this.checkScreen();
-    window.addEventListener('resize', this.checkScreen.bind(this));
-  }
-
-  checkScreen() {
-    this.isMobile = window.innerWidth < 768;
+    this.layoutService.closeSidebar();
   }
 
 }
