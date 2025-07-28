@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-layout',
@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent  {
 isSidebarOpen = false;
-  isMobile = false;
+  @Input() isMobileOpen = false;
+@Input() isMobile = false; // 👈 Add this
+@Output() close = new EventEmitter<void>();
+
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;

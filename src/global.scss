@@ -59,3 +59,26 @@ p {
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* Hide scrollbar globally */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: none; /* hides scrollbar in Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+}

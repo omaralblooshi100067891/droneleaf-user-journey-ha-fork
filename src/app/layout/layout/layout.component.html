@@ -1,19 +1,13 @@
 <div class="flex h-screen overflow-hidden">
   <!-- Sidebar -->
-  <app-sidebar
-    class="hidden md:block w-64"
-    *ngIf="!isMobile"
-    [isMobileOpen]="isSidebarOpen"
-    (close)="closeSidebar()">
-  </app-sidebar>
+<app-sidebar
+  class="w-64"
+  [isMobileOpen]="isSidebarOpen"
+  [isMobile]="isMobile"
+  (close)="closeSidebar()">
+</app-sidebar>
 
-  <!-- Mobile Sidebar -->
-  <app-sidebar
-    class="md:hidden"
-    *ngIf="isMobile"
-    [isMobileOpen]="isSidebarOpen"
-    (close)="closeSidebar()">
-  </app-sidebar>
+
 
   <!-- Main Content -->
   <div class="flex flex-col flex-1 overflow-hidden">
