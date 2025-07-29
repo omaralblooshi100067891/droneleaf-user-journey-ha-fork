@@ -120,23 +120,20 @@
             </button>
 
             <!-- Dropdown -->
-    <!-- Dropdown aligned to LEFT of icon -->
-<div
-  *ngIf="openDropdown === drone.name"
-  class="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 bg-white border border-gray-200 rounded-md shadow-lg z-50"
->
-  <ul class="text-sm text-gray-700">
-    <li>
-      <a href="#" class="block px-4 py-2 hover:bg-gray-100">View</a>
-    </li>
-    <li>
-      <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
-    </li>
-    <li>
-      <a href="#" class="block px-4 py-2 text-red-500 hover:bg-red-50">Delete</a>
-    </li>
-  </ul>
-</div>
+            <div *ngIf="openDropdown === drone.name"
+              class="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+              <ul class="text-sm text-gray-700">
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">View</a>
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
+                </li>
+                <li>
+                  <a href="#" class="block px-4 py-2 text-red-500 hover:bg-red-50">Delete</a>
+                </li>
+              </ul>
+            </div>
 
 
           </td>

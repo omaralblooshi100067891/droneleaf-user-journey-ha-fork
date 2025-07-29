@@ -9,28 +9,82 @@
 </button>
 
 
-  <div class="flex items-center gap-4">
-    <!-- User Info -->
-    <div class="text-right">
-      <h3 class="text-sm font-semibold text-black">John Doe</h3>
-      <p class="text-xs text-gray-500">johndoeemail.com</p>
-    </div>
+<div class="flex items-center gap-4 relative">
+  <!-- User Info -->
+  <div class="text-right">
+    <h3 class="text-sm font-semibold text-black">John Doe</h3>
+    <p class="text-xs text-gray-500">johndoeemail.com</p>
+  </div>
 
-    <!-- Dropdown -->
-    <div class="relative">
-      <button (click)="toggleDropdown()" class="text-black">
-        <ion-icon name="person-circle-outline" class="text-3xl"></ion-icon>
-      </button>
+  <!-- Dropdown Toggle -->
+  <div>
+    <button (click)="toggleDropdown()" class="text-black focus:outline-none">
+      <ion-icon name="person-circle-outline" class="text-3xl"></ion-icon>
+    </button>
+  </div>
 
-      <div
-        *ngIf="dropdownOpen"
-        class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
-        <a
-          routerLink="/switch-account"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          🔄 Switch Account
-        </a>
+  <!-- Dropdown Menu -->
+  <div
+    *ngIf="dropdownOpen"
+    class="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl z-50 border border-gray-100"
+  >
+    <div class="flex flex-col items-center py-4">
+      <div class="w-14 h-14 rounded-full bg-emerald-900 flex items-center justify-center text-white text-xl">
+        <ion-icon name="people-outline"></ion-icon>
+      </div>
+      <div class="mt-2 text-center">
+        <h3 class="text-base font-medium text-gray-800">John Doe</h3>
+        <p class="text-sm text-gray-500">johndoeemail.com</p>
       </div>
     </div>
+
+    <!-- Menu Items -->
+    <ul class="text-sm text-gray-700 border-t border-gray-200">
+      <li>
+        <a  class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
+          <span class="flex items-center gap-2 text-emerald-700">
+            <ion-icon name="contrast-outline"></ion-icon> Theme
+          </span>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </a>
+      </li>
+      <li>
+        <a  class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
+          <span class="flex items-center gap-2 text-emerald-700">
+            <ion-icon name="settings-outline"></ion-icon> Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="border-t border-gray-200 text-black">
+      <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2">
+        <ion-icon name="people-circle-outline"></ion-icon> Create an Organization Account
+      </a>
+    </div>
+
+    <div class="px-4 py-2 text-xs text-gray-400 border-t border-gray-200">Switch Account</div>
+
+    <div class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
+      <div class="w-8 h-8 bg-emerald-900 text-white text-sm font-medium rounded-full flex items-center justify-center">
+        JD
+      </div>
+      <div>
+        <div class="text-sm font-medium text-gray-800">John Doe</div>
+        <div class="text-xs text-gray-500">johndoeemail.com</div>
+      </div>
+    </div>
+
+    <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2">
+      <ion-icon name="add-outline"></ion-icon> Add Account
+    </a>
+
+    <div class="border-t border-gray-200">
+      <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500">
+        <ion-icon name="log-out-outline"></ion-icon> Log Out
+      </a>
+    </div>
   </div>
+</div>
+
 </nav>
