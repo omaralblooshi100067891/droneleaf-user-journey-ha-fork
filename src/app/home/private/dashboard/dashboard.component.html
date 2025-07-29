@@ -82,13 +82,27 @@
                   {{ row.status }}
                 </span>
               </td>
-              <td class="py-5 px-4 text-lg text-gray-400"><svg width="21" height="5" viewBox="0 0 21 5" fill="none"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-                  <ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-                  <ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-                </svg>
+              <td #dropdownRef class="relative px-4 py-3  cursor-pointer" (click)="toggleDropdown(row.name)">
+                <!-- Dots Button -->
+                <button >
+                  <svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
+                    <ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
+                    <ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
+                  </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div *ngIf="openDropdown === row.name"
+                  class="absolute left-12 top-1/2 -translate-x-[90%] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                  <ul class="text-sm text-gray-700">
+                    <li><a class="block px-4 py-2 hover:bg-gray-100">View</a></li>
+                    <li><a class="block px-4 py-2 hover:bg-gray-100">Edit</a></li>
+                    <li><a class="block px-4 py-2 text-red-500 hover:bg-red-50">Delete</a></li>
+                  </ul>
+                </div>
               </td>
+
             </tr>
           </tbody>
         </table>

@@ -22,15 +22,18 @@
     <!-- Navigation -->
     <nav class="flex flex-col gap-4">
       <a *ngFor="let item of sidebarItems" [routerLink]="item.link" routerLinkActive="bg-[#99D3C3] text-[#003224]"
-        #rla="routerLinkActive" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] hover:text-white transition"
+        #rla="routerLinkActive"
+        class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] hover:text-white transition"
         (click)="handleMenuClick()">
-        <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px] text-[#003224]"
-          [ngClass]="{ 'filter invert-0 brightness-0 text-transparent': rla.isActive }" />
-        <span [ngClass]="{ 'font-semibold text-[#003224]': rla.isActive }">
+        <img [src]="rla.isActive ? item.activeIconPath : item.iconPath" alt="icon" class="w-[17px] h-[17px]" />
+        <span [ngClass]="{
+        'font-semibold text-[#003224]': rla.isActive
+      }">
           {{ item.label }}
         </span>
       </a>
     </nav>
+
 
   </div>
 

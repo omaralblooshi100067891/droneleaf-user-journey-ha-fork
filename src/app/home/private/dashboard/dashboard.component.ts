@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,8 +6,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent  implements OnInit {
+openDropdown: string | null = null;
+   constructor(private eRef: ElementRef) {}
+   @ViewChildren('dropdownRef') dropdownRefs!: QueryList<ElementRef>;
 
-  constructor() { }
+    toggleDropdown(droneName: string) {
+    this.openDropdown = this.openDropdown === droneName ? null : droneName;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedInsideAnyDropdown = this.dropdownRefs?.some(ref =>
+      ref.nativeElement.contains(event.target)
+    );
+
+    if (!clickedInsideAnyDropdown) {
+      this.openDropdown = null;
+    }
+  }
 
   ngOnInit() {}
 
