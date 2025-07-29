@@ -54,6 +54,19 @@ export class SelectInputComponent implements OnInit {
     return this.componentId;
   }
 
+    toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+    markTouched() {
+    this.control.markAsTouched();
+  }
+
+    selectOption(option: string) {
+    this.control.setValue(option);
+    this.isOpen = false;
+  }
+
   private generateUniqueId(): string {
     return Math.random().toString(36).substr(2, 9);
   }

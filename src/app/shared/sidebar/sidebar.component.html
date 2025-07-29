@@ -13,7 +13,7 @@
 
   <!-- Header -->
   <div>
-    <div class="text-2xl font-bold mb-10 mt-3 items-center gap-2 mx-auto">
+    <div class="text-2xl font-bold mb-[9rem] mt-3 items-center gap-2 mx-auto">
       <img src="../../../assets/logo.png" class="mx-auto" alt="" />
       <span class="text-4xl mx-4 font-sans">DroneLeaf</span>
       <p class="text-[12px] text-center font-light">Unlimited Autonomy</p>
@@ -22,10 +22,10 @@
     <!-- Navigation -->
     <nav class="flex flex-col gap-4">
       <a *ngFor="let item of sidebarItems" [routerLink]="item.link" routerLinkActive="bg-[#99D3C3] text-[#003224]"
-        #rla="routerLinkActive" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] transition"
+        #rla="routerLinkActive" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] hover:text-white transition"
         (click)="handleMenuClick()">
-        <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px]"
-          [ngClass]="{ 'filter invert-0 brightness-0 text-[#003224]': rla.isActive }" />
+        <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px] text-[#003224]"
+          [ngClass]="{ 'filter invert-0 brightness-0 text-transparent': rla.isActive }" />
         <span [ngClass]="{ 'font-semibold text-[#003224]': rla.isActive }">
           {{ item.label }}
         </span>
