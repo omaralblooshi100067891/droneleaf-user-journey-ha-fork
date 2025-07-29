@@ -16,24 +16,24 @@
     </button>
   </div>
 
-  <!-- Tabs -->
-  <div class="flex space-x-6 justify-between border-b border-gray-200 mb-4">
-    <button *ngFor="let tab of tabs; let i = index" (click)="filterByTab(i)"
-      class="relative pb-2 text-sm font-medium text-gray-500 hover:text-emerald-600 transition-all duration-300"
-      [ngClass]="{
-      'text-emerald-600': selectedTabIndex === i
-    }">
-      {{ tab || 'All' }}
+  <!-- Tabs Container - Fixed Version -->
+  <div class="relative mb-6"> <!-- Added relative here -->
+    <!-- Tabs Navigation -->
+    <div #tabsContainer class="flex justify-between border-b border-gray-200 overflow-x-auto no-scrollbar">
+      <button *ngFor="let tab of tabs; let i = index" (click)="selectTab(i)"
+        class="relative px-4 pb-3 text-sm font-medium text-gray-500 hover:text-emerald-600 transition-colors duration-200 whitespace-nowrap"
+        [class.text-emerald-600]="selectedTabIndex === i">
+        {{ tab || 'All' }}
+      </button>
+    </div>
 
-      <!-- Always present underline, animate it smoothly -->
-      <span
-        class="absolute left-0 bottom-0 h-1 w-full bg-emerald-600 rounded transform transition-all duration-300 ease-in-out"
-        [ngClass]="{
-        'scale-x-100 opacity-100': selectedTabIndex === i,
-        'scale-x-0 opacity-0': selectedTabIndex !== i
-      }"></span>
-    </button>
+    <!-- Animated Underline - Fixed -->
+    <div class="absolute bottom-0 h-0.5 bg-emerald-600 rounded-full transition-all duration-300 ease-out"
+      [style.left]="underlineLeft" [style.width]="underlineWidth"
+      [style.transform]="'translateX(' + underlineOffset + 'px)'">
+    </div>
   </div>
+
 
 
 
@@ -87,12 +87,7 @@
           <th class="px-4 py-5">Last Used</th>
           <th class="px-4 py-5">Application</th>
           <th class="px-4 py-5">Status</th>
-          <th class="px-4 py-5 flex justify-end"> <svg width="21" height="5" viewBox="0 0 21 5" fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-              <ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-              <ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
-            </svg></th>
+          <th class="px-4 py-5 flex justify-end"> </th>
         </tr>
       </thead>
 
@@ -108,35 +103,34 @@
               {{ drone.status }}
             </span>
           </td>
-          <td class="relative px-4 py-3 text-right">
+          <td #dropdownRef class="relative px-4 py-3 text-right cursor-pointer" (click)="toggleDropdown(drone.name)">
             <!-- Dots Button -->
-            <button (click)="toggleDropdown(drone.name)">
+            <button>
               <svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
                 <ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
                 <ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E" />
               </svg>
-
             </button>
 
             <!-- Dropdown -->
-            <div *ngIf="openDropdown === drone.name"
-              class="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+            <div *ngIf="openDropdown === drone.name" #dropdownRef
+              class="dropdown absolute left-12 top-1/2 -translate-x-[70%] bg-white border border-gray-200 rounded-md shadow-lg z-50">
+
               <ul class="text-sm text-gray-700">
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">View</a>
+                  <a class="block px-4 py-2 hover:bg-gray-100">View</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
+                  <a class="block px-4 py-2 hover:bg-gray-100">Edit</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 text-red-500 hover:bg-red-50">Delete</a>
+                  <a class="block px-4 py-2 text-red-500 hover:bg-red-50">Delete</a>
                 </li>
               </ul>
             </div>
-
-
           </td>
+
 
         </tr>
       </tbody>

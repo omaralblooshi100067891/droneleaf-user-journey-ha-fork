@@ -6,11 +6,11 @@
     <div class="bg-white rounded-xl border border-[#D1DADF] p-4 sm:p-6 shadow-sm mt-4">
       <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-4">
         <!-- Left Text Block -->
-        <div class="text-center md:text-left sm:mt-6">
+        <div class="text-center md:text-left sm:mt-6 mx-5">
           <h2 class="text-xl sm:text-2xl font-light text-gray-800 ">
             Welcome Back, <span class="text-black font-bold">John!</span>
           </h2>
-          <p class="mt-2 text-sm sm:text-base text-gray-500 mx-auto text-justify">
+          <p class="mt-5 text-sm sm:text-base text-gray-500 mx-auto text-justify">
             You have completed
             <span class="text-green-600 font-semibold">60%</span> of your drone <br> template. You are almost done!
           </p>
@@ -18,16 +18,16 @@
 
         <!-- Right Image -->
         <img src="../../../assets/dashboard.png" alt="Dashboard Illustration"
-          class="w-32 sm:w-40 md:w-56 max-w-full mt-4 md:mt-0" />
+          class="w-32 mx-5 sm:w-40 md:w-56 max-w-full mt-4 md:mt-0" />
       </div>
     </div>
 
-    <span class="block font-semibold text-base sm:px-5 sm:text-lg leading-none tracking-normal text-gray-800">
+    <span class="block font-semibold text-base  sm:text-lg leading-none tracking-normal text-gray-800">
       Dashboard
     </span>
 
     <!-- Dashboard Metrics -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
       <div *ngFor="let stat of stats" class="bg-white p-6 rounded-2xl shadow-md">
         <h3 class="text-gray-500 text-sm">{{ stat.title }}</h3>
         <h2 class="text-3xl font-bold text-black">{{ stat.value }}</h2>
@@ -42,7 +42,7 @@
 
 
     <!-- Drone Library Table -->
-    <div class=" p-4 sm:p-6 rounded-xl shadow-sm">
+    <div class="rounded-xl shadow-sm">
       <!-- Header Row -->
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
         <h3 class="text-base sm:text-lg font-semibold text-gray-800">Drone Library</h3>
@@ -60,7 +60,12 @@
               <th class="py-4 px-4 font-medium">Last Used</th>
               <th class="py-4 px-4 font-medium">Application</th>
               <th class="py-4 px-4 font-medium">Status</th>
-              <th class="py-4 px-4 text-lg text-gray-400">...</th>
+              <th class="py-4 px-4 text-lg text-gray-400"><svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+<ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+<ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+</svg>
+</th>
             </tr>
           </thead>
 
@@ -76,7 +81,12 @@
                   {{ row.status }}
                 </span>
               </td>
-              <td class="py-5 px-4 text-lg text-gray-400">…</td>
+              <td class="py-5 px-4 text-lg text-gray-400"><svg width="21" height="5" viewBox="0 0 21 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="2.38019" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+<ellipse cx="10.3568" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+<ellipse cx="18.3411" cy="2.5" rx="1.98956" ry="2" fill="#3A3B3E"/>
+</svg>
+</td>
             </tr>
           </tbody>
         </table>
@@ -113,7 +123,7 @@
       <span class="block  text-base sm:px-4 mt-2 sm:text-lg leading-none tracking-normal text-gray-800 ">
         Recently Connected
       </span>
-      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4">
+      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4" style="margin-top: 0;">
         <div *ngFor="let card of cards" class="flex items-center gap-3 p-[0.5rem] max-w-md w-full">
           <!-- Profile Image + Status Dot -->
           <div class="relative">
@@ -144,7 +154,7 @@
         Quick Actions
       </span>
       <!-- Quick Actions -->
-      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4">
+      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4" style="margin-top: 0;">
         <div class="space-y-2">
           <div
             class=" cursor-pointer h-[40px] bg-white border border-[#D1DADF] rounded-[4px] px-2 py-3 flex items-center gap-2">
@@ -170,7 +180,7 @@
         Status Panel
       </span>
       <!-- Third Box -->
-      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4">
+      <div class="w-auto mx-4 bg-white rounded-[8px] border border-t-[#D1DADF] shadow-sm p-4" style="margin-top: 0;">
         <div *ngFor="let task of tasks" class="flex justify-between items-center mb-4 last:mb-0">
           <div>
             <p class="text-sm text-gray-800 font-medium">{{ task.title }}</p>

@@ -1,90 +1,124 @@
 <!-- navbar.component.html -->
 <nav class="bg-white w-full px-8 py-3 flex items-center justify-between md:justify-end shadow-md z-30">
 
-<button
-  class="text-black text-2xl md:hidden"
-  (click)="toggleSidebar()"
-  aria-label="Toggle Sidebar">
-  <ion-icon name="menu-outline"></ion-icon>
-</button>
+  <button class="text-black text-2xl md:hidden" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+    <ion-icon name="menu-outline"></ion-icon>
+  </button>
 
 
-<div class="flex items-center gap-4 relative">
-  <!-- User Info -->
-  <div class="text-right">
-    <h3 class="text-sm font-semibold text-black">John Doe</h3>
-    <p class="text-xs text-gray-500">johndoeemail.com</p>
-  </div>
-
-  <!-- Dropdown Toggle -->
-  <div>
-    <button (click)="toggleDropdown()" class="text-black focus:outline-none">
-      <ion-icon name="person-circle-outline" class="text-3xl"></ion-icon>
-    </button>
-  </div>
-
-  <!-- Dropdown Menu -->
-  <div
-    *ngIf="dropdownOpen"
-    class="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl z-50 border border-gray-100"
-  >
-    <div class="flex flex-col items-center py-4">
-      <div class="w-14 h-14 rounded-full bg-emerald-900 flex items-center justify-center text-white text-xl">
-        <ion-icon name="people-outline"></ion-icon>
-      </div>
-      <div class="mt-2 text-center">
-        <h3 class="text-base font-medium text-gray-800">John Doe</h3>
-        <p class="text-sm text-gray-500">johndoeemail.com</p>
-      </div>
+  <div class="flex items-center gap-4 relative">
+    <!-- User Info -->
+    <div class="text-right">
+      <h3 class="text-sm font-semibold text-black">John Doe</h3>
+      <p class="text-xs text-gray-500">johndoeemail.com</p>
     </div>
 
-    <!-- Menu Items -->
-    <ul class="text-sm text-gray-700 border-t border-gray-200">
-      <li>
-        <a  class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
-          <span class="flex items-center gap-2 text-emerald-700">
-            <ion-icon name="contrast-outline"></ion-icon> Theme
+    <!-- Dropdown Toggle -->
+    <div>
+      <button (click)="toggleDropdown()" class="text-black focus:outline-none">
+        <ion-icon name="person-circle-outline" class="text-3xl"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div *ngIf="dropdownOpen"
+      class="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-xl z-50 border border-gray-100">
+      <div class="flex flex-col items-center py-4">
+        <div class="w-14 h-14 rounded-full bg-emerald-900 flex items-center justify-center text-white text-xl">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+        <div class="mt-2 text-center">
+          <h3 class="text-base font-medium text-gray-800">John Doe</h3>
+          <p class="text-sm text-gray-500">johndoeemail.com</p>
+        </div>
+      </div>
+
+      <!-- Menu Items -->
+      <ul class="text-sm text-gray-700  border-gray-200">
+        <li>
+          <a class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
+            <span class="flex items-center gap-2 text-emerald-700">
+              <ion-icon name="contrast-outline"></ion-icon> Theme
+            </span>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
+            <span class="flex items-center gap-2 text-emerald-700">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6641 14.666L11.6641 10.666" stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11.6641 4.00065L11.6641 1.33398" stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M9.33333 6.66732C9.33333 7.95598 10.378 9.00065 11.6667 9.00065C12.9553 9.00065 14 7.95598 14 6.66732C14 5.37865 12.9553 4.33398 11.6667 4.33398C10.378 4.33398 9.33333 5.37865 9.33333 6.66732Z"
+                  stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M4.33594 14.6667L4.33594 12" stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M4.33594 5.33398L4.33594 1.33398" stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M1.9974 9.33333C1.9974 10.622 3.04206 11.6667 4.33073 11.6667C5.61939 11.6667 6.66406 10.622 6.66406 9.33333C6.66406 8.04467 5.61939 7 4.33073 7C3.04206 7 1.9974 8.04467 1.9974 9.33333Z"
+                  stroke="#003A2A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              Settings
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="border-t border-gray-200 text-black">
+        <a class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2">
+          <ion-icon name="people-circle-outline"></ion-icon> Create an Organization Account
+        </a>
+      </div>
+
+      <div class="px-4 py-2 text-xs text-gray-400 border-t border-gray-200">Switch Account</div>
+
+      <div class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
+        <div
+          class="w-8 h-8 bg-emerald-900 text-white text-sm font-medium rounded-full flex items-center justify-center">
+          JD
+        </div>
+        <div>
+          <div class="text-sm font-medium text-gray-800">John Doe</div>
+          <div class="text-xs text-gray-500">johndoeemail.com</div>
+        </div>
+      </div>
+
+      <a class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2 text-black">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15 10.625H5C4.65833 10.625 4.375 10.3417 4.375 10C4.375 9.65833 4.65833 9.375 5 9.375H15C15.3417 9.375 15.625 9.65833 15.625 10C15.625 10.3417 15.3417 10.625 15 10.625Z"
+            fill="#171717" />
+          <path
+            d="M10 15.625C9.65833 15.625 9.375 15.3417 9.375 15V5C9.375 4.65833 9.65833 4.375 10 4.375C10.3417 4.375 10.625 4.65833 10.625 5V15C10.625 15.3417 10.3417 15.625 10 15.625Z"
+            fill="#171717" />
+        </svg>
+        Add Account
+      </a>
+
+      <div class="border-t border-gray-200">
+        <a class="block px-4 py-3 hover:bg-gray-100 text-sm flex justify-between items-center gap-2 text-red-500">
+          <span class="flex items-center gap-2 ">
+
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M5.24958 8.04732C5.24958 7.77398 5.47625 7.54732 5.74958 7.54732H9.40292V1.90732C9.39625 1.58732 9.14292 1.33398 8.82292 1.33398C4.89625 1.33398 2.15625 4.07398 2.15625 8.00065C2.15625 11.9273 4.89625 14.6673 8.82292 14.6673C9.13625 14.6673 9.39625 14.414 9.39625 14.094V8.54065H5.74958C5.46958 8.54732 5.24958 8.32065 5.24958 8.04732Z"
+                fill="#3A3B3E" />
+              <path
+                d="M13.6918 7.69344L11.7984 5.79344C11.6051 5.6001 11.2851 5.6001 11.0918 5.79344C10.8984 5.98677 10.8984 6.30677 11.0918 6.5001L12.1318 7.5401H9.39844V8.5401H12.1251L11.0851 9.5801C10.8918 9.77344 10.8918 10.0934 11.0851 10.2868C11.1851 10.3868 11.3118 10.4334 11.4384 10.4334C11.5651 10.4334 11.6918 10.3868 11.7918 10.2868L13.6851 8.38677C13.8851 8.2001 13.8851 7.88677 13.6918 7.69344Z"
+                fill="#3A3B3E" />
+            </svg>
+            Log Out
           </span>
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </a>
-      </li>
-      <li>
-        <a  class="flex items-center justify-between px-4 py-3 hover:bg-gray-100">
-          <span class="flex items-center gap-2 text-emerald-700">
-            <ion-icon name="settings-outline"></ion-icon> Settings
-          </span>
-        </a>
-      </li>
-    </ul>
-
-    <div class="border-t border-gray-200 text-black">
-      <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2">
-        <ion-icon name="people-circle-outline"></ion-icon> Create an Organization Account
-      </a>
-    </div>
-
-    <div class="px-4 py-2 text-xs text-gray-400 border-t border-gray-200">Switch Account</div>
-
-    <div class="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer">
-      <div class="w-8 h-8 bg-emerald-900 text-white text-sm font-medium rounded-full flex items-center justify-center">
-        JD
       </div>
-      <div>
-        <div class="text-sm font-medium text-gray-800">John Doe</div>
-        <div class="text-xs text-gray-500">johndoeemail.com</div>
-      </div>
-    </div>
-
-    <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2">
-      <ion-icon name="add-outline"></ion-icon> Add Account
-    </a>
-
-    <div class="border-t border-gray-200">
-      <a  class="block px-4 py-3 hover:bg-gray-100 text-sm flex items-center gap-2 text-red-500">
-        <ion-icon name="log-out-outline"></ion-icon> Log Out
-      </a>
     </div>
   </div>
-</div>
 
 </nav>

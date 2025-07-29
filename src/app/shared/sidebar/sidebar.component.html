@@ -21,37 +21,33 @@
 
     <!-- Navigation -->
     <nav class="flex flex-col gap-4">
-      <a *ngFor="let item of sidebarItems" [routerLink]="item.link" routerLinkActive="bg-[#99D3C3] text-black"
-        class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] transition" (click)="handleMenuClick()">
-        <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px]" />
-        <span>{{ item.label }}</span>
+      <a *ngFor="let item of sidebarItems" [routerLink]="item.link" routerLinkActive="bg-[#99D3C3] text-[#003224]"
+        #rla="routerLinkActive" class="flex items-center gap-3 px-4 py-2 rounded hover:bg-[#0d3f3d] transition"
+        (click)="handleMenuClick()">
+        <img [src]="item.iconPath" alt="icon" class="w-[17px] h-[17px]"
+          [ngClass]="{ 'filter invert-0 brightness-0 text-[#003224]': rla.isActive }" />
+        <span [ngClass]="{ 'font-semibold text-[#003224]': rla.isActive }">
+          {{ item.label }}
+        </span>
       </a>
     </nav>
+
   </div>
 
   <!-- Logout -->
   <div>
-<a
-  (click)="logout()"
-  class="flex items-center gap-2 p-2 mt-8 rounded text-red-300 hover:text-white hover:bg-red-600 cursor-pointer"
->
-  <svg
-    class="w-4 h-4"
-    fill="none"
-    viewBox="0 0 17 16"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M5.64021 8.04732C5.64021 7.77398 5.86688 7.54732 6.14021 7.54732H9.79354V1.90732C9.78688 1.58732 9.53354 1.33398 9.21354 1.33398C5.28688 1.33398 2.54688 4.07398 2.54688 8.00065C2.54688 11.9273 5.28688 14.6673 9.21354 14.6673C9.52688 14.6673 9.78688 14.414 9.78688 14.094V8.54065H6.14021C5.86021 8.54732 5.64021 8.32065 5.64021 8.04732Z"
-      fill="white"
-    />
-    <path
-      d="M14.0824 7.69344L12.1891 5.79344C11.9957 5.6001 11.6757 5.6001 11.4824 5.79344C11.2891 5.98677 11.2891 6.30677 11.4824 6.5001L12.5224 7.5401H9.78906V8.5401H12.5157L11.4757 9.5801C11.2824 9.77344 11.2824 10.0934 11.4757 10.2868C11.5757 10.3868 11.7024 10.4334 11.8291 10.4334C11.9557 10.4334 12.0824 10.3868 12.1824 10.2868L14.0757 8.38677C14.2757 8.2001 14.2757 7.88677 14.0824 7.69344Z"
-      fill="white"
-    />
-  </svg>
-  <span class="text-sm font-medium">Log Out</span>
-</a>
+    <a (click)="logout()"
+      class="flex items-center gap-2 p-2 mt-8 rounded text-red-300 hover:text-white hover:bg-red-600 cursor-pointer">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 17 16" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M5.64021 8.04732C5.64021 7.77398 5.86688 7.54732 6.14021 7.54732H9.79354V1.90732C9.78688 1.58732 9.53354 1.33398 9.21354 1.33398C5.28688 1.33398 2.54688 4.07398 2.54688 8.00065C2.54688 11.9273 5.28688 14.6673 9.21354 14.6673C9.52688 14.6673 9.78688 14.414 9.78688 14.094V8.54065H6.14021C5.86021 8.54732 5.64021 8.32065 5.64021 8.04732Z"
+          fill="white" />
+        <path
+          d="M14.0824 7.69344L12.1891 5.79344C11.9957 5.6001 11.6757 5.6001 11.4824 5.79344C11.2891 5.98677 11.2891 6.30677 11.4824 6.5001L12.5224 7.5401H9.78906V8.5401H12.5157L11.4757 9.5801C11.2824 9.77344 11.2824 10.0934 11.4757 10.2868C11.5757 10.3868 11.7024 10.4334 11.8291 10.4334C11.9557 10.4334 12.0824 10.3868 12.1824 10.2868L14.0757 8.38677C14.2757 8.2001 14.2757 7.88677 14.0824 7.69344Z"
+          fill="white" />
+      </svg>
+      <span class="text-sm font-medium">Log Out</span>
+    </a>
 
 
   </div>
