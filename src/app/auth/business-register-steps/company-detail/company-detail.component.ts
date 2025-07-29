@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -14,7 +15,7 @@ export class CompanyDetailComponent implements OnInit {
 
   finalForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private location: Location,private router: Router) {}
+  constructor(private fb: FormBuilder, private location: Location,private router: Router,private authService:AuthService) {}
 
   goBack() {
     this.location.back();
@@ -44,6 +45,13 @@ export class CompanyDetailComponent implements OnInit {
   get f() {
     return this.finalForm.controls;
   }
+
+goToBusniessDashboard() {
+  // ✅ Assume business registered successfully
+  this.authService.login('business'); // 🔥 Login & set role properly
+  this.router.navigate(['/business-dashboard']);
+}
+
 
 
   goToLogin(){

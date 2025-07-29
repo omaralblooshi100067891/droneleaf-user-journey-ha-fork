@@ -48,7 +48,7 @@
             </app-button>
 
             <!-- Verify Button -->
-            <app-button type="submit" label="Register" [hasBackButton]="true" [responsive]="true" variant="primary"
+            <app-button type="submit" label="Register" [hasBackButton]="true" [responsive]="true" variant="primary" (click)="goToBusniessDashboard()"
               [disabled]="finalForm.invalid">
             </app-button>
           </div>

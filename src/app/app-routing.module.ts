@@ -4,6 +4,7 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { DashboardComponent } from './home/private/dashboard/dashboard.component';
 import { DroneLibraryComponent } from './home/private/drone-library/drone-library.component';
+import { BusinessDashboardComponent } from './home/business/business-dashboard/business-dashboard.component';
 
 const routes: Routes = [
   // ✅ Auth & Registration Routes
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'drone-library',
         component: DroneLibraryComponent
+      },
+      {
+        path:'business-dashboard',
+        component:BusinessDashboardComponent
       },
       {
         path: '',

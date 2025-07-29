@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit {
     const businessItems: SidebarItem[] = [
       {
         label: 'Business Dashboard',
-        link: '/dashboard',
+        link: '/business-dashboard',
         iconPath: '../../../assets/svgs/private/home-2.svg',
       },
       {
