@@ -1,4 +1,4 @@
-<ion-content class="bg-white relative">
+<div class="bg-white relative text-black">
   <ng-container [ngSwitch]="step">
 
     <app-business-info *ngSwitchCase="BusinessSteps.Info" (formSubmitted)="next()">
@@ -19,4 +19,4 @@
 
 
   </ng-container>
-</ion-content>
+</div>
