@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -26,7 +27,8 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
     ButtonComponent,
     TextInputComponent,
     SelectInputComponent,
-    PhoneInputComponent,
+    PhoneInputComponent
+
   ],
 })
 export class CoreModule { }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
@@ -15,6 +15,7 @@ export class SelectInputComponent implements OnInit {
   @Input() helperText: string = '';
   @Input() required: boolean = false;
   @Input() icon: string = ''; // custom fallback if needed
+@ViewChild('dropdownRef', { static: false }) dropdownRef!: ElementRef;
 
   isOpen: boolean = false;
   private componentId: string = '';
@@ -22,6 +23,20 @@ export class SelectInputComponent implements OnInit {
   ngOnInit() {
     this.componentId = this.generateUniqueId();
   }
+
+
+  @HostListener('document:click', ['$event'])
+onDocumentClick(event: MouseEvent) {
+  if (this.isOpen && this.dropdownRef) {
+    const target = event.target as HTMLElement;
+    const clickedInside = this.dropdownRef.nativeElement.contains(target);
+
+    if (!clickedInside) {
+      this.isOpen = false;
+    }
+  }
+}
+
 
   // When user clicks on select
   onMouseDown() {
@@ -52,6 +67,19 @@ export class SelectInputComponent implements OnInit {
 
   generateId(): string {
     return this.componentId;
+  }
+
+    toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+
+    markTouched() {
+    this.control.markAsTouched();
+  }
+
+    selectOption(option: string) {
+    this.control.setValue(option);
+    this.isOpen = false;
   }
 
   private generateUniqueId(): string {

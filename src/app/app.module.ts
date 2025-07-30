@@ -8,10 +8,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './shared/shared/shared.module';
+import { HomePageModule } from './home/home.module';
+import { LayoutComponent } from './layout/layout/layout.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,AuthModule,HttpClientModule],
+  declarations: [AppComponent,LayoutComponent],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,AuthModule,HttpClientModule,SharedModule,HomePageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

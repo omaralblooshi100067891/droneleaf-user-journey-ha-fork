@@ -11,12 +11,16 @@ export class AccountTypeComponent  implements OnInit {
  selectedType: 'private' | 'business' | null = null;
 
   constructor(private router: Router) {}
-  ngOnInit(): void {
+
+    ngOnInit() {
+
   }
 
-  selectType(type: 'private' | 'business') {
-    this.selectedType = type;
-  }
+selectType(type: 'private' | 'business') {
+  this.selectedType = type;
+  localStorage.setItem('userRole', type); // 👈 Save role
+}
+
 
 onContinue() {
   if (this.selectedType === 'private') {

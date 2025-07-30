@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-custom-drone-details',
@@ -12,7 +14,7 @@ export class CustomDroneDetailsComponent implements OnInit {
 @Output() goBack = new EventEmitter<void>();
   finalForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private location: Location) {}
+  constructor(private fb: FormBuilder, private location: Location,private auth: AuthService,private router:Router) {}
 
   // goBack() {
   //   this.location.back();
@@ -32,14 +34,14 @@ export class CustomDroneDetailsComponent implements OnInit {
     return this.finalForm.controls;
   }
 
-  onSubmit() {
-    if (this.finalForm.valid) {
-      console.log('✅ Final form submitted:', this.finalForm.value);
-      this.submitted.emit();
-    } else {
-      this.finalForm.markAllAsTouched();
-    }
+
+onSubmit() {
+  if (this.finalForm.valid) {
+    this.auth.login('private'); // ✅ Set role
+    this.router.navigate(['/dashboard']);
   }
+}
+
 
   primaryUseOptions = ['Inspection', 'Monitoring ', 'Surveillance'];
 
