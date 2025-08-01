@@ -7,6 +7,9 @@ module.exports = {
        screens: {
         'short': { raw: '(max-height: 700px)' },
       },
+       colors: {
+      primaryGreen: '#009169'
+    }
     },
   },
   plugins: [],
