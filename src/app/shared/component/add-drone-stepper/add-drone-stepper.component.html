@@ -1,0 +1,26 @@
+<ul class="space-y-4">
+  <li *ngFor="let step of steps; let i = index" class="flex justify-between items-center">
+    <!-- Step Title -->
+    <span class="text-sm" [ngClass]="{
+        'font-semibold text-gray-800': i === currentStepIndex,
+        'text-gray-600': i !== currentStepIndex
+      }">
+      {{ step.title }}
+    </span>
+
+    <!-- Icon -->
+    <ion-icon [name]="step.completed ? 'checkmark-circle' : 'ellipse-outline'" [ngClass]="{
+        'text-[#009169]': i === currentStepIndex,
+        'text-gray-400': i !== currentStepIndex
+      }" class="text-lg"></ion-icon>
+  </li>
+</ul>
+
+
+<!-- Progress bar -->
+<div class="mt-6">
+  <div class="h-1 bg-gray-300 rounded w-full">
+    <div class="h-1 bg-[#009169] rounded" [style.width.%]="(currentStepIndex + 1) / steps.length * 100"></div>
+  </div>
+  <div class="text-xs text-right mt-1 text-gray-600">{{ currentStepIndex + 1 }}/{{ steps.length }}</div>
+</div>

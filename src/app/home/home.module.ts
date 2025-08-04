@@ -8,6 +8,10 @@ import { HomePageRoutingModule } from './home-routing.module';
 import {MatButtonModule} from '@angular/material/button';
 import { DashboardComponent } from './private/dashboard/dashboard.component';
 import { DroneLibraryComponent } from './private/drone-library/drone-library.component';
+import { AddDroneComponent } from './private/add-drone/add-drone.component';
+import { SharedModule } from '../shared/shared/shared.module';
+import { MatIconModule } from '@angular/material/icon';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -17,8 +21,12 @@ import { DroneLibraryComponent } from './private/drone-library/drone-library.com
     IonicModule,
     HomePageRoutingModule,
     MatButtonModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    SharedModule,
+    MatIconModule,
+    CoreModule
   ],
-  declarations: [HomePage,DashboardComponent,DroneLibraryComponent]
+  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent],
+  exports:[AddDroneComponent]
 })
 export class HomePageModule {}

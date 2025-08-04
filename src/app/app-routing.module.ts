@@ -5,6 +5,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { DashboardComponent } from './home/private/dashboard/dashboard.component';
 import { DroneLibraryComponent } from './home/private/drone-library/drone-library.component';
 import { BusinessDashboardComponent } from './home/business/business-dashboard/business-dashboard.component';
+import { AddDroneComponent } from './home/private/add-drone/add-drone.component';
 
 const routes: Routes = [
   // ✅ Auth & Registration Routes
@@ -24,11 +25,15 @@ const routes: Routes = [
       },
       {
         path: 'drone-library',
-        component: DroneLibraryComponent
+        component: DroneLibraryComponent,
       },
       {
-        path:'business-dashboard',
-        component:BusinessDashboardComponent
+        path: 'business-dashboard',
+        component: BusinessDashboardComponent,
+      },
+      {
+        path: 'add-drone',
+        component: AddDroneComponent,
       },
       {
         path: '',

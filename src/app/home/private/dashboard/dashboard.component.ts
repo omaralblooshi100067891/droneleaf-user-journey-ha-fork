@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class DashboardComponent  implements OnInit {
 openDropdown: string | null = null;
-   constructor(private eRef: ElementRef,private toastService: ToastService) {}
+   constructor(private eRef: ElementRef,private toastService: ToastService,private router:Router) {}
    @ViewChildren('dropdownRef') dropdownRefs!: QueryList<ElementRef>;
 
     toggleDropdown(droneName: string) {
@@ -25,6 +26,10 @@ openDropdown: string | null = null;
     if (!clickedInsideAnyDropdown) {
       this.openDropdown = null;
     }
+  }
+
+  addDronePage(){
+    this.router.navigate(['/add-drone'])
   }
 
 ngOnInit() {
