@@ -1,0 +1,106 @@
+<div class="flex flex-col min-h-screen bg-white text-black">
+
+
+  <!-- Main Content Area -->
+  <div class="flex flex-1 flex-col md:flex-row">
+    <!-- Left Content -->
+    <div class="flex flex-col flex-1 px-6 py-6 space-y-8">
+      <!-- Top Header -->
+      <div class="flex justify-between items-center  py-4">
+        <img src="../../../../assets/svgs/private/Group 1597881310.svg" alt="DroneLeaf Logo" class="h-16" />
+        <app-help-button></app-help-button>
+      </div>
+      <div>
+        <h2 class="text-2xl font-semibold mb-2">Select a Drone</h2>
+        <p class="text-sm text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        </p>
+      </div>
+
+      <!-- Drone Options Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Custom Drone -->
+        <div (click)="selectOption('custom')" [ngClass]="{
+      'border-[#009169] bg-[#f2f9f7]': selectedDroneOption === 'custom',
+      'border-[#D1DADF]': selectedDroneOption !== 'custom'
+    }" class="border rounded-lg p-6 pt-12 relative flex flex-col space-y-2 cursor-pointer hover:shadow transition">
+          <div class="absolute top-0 left-0 w-full flex justify-center">
+            <div class="bg-[#E5F0FF] text-[#1D4ED8] w-72  text-xs font-normal  px-3 py-1 rounded-b-[1.3rem] text-center">
+              Recommended for Advanced Users <span class="font-bold">ONLY</span>
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="sr-only">Recommended</span>
+            <ion-icon name="construct-outline" class="text-xl text-gray-600"></ion-icon>
+          </div>
+          <h3 class="text-lg font-semibold">Custom Drone</h3>
+          <p class="text-sm text-gray-600">Start from scratch.</p>
+        </div>
+
+        <!-- Personal/Organization Template -->
+        <div (click)="selectOption('organization')" [ngClass]="{
+      'border-[#009169] bg-[#f2f9f7]': selectedDroneOption === 'organization',
+      'border-[#D1DADF]': selectedDroneOption !== 'organization'
+    }" class="border rounded-lg p-6 flex flex-col space-y-2 cursor-pointer hover:shadow transition">
+          <div class="flex justify-end">
+            <ion-icon name="folder-open-outline" class="text-xl text-gray-600"></ion-icon>
+          </div>
+          <h3 class="text-lg font-semibold">Personal or Organization Template</h3>
+          <p class="text-sm text-gray-600">Load from saved templates.</p>
+        </div>
+
+        <!-- Template Marketplace -->
+        <div (click)="selectOption('marketplaceTemplate')" [ngClass]="{
+      'border-[#009169] bg-[#f2f9f7]': selectedDroneOption === 'marketplaceTemplate',
+      'border-[#D1DADF]': selectedDroneOption !== 'marketplaceTemplate'
+    }" class="border rounded-lg p-6 flex flex-col space-y-2 cursor-pointer hover:shadow transition">
+          <div class="flex justify-end">
+            <ion-icon name="cloud-download-outline" class="text-xl text-gray-600"></ion-icon>
+          </div>
+          <h3 class="text-lg font-semibold">Template Marketplace</h3>
+          <p class="text-sm text-gray-600">Import community or vendor-provided templates.</p>
+        </div>
+
+        <!-- Drone Marketplace -->
+        <div (click)="selectOption('droneMarketplace')" [ngClass]="{
+      'border-[#009169] bg-[#f2f9f7]': selectedDroneOption === 'droneMarketplace',
+      'border-[#D1DADF]': selectedDroneOption !== 'droneMarketplace'
+    }" class="border rounded-lg p-6 pt-12 relative flex flex-col space-y-2 cursor-pointer hover:shadow transition">
+          <div class="absolute top-0 left-0 w-full flex justify-center">
+            <div class="bg-[#E5F0FF] text-[#1D4ED8] w-72 text-xs font-normal  px-3 py-1 rounded-b-[1.3rem] text-center">
+              Recommended for Beginner Users
+            </div>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="sr-only">Recommended</span>
+            <ion-icon name="cart-outline" class="text-xl text-gray-600"></ion-icon>
+          </div>
+          <h3 class="text-lg font-semibold">Drone Marketplace</h3>
+          <p class="text-sm text-gray-600">Purchase a ready-made drone with hardware.</p>
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between mt-8">
+        <button (click)="goBack()"
+          class="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700">Back</button>
+        <button (click)="continue()"
+          [ngClass]="{'bg-[#009169]': selectedDroneOption, 'bg-[#80c8b4] opacity-50 cursor-not-allowed': !selectedDroneOption}"
+          class="font-semibold py-2 px-6 rounded-md text-white">Continue</button>
+      </div>
+    </div>
+
+    <!-- Right Stepper Sidebar -->
+    <div class="w-full md:w-96 bg-[#cce9e1] p-6 flex flex-col justify-around">
+      <app-add-drone-stepper [steps]="steps" [currentStepIndex]="currentStepIndex"></app-add-drone-stepper>
+      <div class="mt-8">
+        <h4 class="text-[22px] font-semibold text-gray-800 mb-1">Add A Drone</h4>
+        <p class="text-[16px] text-gray-600">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+          magna aliqua.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,8 +11,9 @@ type EnvironmentOption = 'indoors' | 'outdoors';
 export class StepTwoComponent {
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
+  @Input() droneOption: 'yes' | 'no' | null = null;
 
-  @Output() next = new EventEmitter<EnvironmentOption>();
+  @Output() next = new EventEmitter<number>();
   @Output() back = new EventEmitter<void>();
 
   selectedOption: EnvironmentOption | null = null;
@@ -22,18 +23,41 @@ export class StepTwoComponent {
   }
 
   continue() {
-    if (this.selectedOption) {
-      this.next.emit(this.selectedOption);
+    if (!this.selectedOption) return;
+
+    if (this.droneOption === 'yes') {
+      if (this.selectedOption === 'indoors') {
+        this.next.emit(2);
+      } else {
+        this.next.emit(3);
+      }
+    } else {
+      if (this.selectedOption === 'indoors') {
+        this.next.emit(2);
+      } else {
+        this.next.emit(4);
+      }
     }
   }
 
-  get isIndoorSelected() {
-  return this.selectedOption === 'indoors';
-}
-get isOutdoorSelected() {
-  return this.selectedOption === 'outdoors';
-}
+  get shouldShowAlert(): boolean {
+    if (this.isIndoorSelected) {
+      return true;
+    }
 
+    if (this.isOutdoorSelected && this.droneOption === 'yes') {
+      return true;
+    }
+
+    return false;
+  }
+
+  get isIndoorSelected() {
+    return this.selectedOption === 'indoors';
+  }
+  get isOutdoorSelected() {
+    return this.selectedOption === 'outdoors';
+  }
 
   cancel() {
     // Optionally add modal here

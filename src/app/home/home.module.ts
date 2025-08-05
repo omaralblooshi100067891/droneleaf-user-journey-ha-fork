@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CoreModule } from '../core/core.module';
 import { StepOneComponent } from './private/add-drone/step-one/step-one.component';
 import { StepTwoComponent } from './private/add-drone/step-two/step-two.component';
+import { StepThreeComponent } from './private/add-drone/step-three/step-three.component';
+import { StepFourComponent } from './private/add-drone/step-four/step-four.component';
+import { SelectDroneStepComponent } from './private/add-drone/select-drone-step/select-drone-step.component';
 
 
 @NgModule({
@@ -28,7 +31,7 @@ import { StepTwoComponent } from './private/add-drone/step-two/step-two.componen
     MatIconModule,
     CoreModule
   ],
-  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent,StepOneComponent,StepTwoComponent],
-  exports:[AddDroneComponent,StepOneComponent,StepTwoComponent]
+  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent],
+  exports:[AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent]
 })
 export class HomePageModule {}

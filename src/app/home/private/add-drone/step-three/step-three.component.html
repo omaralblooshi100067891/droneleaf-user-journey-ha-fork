@@ -5,7 +5,7 @@
 
     <!-- ✅ Top Bar -->
     <div class="flex justify-between items-center">
-      <img src="../../../../assets/svgs/private/Group 1597881310.svg" alt="DroneLeaf Logo" class="h-16" />
+      <img src="../../../../../assets/svgs/private/Group 1597881310.svg" alt="DroneLeaf Logo" class="h-16" />
       <app-help-button></app-help-button>
     </div>
 
@@ -13,8 +13,9 @@
     <div class="flex flex-col items-center text-center my-auto">
       <div>
 
-        <h2 class="text-2xl font-semibold mb-2">Let’s get started. Do you already have a drone?</h2>
-        <p class="text-sm text-gray-600 mb-8">We’ll tailor the next steps based on your setup</p>
+        <h2 class="text-2xl font-semibold mb-2">How would you like to set up your indoor environment?</h2>
+        <p class="text-sm text-gray-600 mb-8">You can either start fresh and define your own layout and parameters, or
+          use an existing environment template that matches your space.</p>
       </div>
 
       <div class="flex flex-col md:flex-row gap-4 mb-8">
@@ -25,13 +26,14 @@
           }"
           class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
           <img [src]="selectedOption === 'yes'
-              ? '../../../../../assets/svgs/private/yes-have-drone-active.svg'
-              : '../../../../../assets/svgs/private/yes-have-drone.svg'" alt="Drone" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">Yes, I have a drone</h3>
+              ? '../../../../../assets/svgs/private/create-org-active.svg'
+              : '../../../../../assets/svgs/private/create-or.svg'" alt="Drone" class="w-10 h-10 mb-4" />
+          <h3 class="font-semibold mb-1">Create a new environment</h3>
           <p class="text-sm text-gray-600">
-            Let’s configure your <br />
-            hardware & get you flying
+            Set up your own template <br />
+            and parameters
           </p>
+
         </div>
 
         <!-- ✅ No Card -->
@@ -41,27 +43,38 @@
           }"
           class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
           <img [src]="selectedOption === 'no'
-              ? '../../../../../assets/svgs/private/dont-have-active.svg'
-              : '../../../../../assets/svgs/private/dont-have-drone.svg'" alt="No Drone" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">No, I don’t have one yet</h3>
+              ? '../../../../../assets/svgs/private/existing-active.svg'
+              : '../../../../../assets/svgs/private/existing.svg'" alt="No Drone" class="w-10 h-10 mb-4" />
+          <h3 class="font-semibold mb-1">Use an existing template</h3>
           <p class="text-sm text-gray-600">
-            We’ll guide you through the best options to get started
+            Choose from previously saved environments
           </p>
         </div>
       </div>
     </div>
 
     <!-- ✅ Bottom Buttons -->
-    <div class="flex justify-between items-center pt-4">
-      <button class="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700" (click)="cancel()">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-auto">
+      <button class="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700 w-full md:w-auto"
+        (click)="cancel()">
         Cancel
       </button>
-      <button [disabled]="!selectedOption" [ngClass]="{
-          'bg-[#009169]': selectedOption,
-          'bg-[#80c8b4] opacity-50 cursor-not-allowed': !selectedOption
-        }" class="font-semibold py-2 px-6 rounded-md transition-colors duration-200 text-white" (click)="continue()">
-        Continue
-      </button>
+
+      <div class="flex gap-4 w-full md:w-auto">
+        <button
+          class="border-1 border-[#009169] text-gray-700 font-semibold py-2 px-6 rounded-md hover:bg-gray-100 w-full md:w-auto"
+          style="border: 1px solid #009169;" (click)="back.emit()">
+          Back
+        </button>
+
+        <button [disabled]="!selectedOption" [ngClass]="{
+            'bg-[#009169]': selectedOption,
+            'bg-[#80c8b4] opacity-50 cursor-not-allowed': !selectedOption
+          }" class="text-white font-semibold py-2 px-6 rounded-md transition-colors duration-200 w-full md:w-auto"
+          (click)="continue()">
+          Continue
+        </button>
+      </div>
     </div>
   </div>
 
