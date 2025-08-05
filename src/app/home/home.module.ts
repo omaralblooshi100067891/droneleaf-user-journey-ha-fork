@@ -12,6 +12,8 @@ import { AddDroneComponent } from './private/add-drone/add-drone.component';
 import { SharedModule } from '../shared/shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { CoreModule } from '../core/core.module';
+import { StepOneComponent } from './private/add-drone/step-one/step-one.component';
+import { StepTwoComponent } from './private/add-drone/step-two/step-two.component';
 
 
 @NgModule({
@@ -26,7 +28,7 @@ import { CoreModule } from '../core/core.module';
     MatIconModule,
     CoreModule
   ],
-  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent],
-  exports:[AddDroneComponent]
+  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent,StepOneComponent,StepTwoComponent],
+  exports:[AddDroneComponent,StepOneComponent,StepTwoComponent]
 })
 export class HomePageModule {}

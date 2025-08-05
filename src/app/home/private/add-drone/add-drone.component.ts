@@ -7,39 +7,22 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   styleUrls: ['./add-drone.component.scss'],
 })
 export class AddDroneComponent  implements OnInit {
-  // add-drone.component.ts
-selectedOption: 'yes' | 'no' | null = null;
+ currentStepIndex = 0;
 
-selectOption(option: 'yes' | 'no') {
-  this.selectedOption = option;
-}
+  steps = [
+    { title: 'Drone Type', completed: false },
+    { title: 'Environment', completed: false },
+    { title: 'Flight Range', completed: false },
+    { title: 'Camera Setup', completed: false },
+    { title: 'Insurance', completed: false },
+    { title: 'Confirmation', completed: false }
+  ];
 
-
-  constructor() { }
-steps: Step[] = [
-  { title: 'Drone Details', completed: true },
-  { title: 'Camera Setup', completed: false },
-  { title: 'Flight Range', completed: false },
-  { title: 'Regulations', completed: false },
-  { title: 'Insurance', completed: false },
-  { title: 'Confirmation', completed: false }
-];
-
-
-  currentStep = 0;
-
-  nextStep() {
-    if (this.currentStep < this.steps.length - 1) {
-      this.steps[this.currentStep].completed = true;
-      this.currentStep++;
+  goToStep(index: number) {
+    if (index > this.currentStepIndex) {
+      this.steps[this.currentStepIndex].completed = true;
     }
-  }
-
-  prevStep() {
-    if (this.currentStep > 0) {
-      this.steps[this.currentStep].completed = false;
-      this.currentStep--;
-    }
+    this.currentStepIndex = index;
   }
 
   ngOnInit() {}

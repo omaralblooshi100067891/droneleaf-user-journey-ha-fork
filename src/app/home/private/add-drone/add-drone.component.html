@@ -1,82 +1,14 @@
-<div class="flex h-full bg-white text-black">
-  <!-- ✅ Left Main Content -->
-  <div class="flex flex-col flex-1 px-6 py-6 relative">
-    <!-- ✅ Top bar -->
-    <div class="flex justify-between items-center mb-12">
-      <img src="../../../../assets/svgs/private/Group 1597881310.svg" alt="DroneLeaf Logo" class="h-16" />
-      <!-- <div class="block relative sm:absolute bottom-6 left-4 z-50 pt-2"> -->
-      <app-help-button></app-help-button>
-
-      <!-- </div> -->
-    </div>
-
-    <!-- ✅ Centered Content -->
-    <div class="flex flex-col item-center justify-center flex-1" style="align-items: center;">
-      <h2 class="text-xl md:text-2xl font-semibold mb-2">Let’s get started. Do you already have a drone?
-      </h2>
-      <p class="text-sm text-gray-600 mb-8">We’ll tailor the next steps based on your setup</p>
-
-      <!-- Drone Options -->
-      <div class="flex flex-col md:flex-row gap-4 mb-8">
-        <!-- ✅ Yes, I have a drone -->
-        <div (click)="selectOption('yes')" [ngClass]="{
-      'bg-[#f2f9f7] border-[#009169]': selectedOption === 'yes',
-      'border-[#D1DADF]': selectedOption !== 'yes'
-    }" class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
-          <img
-            [src]="selectedOption === 'yes' ? '../../../../assets/svgs/private/yes-have-drone-active.svg' : '../../../../assets/svgs/private/yes-have-drone.svg'"
-            alt="Drone" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">Yes, I have a drone</h3>
-          <p class="text-sm text-gray-600">
-            Let’s configure your <br> hardware & get you flying
-          </p>
-        </div>
-
-        <!-- ✅ No, I don't have one -->
-        <div (click)="selectOption('no')" [ngClass]="{
-      'bg-[#f2f9f7] border-[#009169]': selectedOption === 'no',
-      'border-[#D1DADF]': selectedOption !== 'no'
-    }" class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
-          <img
-            [src]="selectedOption === 'no' ? 'assets/svgs/private/dont-have-drone-active.svg' : 'assets/svgs/private/dont-have-drone.svg'"
-            alt="No Drone" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">No, I don’t have one yet</h3>
-          <p class="text-sm text-gray-600">
-            We’ll guide you through the best options to get started
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ✅ Bottom Buttons -->
-    <div class="flex justify-between items-center">
-      <button class="bg-red-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-red-700">
-        Cancel
-      </button>
-      <button [disabled]="!selectedOption" [ngClass]="{
-    'bg-[#009169]': selectedOption,
-    'bg-[#80c8b4] opacity-50 cursor-not-allowed': !selectedOption
-  }" class="font-semibold py-2 px-6 rounded-md transition-colors duration-200 text-white">
-        Continue
-      </button>
-
-
-    </div>
+<div class="flex min-h-screen bg-white">
+  <!-- Left Main Area -->
+  <div class="flex flex-col flex-1 px-6 py-6">
+    <!-- Step Content -->
+    <ng-container [ngSwitch]="currentStepIndex">
+      <ng-container [ngSwitch]="currentStepIndex">
+        <app-step-one *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex"
+          (next)="goToStep(1)"></app-step-one>
+        <app-step-two *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(2)"
+          (back)="goToStep(0)"></app-step-two>
+      </ng-container>
+    </ng-container>
   </div>
-
-  <!-- ✅ Right Sidebar Stepper -->
-  <!-- ✅ Use reusable component instead -->
-  <div class="w-96 bg-[#cce9e1] p-6 flex flex-col justify-around">
-    <app-add-drone-stepper [steps]="steps" [currentStepIndex]="currentStep"></app-add-drone-stepper>
-
-    <div class="mt-8">
-      <h4 class="text-[22px] font-semibold text-gray-800 mb-1">Add A Drone</h4>
-      <p class="text-[16px] text-gray-600">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.
-      </p>
-    </div>
-  </div>
-
 </div>
