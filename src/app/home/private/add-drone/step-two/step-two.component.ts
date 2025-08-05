@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 
 type EnvironmentOption = 'indoors' | 'outdoors';
@@ -9,6 +10,7 @@ type EnvironmentOption = 'indoors' | 'outdoors';
   styleUrls: ['./step-two.component.scss'],
 })
 export class StepTwoComponent {
+  cancelModalVisible = false;
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Input() droneOption: 'yes' | 'no' | null = null;
@@ -17,6 +19,8 @@ export class StepTwoComponent {
   @Output() back = new EventEmitter<void>();
 
   selectedOption: EnvironmentOption | null = null;
+
+   constructor(private router: Router) {}
 
   selectOption(option: EnvironmentOption) {
     this.selectedOption = option;
@@ -59,7 +63,19 @@ export class StepTwoComponent {
     return this.selectedOption === 'outdoors';
   }
 
-  cancel() {
-    // Optionally add modal here
+ showCancelModal() {
+    this.cancelModalVisible = true;
+  }
+
+  // Called when user confirms cancel
+  cancelConfirmed() {
+    this.cancelModalVisible = false;
+    console.log('Cancelled');
+    this.router.navigate(['/dashboard']); // Or whatever route
+  }
+
+  // Called when user closes the modal
+  cancelDismissed() {
+    this.cancelModalVisible = false;
   }
 }

@@ -11,12 +11,13 @@ import { SelectInputComponent } from './components/select-input/select-input.com
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { HelpButtonComponent } from './components/help-button/help-button.component';
+import { ConfirmCancelModelComponent } from './components/confirm-cancel-model/confirm-cancel-model.component';
 
 
 
 
 @NgModule({
-  declarations: [InputComponent,ButtonComponent,TextInputComponent,SelectInputComponent,PhoneInputComponent,ToastComponent,HelpButtonComponent],
+  declarations: [InputComponent,ButtonComponent,TextInputComponent,SelectInputComponent,PhoneInputComponent,ToastComponent,HelpButtonComponent,ConfirmCancelModelComponent],
   imports: [
     CommonModule,
     IonicModule,
@@ -31,7 +32,8 @@ import { HelpButtonComponent } from './components/help-button/help-button.compon
     SelectInputComponent,
     PhoneInputComponent,
     ToastComponent,
-    HelpButtonComponent
+    HelpButtonComponent,
+    ConfirmCancelModelComponent
   ],
 })
 export class CoreModule { }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 
 @Component({
@@ -8,7 +9,7 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   styleUrls: ['./step-four.component.scss'],
 })
 export class StepFourComponent  implements OnInit {
-
+  cancelModalVisible = false;
 @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<number>();
@@ -19,7 +20,7 @@ export class StepFourComponent  implements OnInit {
   indoorPositioningTypes = ['OptiTrack', 'Vicon', 'Qualisys'];
   positioningSystemMakes = ['Make 1', 'Make 2', 'Make 3'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private router: Router) {}
 
   ngOnInit(): void {
     this.environmentForm = this.fb.group({
@@ -37,6 +38,16 @@ export class StepFourComponent  implements OnInit {
     });
   }
 
+    showCancelModal() {
+    this.cancelModalVisible = true;
+  }
+
+  cancelConfirmed() {
+    this.cancelModalVisible = false;
+    console.log('Cancelled');
+    this.router.navigate(['/dashboard']); // Or whatever route
+  }
+
   onContinue() {
     if (this.environmentForm.valid) {
       this.next.emit(4);
@@ -44,7 +55,9 @@ export class StepFourComponent  implements OnInit {
       this.environmentForm.markAllAsTouched();
     }
   }
-  cancel(){}
+ cancelDismissed() {
+    this.cancelModalVisible = false;
+  }
 
   onBack() {
     this.back.emit();

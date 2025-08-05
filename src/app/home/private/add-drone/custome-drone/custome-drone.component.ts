@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 
 @Component({
@@ -12,12 +13,13 @@ export class CustomeDroneComponent  implements OnInit {
   @Output() back = new EventEmitter<void>();
 @Input() steps: Step[] = [];
 @Input() currentStepIndex!: number;
+ cancelModalVisible = false;
 
   form!: FormGroup;
 
   applicationOptions: string[] = ['Agri', 'Survey'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private router: Router) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -27,7 +29,23 @@ export class CustomeDroneComponent  implements OnInit {
     });
   }
 
+   showCancelModal() {
+    this.cancelModalVisible = true;
+  }
   cancel(){}
+
+   cancelConfirmed() {
+    this.cancelModalVisible = false;
+
+    // 🔥 Place your cancel logic here
+    // e.g. navigate, reset form, etc
+    console.log('Cancelled');
+    this.router.navigate(['/dashboard']); // Or whatever route
+  }
+
+    cancelDismissed() {
+    this.cancelModalVisible = false;
+  }
 
   submit(): void {
     if (this.form.valid) {

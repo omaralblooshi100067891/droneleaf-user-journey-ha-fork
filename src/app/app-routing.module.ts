@@ -31,16 +31,17 @@ const routes: Routes = [
         path: 'business-dashboard',
         component: BusinessDashboardComponent,
       },
-      {
-        path: 'add-drone',
-        component: AddDroneComponent,
-      },
+
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
     ],
+  },
+  {
+    path: 'add-drone',
+    component: AddDroneComponent,
   },
   {
     path: '',

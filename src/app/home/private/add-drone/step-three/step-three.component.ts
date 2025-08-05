@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 
 @Component({
@@ -7,7 +8,7 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   styleUrls: ['./step-three.component.scss'],
 })
 export class StepThreeComponent  implements OnInit {
-
+ cancelModalVisible = false;
  @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<'yes' | 'no'>();
@@ -26,11 +27,22 @@ export class StepThreeComponent  implements OnInit {
     }
   }
 
-  cancel() {
-    // Navigate to home or show modal confirmation
+ showCancelModal() {
+    this.cancelModalVisible = true;
   }
 
-  constructor() {}
+  cancelConfirmed() {
+    this.cancelModalVisible = false;
+    console.log('Cancelled');
+    this.router.navigate(['/dashboard']); // Or whatever route
+  }
+
+  // Called when user closes the modal
+  cancelDismissed() {
+    this.cancelModalVisible = false;
+  }
+
+constructor(private router: Router) {}
 
   ngOnInit() {}
 
