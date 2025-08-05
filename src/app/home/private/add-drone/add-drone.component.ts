@@ -8,7 +8,8 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
 })
 export class AddDroneComponent  implements OnInit {
  currentStepIndex = 0;
- selectedDroneOption: 'yes' | 'no' | null = null;
+ selectedDroneOption: any | null = null;
+
   steps = [
     { title: 'Drone Type', completed: false },
     { title: 'Environment', completed: false },
@@ -19,7 +20,7 @@ export class AddDroneComponent  implements OnInit {
   ];
 
  // parent.component.ts
-goToStep(stepIndex: number, droneOption?: 'yes' | 'no') {
+goToStep(stepIndex: number, droneOption?: string) {
   // Mark current step as completed if moving forward
   if (stepIndex > this.currentStepIndex) {
     this.steps[this.currentStepIndex].completed = true;

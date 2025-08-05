@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
@@ -17,6 +17,7 @@ import { StepTwoComponent } from './private/add-drone/step-two/step-two.componen
 import { StepThreeComponent } from './private/add-drone/step-three/step-three.component';
 import { StepFourComponent } from './private/add-drone/step-four/step-four.component';
 import { SelectDroneStepComponent } from './private/add-drone/select-drone-step/select-drone-step.component';
+import { CustomeDroneComponent } from './private/add-drone/custome-drone/custome-drone.component';
 
 
 @NgModule({
@@ -29,9 +30,10 @@ import { SelectDroneStepComponent } from './private/add-drone/select-drone-step/
     HomePageRoutingModule,
     SharedModule,
     MatIconModule,
-    CoreModule
+    CoreModule,
+    ReactiveFormsModule
   ],
-  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent],
-  exports:[AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent]
+  declarations: [HomePage,DashboardComponent,DroneLibraryComponent,AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent,CustomeDroneComponent],
+  exports:[AddDroneComponent,StepOneComponent,StepTwoComponent,StepThreeComponent,StepFourComponent,SelectDroneStepComponent,CustomeDroneComponent]
 })
 export class HomePageModule {}

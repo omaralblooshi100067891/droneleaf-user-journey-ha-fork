@@ -11,7 +11,7 @@ export class SelectDroneStepComponent  {
  @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
 
-  @Output() next = new EventEmitter<void>();
+  @Output() next = new EventEmitter<string>();
   @Output() back = new EventEmitter<void>();
 
   selectedDroneOption: string | null = null;
@@ -20,11 +20,14 @@ export class SelectDroneStepComponent  {
     this.selectedDroneOption = option;
   }
 
-  continue() {
-    if (this.selectedDroneOption) {
-      this.next.emit();
-    }
+continue() {
+  if (this.selectedDroneOption) {
+    this.next.emit(this.selectedDroneOption); // send selected value to parent
   }
+}
+
+
+  cancel(){}
 
   goBack() {
     this.back.emit();

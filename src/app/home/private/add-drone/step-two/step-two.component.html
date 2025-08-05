@@ -1,4 +1,4 @@
-<div class="flex flex-col lg:flex-row h-screen bg-white text-black overflow-hidden">
+<div class="flex flex-col lg:flex-row h-[80vh] bg-white text-black overflow-hidden">
   <!-- ✅ Main Content -->
   <div class="flex flex-col flex-1 px-4 py-6 lg:px-8">
     <!-- Top: Logo + Help -->
@@ -8,24 +8,27 @@
     </div>
 
     <!-- Options -->
-    <div class="flex flex-col items-center text-center my-auto">
-      <h2 class="text-xl md:text-2xl font-semibold mb-2">
-        Will you be operating Indoors or Outdoors?
-      </h2>
-      <p class="text-sm text-gray-600 mb-4">
-        Different environments require different setups. This helps us guide you better.
-      </p>
-      <div class="flex flex-col md:flex-row gap-4 mb-8">
+    <div class="flex flex-col text-center my-auto">
+      <div class="flex flex-col items-start mx-auto sm:mx-[17.2rem]">
+
+        <h2 class="text-xl md:text-2xl font-semibold mb-2">
+          Will you be operating Indoors or Outdoors?
+        </h2>
+        <p class="text-sm text-gray-600 mb-4">
+          Different environments require different setups. This helps us guide you better.
+        </p>
+      </div>
+      <div class="flex flex-col md:flex-row gap-4 mb-8 mx-auto">
 
         <!-- Outdoors -->
         <div (click)="selectOption('outdoors')" [ngClass]="{
              'bg-[#f2f9f7] border-[#009169]': selectedOption === 'outdoors',
              'border-[#D1DADF]': selectedOption !== 'outdoors'
            }"
-          class="w-full md:w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
+          class="w-full md:w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition h-full sm:h-[10rem]">
           <img
             [src]="selectedOption === 'outdoors' ? '../../../../../assets/svgs/private/outdoor-active.svg' : '../../../../../assets/svgs/private/outdoor.svg'"
-            alt="Outdoors Icon" class="w-10 h-10 mb-4" />
+            alt="Outdoors Icon" class="w-10 h-10 mb-4 mt-5" />
           <h3 class="font-semibold">Outdoors</h3>
         </div>
 
@@ -37,12 +40,12 @@
           class="w-full md:w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
           <img
             [src]="selectedOption === 'indoors' ? '../../../../../assets/svgs/private/indoor-active.svg' : '../../../../../assets/svgs/private/indoor.svg'"
-            alt="Indoors Icon" class="w-10 h-10 mb-4" />
+            alt="Indoors Icon" class="w-10 h-10 mb-4 mt-5" />
           <h3 class="font-semibold">Indoors</h3>
         </div>
       </div>
       <ng-container *ngIf="shouldShowAlert">
-        <div class="w-full max-w-[590px] border border-[#FFC700] bg-[#FFF6D6] rounded-md p-4 flex items-start gap-4">
+        <div class="w-full max-w-[590px] border border-[#FFC700] bg-[#FFF6D6] rounded-md p-4 flex items-start gap-4 mx-auto">
           ⚠️
           <div class="flex flex-col items-start">
             <p class="text-[#636670] font-semibold mb-1">

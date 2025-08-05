@@ -1,5 +1,5 @@
 <!-- OUTERMOST: Full screen height -->
-<div class="flex min-h-screen bg-white text-black">
+<div class="flex h-[80vh] bg-white text-black">
   <!-- ✅ LEFT SIDE -->
   <div class="flex flex-col justify-between flex-1 px-6 py-6">
 
@@ -10,14 +10,14 @@
     </div>
 
     <!-- ✅ Centered Content (with auto margin-top & bottom) -->
-    <div class="flex flex-col items-center text-center my-auto">
-      <div>
+    <div class="flex flex-col  text-center my-auto">
+      <div class="flex flex-col text-justify  sm:mx-[17.7rem] mx-auto">
 
         <h2 class="text-2xl font-semibold mb-2">Let’s get started. Do you already have a drone?</h2>
         <p class="text-sm text-gray-600 mb-8">We’ll tailor the next steps based on your setup</p>
       </div>
 
-      <div class="flex flex-col md:flex-row gap-4 mb-8">
+      <div class="flex flex-col md:flex-row gap-4 mb-8 mx-auto">
         <!-- ✅ Yes Card -->
         <div (click)="selectOption('yes')" [ngClass]="{
             'bg-[#f2f9f7] border-[#009169]': selectedOption === 'yes',
@@ -50,6 +50,8 @@
         </div>
       </div>
     </div>
+
+    <hr>
 
     <!-- ✅ Bottom Buttons -->
     <div class="flex justify-between items-center pt-4">

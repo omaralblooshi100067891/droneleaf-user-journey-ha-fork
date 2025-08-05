@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-white">
+<div class="flex bg-white">
   <!-- Left Main Area -->
   <div class="flex flex-col flex-1 px-6 py-6">
 
@@ -20,11 +20,38 @@
         (back)="goToStep(2)">
       </app-step-four>
 
- <app-select-drone-step *ngSwitchCase="4" [steps]="steps" [currentStepIndex]="currentStepIndex"
-  (next)="goToStep(5)" (back)="goToStep(3)">
-</app-select-drone-step>
+      <app-select-drone-step *ngSwitchCase="4" [steps]="steps" [currentStepIndex]="currentStepIndex"
+        (next)="goToStep(5, $event)" (back)="goToStep(3)">
+      </app-select-drone-step>
 
 
+
+      <ng-container *ngSwitchCase="5">
+
+        <app-custome-drone *ngIf="selectedDroneOption === 'custom'" [steps]="steps"
+          [currentStepIndex]="currentStepIndex" (next)="goToStep(6)" (back)="goToStep(4)">
+        </app-custome-drone>
+
+
+        <!-- <app-organization-template-form
+      *ngIf="selectedDroneOption === 'organization'"
+      (next)="goToStep(6)"
+      (back)="goToStep(4)">
+    </app-organization-template-form>
+
+    <app-template-marketplace-form
+      *ngIf="selectedDroneOption === 'marketplaceTemplate'"
+      (next)="goToStep(6)"
+      (back)="goToStep(4)">
+    </app-template-marketplace-form>
+
+    <app-drone-marketplace-form
+      *ngIf="selectedDroneOption === 'droneMarketplace'"
+      (next)="goToStep(6)"
+      (back)="goToStep(4)">
+    </app-drone-marketplace-form> -->
+
+      </ng-container>
 
     </ng-container>
 
