@@ -8,7 +8,7 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   styleUrls: ['./step-one.component.scss'],
 })
 export class StepOneComponent implements OnInit {
-   cancelModalVisible = false;
+  cancelModalVisible = false;
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<'yes' | 'no'>();
@@ -21,24 +21,18 @@ export class StepOneComponent implements OnInit {
     this.selectedOption = option;
   }
 
-
   continue() {
     if (this.selectedOption) {
       this.next.emit(this.selectedOption);
     }
   }
 
-    showCancelModal() {
+  showCancelModal() {
     this.cancelModalVisible = true;
   }
 
   cancelConfirmed() {
     this.cancelModalVisible = false;
-
-    // 🔥 Place your cancel logic here
-    // e.g. navigate, reset form, etc
-    console.log('Cancelled');
-    this.router.navigate(['/dashboard']); // Or whatever route
   }
 
   // Called when user closes the modal
@@ -46,7 +40,13 @@ export class StepOneComponent implements OnInit {
     this.cancelModalVisible = false;
   }
 
- constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  @Output() cancel = new EventEmitter<void>();
+
+  onCancelClick() {
+    this.cancel.emit();
+  }
 }

@@ -8,9 +8,9 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   templateUrl: './step-four.component.html',
   styleUrls: ['./step-four.component.scss'],
 })
-export class StepFourComponent  implements OnInit {
+export class StepFourComponent implements OnInit {
   cancelModalVisible = false;
-@Input() steps!: Step[];
+  @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<number>();
   @Output() back = new EventEmitter<void>();
@@ -20,7 +20,7 @@ export class StepFourComponent  implements OnInit {
   indoorPositioningTypes = ['OptiTrack', 'Vicon', 'Qualisys'];
   positioningSystemMakes = ['Make 1', 'Make 2', 'Make 3'];
 
-  constructor(private fb: FormBuilder,private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.environmentForm = this.fb.group({
@@ -38,7 +38,7 @@ export class StepFourComponent  implements OnInit {
     });
   }
 
-    showCancelModal() {
+  showCancelModal() {
     this.cancelModalVisible = true;
   }
 
@@ -55,7 +55,7 @@ export class StepFourComponent  implements OnInit {
       this.environmentForm.markAllAsTouched();
     }
   }
- cancelDismissed() {
+  cancelDismissed() {
     this.cancelModalVisible = false;
   }
 
@@ -63,4 +63,9 @@ export class StepFourComponent  implements OnInit {
     this.back.emit();
   }
 
+  @Output() cancel = new EventEmitter<void>();
+
+  onCancelClick() {
+    this.cancel.emit();
+  }
 }

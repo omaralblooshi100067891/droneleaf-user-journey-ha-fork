@@ -20,7 +20,7 @@ export class StepTwoComponent {
 
   selectedOption: EnvironmentOption | null = null;
 
-   constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
   selectOption(option: EnvironmentOption) {
     this.selectedOption = option;
@@ -63,7 +63,7 @@ export class StepTwoComponent {
     return this.selectedOption === 'outdoors';
   }
 
- showCancelModal() {
+  showCancelModal() {
     this.cancelModalVisible = true;
   }
 
@@ -77,5 +77,11 @@ export class StepTwoComponent {
   // Called when user closes the modal
   cancelDismissed() {
     this.cancelModalVisible = false;
+  }
+
+  @Output() cancel = new EventEmitter<void>();
+
+  onCancelClick() {
+    this.cancel.emit();
   }
 }

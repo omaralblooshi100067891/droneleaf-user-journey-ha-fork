@@ -48,4 +48,11 @@ continue() {
     this.back.emit();
   }
 
+  @Output() cancel = new EventEmitter<void>();
+
+onCancelClick() {
+  this.cancel.emit();
+}
+
+
 }

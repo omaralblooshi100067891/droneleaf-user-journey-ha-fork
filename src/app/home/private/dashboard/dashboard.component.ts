@@ -11,6 +11,7 @@ export class DashboardComponent  implements OnInit {
 openDropdown: string | null = null;
    constructor(private eRef: ElementRef,private toastService: ToastService,private router:Router) {}
    @ViewChildren('dropdownRef') dropdownRefs!: QueryList<ElementRef>;
+showAddDroneModal = false;
 
     toggleDropdown(droneName: string) {
     this.openDropdown = this.openDropdown === droneName ? null : droneName;

@@ -8,33 +8,32 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   templateUrl: './custome-drone.component.html',
   styleUrls: ['./custome-drone.component.scss'],
 })
-export class CustomeDroneComponent  implements OnInit {
-@Output() next = new EventEmitter<void>();
+export class CustomeDroneComponent implements OnInit {
+  @Output() next = new EventEmitter<void>();
   @Output() back = new EventEmitter<void>();
-@Input() steps: Step[] = [];
-@Input() currentStepIndex!: number;
- cancelModalVisible = false;
+  @Input() steps: Step[] = [];
+  @Input() currentStepIndex!: number;
+  cancelModalVisible = false;
 
   form!: FormGroup;
 
   applicationOptions: string[] = ['Agri', 'Survey'];
 
-  constructor(private fb: FormBuilder,private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       templateName: ['', Validators.required],
       application: ['', Validators.required],
-      description: ['']
+      description: [''],
     });
   }
 
-   showCancelModal() {
+  showCancelModal() {
     this.cancelModalVisible = true;
   }
-  cancel(){}
 
-   cancelConfirmed() {
+  cancelConfirmed() {
     this.cancelModalVisible = false;
 
     // 🔥 Place your cancel logic here
@@ -43,7 +42,7 @@ export class CustomeDroneComponent  implements OnInit {
     this.router.navigate(['/dashboard']); // Or whatever route
   }
 
-    cancelDismissed() {
+  cancelDismissed() {
     this.cancelModalVisible = false;
   }
 
@@ -56,4 +55,9 @@ export class CustomeDroneComponent  implements OnInit {
     }
   }
 
+  @Output() cancel = new EventEmitter<void>();
+
+  onCancelClick() {
+    this.cancel.emit();
+  }
 }

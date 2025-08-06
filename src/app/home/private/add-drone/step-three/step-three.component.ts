@@ -7,9 +7,9 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.scss'],
 })
-export class StepThreeComponent  implements OnInit {
- cancelModalVisible = false;
- @Input() steps!: Step[];
+export class StepThreeComponent implements OnInit {
+  cancelModalVisible = false;
+  @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<'yes' | 'no'>();
 
@@ -27,7 +27,7 @@ export class StepThreeComponent  implements OnInit {
     }
   }
 
- showCancelModal() {
+  showCancelModal() {
     this.cancelModalVisible = true;
   }
 
@@ -42,8 +42,13 @@ export class StepThreeComponent  implements OnInit {
     this.cancelModalVisible = false;
   }
 
-constructor(private router: Router) {}
+  @Output() cancel = new EventEmitter<void>();
+
+  onCancelClick() {
+    this.cancel.emit();
+  }
+
+  constructor(private router: Router) {}
 
   ngOnInit() {}
-
 }
