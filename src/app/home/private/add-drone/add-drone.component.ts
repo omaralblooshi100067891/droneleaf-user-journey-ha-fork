@@ -24,6 +24,7 @@ export class AddDroneComponent implements OnInit {
     { title: 'Confirmation', completed: false },
   ];
 
+
   constructor(private router: Router) {}
 
   // parent.component.ts
