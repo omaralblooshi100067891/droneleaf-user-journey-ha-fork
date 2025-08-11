@@ -13,10 +13,10 @@
          <div>
            <h3 class="text-lg font-semibold mb-4">Indoor Flight Environment</h3>
            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <app-text-input [control]="environmentForm.get('nameOfEnvironment')" label="Name of Environment"
+             <app-text-input [control]="environmentForm.get('nameOfEnvironment')" label="Name of Environment*"
                placeholder="What would you like to call this indoor flight area" [required]="true"></app-text-input>
              <app-select-input [control]="environmentForm.get('positioningSystemType')" [options]="indoorPositioningTypes"
-               placeholder="Select an answer" label="Indoor Positioning System Type" [required]="true"></app-select-input>
+               placeholder="Select an answer" label="Indoor Positioning System Type*" [required]="true"></app-select-input>
            </div>
          </div>
 
@@ -25,7 +25,7 @@
            <div>
              <h3 class="text-lg font-semibold mb-4">Motion Capture</h3>
              <app-select-input [control]="environmentForm.get('positioningSystemMake')" [options]="positioningSystemMakes"
-               placeholder="Select an answer" label="Indoor Positioning System Make" [required]="true"></app-select-input>
+               placeholder="Select an answer" label="Indoor Positioning System Make*" [required]="true"></app-select-input>
            </div>
          </div>
 
@@ -33,13 +33,13 @@
          <div>
            <h3 class="text-lg font-semibold mb-4">OptiTrack</h3>
            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <app-text-input [control]="environmentForm.get('wifiSSID')" label="WiFi SSID"
+             <app-text-input [control]="environmentForm.get('wifiSSID')" label="WiFi SSID*"
                placeholder="Enter OptiTrack SSID (for the drone access to live data stream)"
                [required]="true"></app-text-input>
-             <app-text-input [control]="environmentForm.get('wifiPassword')" label="WiFi Password"
+             <app-text-input [control]="environmentForm.get('wifiPassword')" label="WiFi Password*"
                placeholder="Enter the OptiTrack Network WiFi Password" type="password" [required]="true"></app-text-input>
 
-             <app-text-input [control]="environmentForm.get('lanSubnet')" label="LAN Subnet"
+             <app-text-input [control]="environmentForm.get('lanSubnet')" label="LAN Subnet*"
                placeholder="Enter the OptiTrack Network Subnet settings" [required]="true"></app-text-input>
              <app-text-input [control]="environmentForm.get('optiTrackServerAddress')" label="OptiTrack Server Address"
                placeholder="Enter the OptiTrack Server Address" [required]="true"></app-text-input>
@@ -50,7 +50,7 @@
            <div>
 
              <app-text-input [control]="environmentForm.get('optiTrackMulticastAddress')"
-               label="OptiTrack Multicast Address" placeholder="Enter the OptiTrack Multicast Address" [required]="true"
+               label="OptiTrack Multicast Address*" placeholder="Enter the OptiTrack Multicast Address" [required]="true"
                class="md:col-span-2"></app-text-input>
            </div>
          </div>
