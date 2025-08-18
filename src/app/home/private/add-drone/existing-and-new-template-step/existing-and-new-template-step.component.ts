@@ -3,21 +3,21 @@ import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 
 @Component({
-  selector: 'app-step-three',
-  templateUrl: './step-three.component.html',
-  styleUrls: ['./step-three.component.scss'],
+  selector: 'app-existing-and-new-template-step',
+  templateUrl: './existing-and-new-template-step.component.html',
+  styleUrls: ['./existing-and-new-template-step.component.scss'],
 })
-export class StepThreeComponent implements OnInit {
+export class ExistingAndNewTemplateStepComponent  implements OnInit {
   cancelModalVisible = false;
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
-  @Output() next = new EventEmitter<'new_template' | 'existing_template'>();
+  @Output() next = new EventEmitter<'existing' | 'new'>();
 
   @Output() back = new EventEmitter<void>(); // if needed
 
+  selectedOption: 'existing' | 'new' | null = null;
 
-  selectedOption: 'new_template' | 'existing_template' | null = null;
-  selectOption(option: 'new_template' | 'existing_template') {
+  selectOption(option: 'existing' | 'new') {
     this.selectedOption = option;
   }
 
@@ -51,4 +51,5 @@ export class StepThreeComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {}
+
 }

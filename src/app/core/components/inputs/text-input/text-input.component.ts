@@ -17,7 +17,11 @@ export class TextInputComponent implements OnInit {
   @Input() required: boolean = false;
   @Input() clearInput: boolean = false;
   @Input() maxlength: number | undefined | any = undefined;
-@Input() textarea: boolean = false;
+  @Input() textarea: boolean = false;
+  @Input() showTooltip: boolean = false;
+
+  @Input() tooltipText: string = '';
+  @Input() tooltipImage: string = '';
 
   private componentId: string = '';
 
@@ -25,7 +29,7 @@ export class TextInputComponent implements OnInit {
     this.componentId = this.generateUniqueId();
   }
 
-    showPassword: boolean = false;
+  showPassword: boolean = false;
 
   get inputType(): string {
     if (this.type === 'password') {
@@ -43,11 +47,15 @@ export class TextInputComponent implements OnInit {
   }
 
   get isValid(): boolean {
-    return this.control ? this.control.valid && this.control.touched && !!this.control.value : false;
+    return this.control
+      ? this.control.valid && this.control.touched && !!this.control.value
+      : false;
   }
 
   get showError(): boolean {
-    return this.isInvalid && (!!this.errorMessage || this.hasValidationErrors());
+    return (
+      this.isInvalid && (!!this.errorMessage || this.hasValidationErrors())
+    );
   }
 
   get isPending(): boolean {
@@ -124,7 +132,9 @@ export class TextInputComponent implements OnInit {
 
   // Helper method to get all error keys (useful for debugging)
   getErrorKeys(): string[] {
-    return this.control && this.control.errors ? Object.keys(this.control.errors) : [];
+    return this.control && this.control.errors
+      ? Object.keys(this.control.errors)
+      : [];
   }
 
   // Method to manually trigger validation

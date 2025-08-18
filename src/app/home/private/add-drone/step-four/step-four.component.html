@@ -16,7 +16,7 @@
              <app-text-input [control]="environmentForm.get('nameOfEnvironment')" label="Name of Environment*"
                placeholder="What would you like to call this indoor flight area" [required]="true"></app-text-input>
              <app-select-input [control]="environmentForm.get('positioningSystemType')" [options]="indoorPositioningTypes"
-               placeholder="Select an answer" label="Indoor Positioning System Type*" [required]="true"></app-select-input>
+               placeholder="Select an answer" label="Indoor Positioning System Type" [required]="true"></app-select-input>
            </div>
          </div>
 
@@ -25,7 +25,7 @@
            <div>
              <h3 class="text-lg font-semibold mb-4">Motion Capture</h3>
              <app-select-input [control]="environmentForm.get('positioningSystemMake')" [options]="positioningSystemMakes"
-               placeholder="Select an answer" label="Indoor Positioning System Make*" [required]="true"></app-select-input>
+               placeholder="Select an answer" label="Indoor Positioning System Make" [required]="true"></app-select-input>
            </div>
          </div>
 

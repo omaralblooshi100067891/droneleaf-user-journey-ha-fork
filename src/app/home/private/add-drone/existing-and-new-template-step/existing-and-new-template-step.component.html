@@ -11,36 +11,49 @@
 
     <!-- ✅ Centered Content (with auto margin-top & bottom) -->
     <div class="flex flex-col items-center text-center my-auto">
-      <div class="text-justify ml-6">
+      <div class="text-justify mr-auto sm:mr-[5rem]">
 
-        <h2 class="text-2xl font-semibold mb-2">How would you like to set up your indoor environment?</h2>
-        <p class="text-sm text-gray-600 mb-8">You can either start fresh and define your own layout and parameters, or
-          use <br> an existing environment template that matches your space.</p>
+        <h2 class="text-2xl font-semibold mb-2">How Would You Like to Start?</h2>
+        <p class="text-sm text-gray-600 mb-8">Now that your Companion Computer (CC) and PX4 are connected, you can either  <br> create a new drone setup or load an existing one.</p>
       </div>
 
       <div class="flex flex-col md:flex-row gap-4 mb-8">
         <!-- ✅ Yes Card -->
-        <!-- ✅ New Environment Card -->
-        <div (click)="selectOption('new_template')" [ngClass]="{ 'bg-[#f2f9f7] border-[#009169]': selectedOption === 'new_template',
-                  'border-[#D1DADF]': selectedOption !== 'new_template' }"
+        <div (click)="selectOption('existing')" [ngClass]="{
+            'bg-[#f2f9f7] border-[#009169]': selectedOption === 'existing',
+            'border-[#D1DADF]': selectedOption !== 'existing'
+          }"
           class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
-          <img src="../../../../../assets/svgs/private/create-org-active.svg" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">Create a new environment</h3>
-          <p class="text-sm text-gray-600">Set up your own template and parameters</p>
+          <img [src]="selectedOption === 'existing'
+              ? '../../../../../assets/svgs/private/Rectangle-active.svg'
+              : '../../../../../assets/svgs/private/Rectangle 3465512.svg'" alt="Drone" class="w-10 h-10 mb-4" />
+          <h3 class="font-semibold mb-1">Use an Existing Template</h3>
+          <p class="text-sm text-gray-600">
+            Choose from saved  <br />
+           configurations in your library or <br>
+           rom shared community <br>
+            templates.
+          </p>
+
         </div>
 
-        <!-- ✅ Existing Template Card -->
-        <div (click)="selectOption('existing_template')" [ngClass]="{ 'bg-[#f2f9f7] border-[#009169]': selectedOption === 'existing_template',
-                  'border-[#D1DADF]': selectedOption !== 'existing_template' }"
+        <!-- ✅ No Card -->
+        <div (click)="selectOption('new')" [ngClass]="{
+            'bg-[#f2f9f7] border-[#009169]': selectedOption === 'new',
+            'border-[#D1DADF]': selectedOption !== 'new'
+          }"
           class="w-72 border rounded-lg p-6 flex flex-col items-center text-center cursor-pointer hover:shadow transition">
-          <img src="../../../../../assets/svgs/private/existing.svg" class="w-10 h-10 mb-4" />
-          <h3 class="font-semibold mb-1">Use an existing template</h3>
-          <p class="text-sm text-gray-600">Choose from previously saved environments</p>
+          <img [src]="selectedOption === 'new'
+                ? '../../../../../assets/svgs/private/Rectangle-active.svg'
+              : '../../../../../assets/svgs/private/Rectangle 3465512.svg'" alt="No Drone" class="w-10 h-10 mb-4" />
+          <h3 class="font-semibold mb-1">Create a New Template</h3>
+          <p class="text-sm text-gray-600">
+           Define your drone setup step- <br> by-step,starting from  <br>geometry to sensors.
+          </p>
         </div>
-
       </div>
     </div>
-    <hr>
+<hr>
     <!-- ✅ Bottom Buttons -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-5">
       <button type="button"

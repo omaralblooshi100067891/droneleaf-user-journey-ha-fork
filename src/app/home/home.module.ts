@@ -1,3 +1,5 @@
+import { DroneMoterTestComponent } from './private/add-drone/drone-moter-test/drone-moter-test.component';
+import { ExistingAndNewTemplateStepComponent } from './private/add-drone/existing-and-new-template-step/existing-and-new-template-step.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -22,6 +24,9 @@ import { ChooseYourDroneMethodComponent } from './private/add-drone/choose-your-
 import { TierOneScreenComponent } from './private/add-drone/tier-one-screen/tier-one-screen.component';
 import { BusinessDashboardComponent } from './business/business-dashboard/business-dashboard.component';
 import { DroneLinraryComponent } from './business/drone-linrary/drone-linrary.component';
+import { CreateNewTemplateStepComponent } from './private/add-drone/create-new-template-step/create-new-template-step.component';
+import { CreateNewTemplateFormStepComponent } from './private/add-drone/create-new-template-form-step/create-new-template-form-step.component';
+import { OutComponentSetupComponent } from './private/add-drone/out-component-setup/out-component-setup.component';
 
 @NgModule({
   imports: [
@@ -50,7 +55,12 @@ import { DroneLinraryComponent } from './business/drone-linrary/drone-linrary.co
     ChooseYourDroneMethodComponent,
     TierOneScreenComponent,
     BusinessDashboardComponent,
-    DroneLinraryComponent
+    DroneLinraryComponent,
+    ExistingAndNewTemplateStepComponent,
+    CreateNewTemplateStepComponent,
+    CreateNewTemplateFormStepComponent,
+    DroneMoterTestComponent,
+    OutComponentSetupComponent
   ],
   exports: [
     AddDroneComponent,
@@ -61,7 +71,8 @@ import { DroneLinraryComponent } from './business/drone-linrary/drone-linrary.co
     SelectDroneStepComponent,
     CustomeDroneComponent,
     ChooseYourDroneMethodComponent,
-    TierOneScreenComponent
+    TierOneScreenComponent,
+    ExistingAndNewTemplateStepComponent
   ],
 })
 export class HomePageModule {}

@@ -15,7 +15,8 @@ export class StepTwoComponent {
   @Input() currentStepIndex!: number;
   @Input() droneOption: 'yes' | 'no' | null = null;
 
-  @Output() next = new EventEmitter<number>();
+  @Output() next = new EventEmitter<EnvironmentOption>();
+
   @Output() back = new EventEmitter<void>();
 
   selectedOption: EnvironmentOption | null = null;
@@ -26,23 +27,11 @@ export class StepTwoComponent {
     this.selectedOption = option;
   }
 
-  continue() {
-    if (!this.selectedOption) return;
+continue() {
+  if (!this.selectedOption) return;
+  this.next.emit(this.selectedOption); // 'indoors' ya 'outdoors'
+}
 
-    if (this.droneOption === 'yes') {
-      if (this.selectedOption === 'indoors') {
-        this.next.emit(2);
-      } else {
-        this.next.emit(3);
-      }
-    } else {
-      if (this.selectedOption === 'indoors') {
-        this.next.emit(2);
-      } else {
-        this.next.emit(4);
-      }
-    }
-  }
 
   get shouldShowAlert(): boolean {
     if (this.isIndoorSelected) {
