@@ -1,49 +1,128 @@
-<!-- OUTER MODAL BACKDROP with spacing outside + fade animation -->
+<!-- OUTER MODAL BACKDROP -->
 <div class="fixed inset-0 z-50 bg-black bg-opacity-30 backdrop-blur-sm p-5 flex items-center justify-center
          transition-opacity duration-300 ease-out animate-fadeIn">
-  <!-- WHITE MODAL BOX (inner container) with slide animation -->
+
+  <!-- WHITE MODAL BOX -->
   <div class="w-full max-w-[110rem] h-full bg-white shadow-xl rounded-xl overflow-hidden flex flex-col
            transform transition-all duration-300 ease-out animate-slideUp">
+
     <!-- Step Layout -->
     <div class="flex flex-col md:flex-row flex-1">
-      <!-- Left Main Area -->
       <div class="flex flex-col flex-1 overflow-y-auto">
-        <ng-container [ngSwitch]="currentStepIndex">
-          <app-step-one *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(1, $event)" (cancel)="handleStepCancel()"></app-step-one>
 
-          <app-step-two *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            [droneOption]="selectedDroneOption" (next)="goToStep($event)" (cancel)="handleStepCancel()"
-            (back)="goToStep(0)"></app-step-two>
+        <!-- STEP ONE -->
+        <ng-container *ngIf="!selectedFlow">
+          <app-step-one [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(0, $event)"
+            (cancel)="handleStepCancel()">
+          </app-step-one>
+        </ng-container>
 
-          <app-step-three *ngSwitchCase="2" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(3)"
-            (cancel)="handleStepCancel()" (back)="goToStep(1)"></app-step-three>
+        <!-- YES FLOW -->
+        <ng-container *ngIf="selectedFlow === 'yes'" [ngSwitch]="currentStepIndex">
 
-          <app-step-four *ngSwitchCase="3" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(4)"
-            (cancel)="handleStepCancel()" (back)="goToStep(2)"></app-step-four>
+          <!-- Step Two -->
+          <app-step-two *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            [droneOption]="selectedFlow" (next)="goToStep(1, $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(0)">
+          </app-step-two>
 
-          <app-select-drone-step *ngSwitchCase="4" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(5, $event)" (cancel)="handleStepCancel()" (back)="goToStep(3)"></app-select-drone-step>
+          <!-- Step Three -->
+          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(2, $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(0)">
+          </app-step-three>
+        </ng-container>
 
-          <ng-container *ngSwitchCase="5">
-            <app-custome-drone *ngIf="selectedDroneOption === 'custom'" [steps]="steps"
-              [currentStepIndex]="currentStepIndex" (next)="goToStep(6)" (cancel)="handleStepCancel()"
-              (back)="goToStep(4)"></app-custome-drone>
-          </ng-container>
+        <!-- OUTDOORS YES Flow -->
+        <ng-container *ngIf="selectedFlow === 'outdoors_yes'" [ngSwitch]="currentStepIndex">
+          <app-out-component-setup *ngSwitchCase="100" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(101)" (cancel)="handleStepCancel()" (back)="goToStep(0)">
+          </app-out-component-setup>
+        </ng-container>
 
-          <app-choose-your-drone-method *ngSwitchCase="6" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="handleChooseMethod($event)" (cancel)="handleStepCancel()" (back)="goToStep(5)">
+        <!-- INDOORS YES Flow -->
+        <ng-container *ngIf="selectedFlow === 'indoors_yes'" [ngSwitch]="currentStepIndex">
+          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(2, $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(0)">
+          </app-step-three>
+        </ng-container>
+
+        <!-- NEW TEMPLATE Flow -->
+        <ng-container *ngIf="selectedFlow === 'new_template'" [ngSwitch]="currentStepIndex">
+          <app-step-four *ngSwitchCase="2" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(3,$event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(1)">
+          </app-step-four>
+
+          <app-select-drone-step *ngSwitchCase="3" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(4, $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(2)">
+          </app-select-drone-step>
+        </ng-container>
+
+        <!-- CUSTOM Flow -->
+        <ng-container *ngIf="selectedFlow === 'custom'" [ngSwitch]="currentStepIndex">
+          <app-custome-drone *ngSwitchCase="4" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(5,$event)" (cancel)="handleStepCancel()" (back)="goToStep(3)">
+          </app-custome-drone>
+
+          <app-choose-your-drone-method *ngSwitchCase="5" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(6,$event)" (cancel)="handleStepCancel()" (back)="goToStep(4)">
           </app-choose-your-drone-method>
+        </ng-container>
 
-          <app-tier-one-screen *ngSwitchCase="7" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(8)" (cancel)="handleStepCancel()" (back)="goToStep(6)">
+        <!-- TIER1 Flow -->
+        <ng-container *ngIf="selectedFlow === 'tier1'" [ngSwitch]="currentStepIndex">
+          <app-tier-one-screen *ngSwitchCase="6" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(7,$event)" (cancel)="handleStepCancel()" (back)="goToStep(5)">
           </app-tier-one-screen>
+
+          <app-existing-and-new-template-step *ngSwitchCase="7" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(8, $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goToStep(6)">
+          </app-existing-and-new-template-step>
+
+          <app-create-new-template-step *ngSwitchCase="8" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(9)" (cancel)="handleStepCancel()" (back)="goToStep(7)">
+          </app-create-new-template-step>
+
+          <app-create-new-template-form-step *ngSwitchCase="9" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(10)" (cancel)="handleStepCancel()" (back)="goToStep(8)">
+          </app-create-new-template-form-step>
+
+          <app-drone-moter-test *ngSwitchCase="10" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(11)" (cancel)="handleStepCancel()" (back)="goToStep(9)">
+          </app-drone-moter-test>
+        </ng-container>
+
+        <!-- NO Flow -->
+        <ng-container *ngIf="selectedFlow === 'no'" [ngSwitch]="currentStepIndex">
+          <app-step-two *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(1)"
+            (cancel)="handleStepCancel()" (back)="goToStep(0)">
+          </app-step-two>
+
+          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(2)"
+            (cancel)="handleStepCancel()" (back)="goToStep(0)">
+          </app-step-three>
+
+          <app-step-four *ngSwitchCase="2" [steps]="steps" [currentStepIndex]="currentStepIndex"
+            (next)="goToStep(3)" (cancel)="handleStepCancel()" (back)="goToStep(1)">
+          </app-step-four>
+
+
         </ng-container>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Confirmation Cancel Modal -->
-<app-confirm-cancel-model [show]="cancelModalVisible" (confirm)="cancelConfirmed()"
-  (cancel)="cancelDismissed()"></app-confirm-cancel-model>
+<!-- Cancel Modal -->
+<app-confirm-cancel-model [show]="cancelModalVisible" (confirm)="cancelConfirmed()" (cancel)="cancelDismissed()">
+</app-confirm-cancel-model>

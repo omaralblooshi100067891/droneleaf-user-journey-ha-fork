@@ -11,13 +11,13 @@ export class StepThreeComponent implements OnInit {
   cancelModalVisible = false;
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
-  @Output() next = new EventEmitter<'yes' | 'no'>();
+  @Output() next = new EventEmitter<'new_template' | 'existing_template'>();
 
   @Output() back = new EventEmitter<void>(); // if needed
 
-  selectedOption: 'yes' | 'no' | null = null;
 
-  selectOption(option: 'yes' | 'no') {
+  selectedOption: 'new_template' | 'existing_template' | null = null;
+  selectOption(option: 'new_template' | 'existing_template') {
     this.selectedOption = option;
   }
 

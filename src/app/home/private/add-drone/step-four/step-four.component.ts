@@ -14,6 +14,9 @@ export class StepFourComponent implements OnInit {
   @Input() currentStepIndex!: number;
   @Output() next = new EventEmitter<number>();
   @Output() back = new EventEmitter<void>();
+ axisX = '0.0';
+  axisY = '0.0';
+  axisZ = '0.0';
 
   environmentForm!: FormGroup;
 
@@ -32,9 +35,9 @@ export class StepFourComponent implements OnInit {
       lanSubnet: ['', Validators.required],
       optiTrackMulticastAddress: ['', Validators.required],
       optiTrackServerAddress: ['', Validators.required],
-      axisX: ['', Validators.required],
-      axisY: ['', Validators.required],
-      axisZ: ['', Validators.required],
+      axisY: [''],
+      axisX: [''],
+      axisZ: [''],
     });
   }
 

@@ -20,7 +20,12 @@ selectMethod(method: string) {
   this.selectedMethod = method; // 👈 This was missing
 }
 
-
+continue() {
+  if (this.selected) {
+    console.log("✅ Emitting method:", this.selected);
+    this.next.emit(this.selected); // parent ko option bhejo
+  }
+}
 
 
 
