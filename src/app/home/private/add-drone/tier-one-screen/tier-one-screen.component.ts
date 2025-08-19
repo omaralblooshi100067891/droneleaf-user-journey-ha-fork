@@ -19,13 +19,48 @@ export class TierOneScreenComponent implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       ip: new FormControl('', [Validators.required]),
+      machineId: new FormControl('', [Validators.required]),
+      apiKey: new FormControl('', [Validators.required]),
     });
   }
 
-  get ipControl(): FormControl {
-  return this.form.get('ip') as FormControl;
+
+
+  generateApiKey() {
+  const key = 'API-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+  this.form.get('apiKey')?.setValue(key);
 }
 
+
+
+get ipControl(): FormControl {
+  return this.form.get('ip')! as FormControl;
+}
+
+get machineIdControl(): FormControl {
+  return this.form.get('machineId')! as FormControl;
+}
+
+get apiKeyControl(): FormControl {
+  return this.form.get('apiKey')! as FormControl;
+}
+
+
+
+
+  copyApiKey(input: HTMLInputElement) {
+    input.select(); // Select the text
+    input.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard
+      .writeText(input.value)
+      .then(() => {
+        console.log('API Key copied:', input.value);
+        // Optional: show a toast/alert
+      })
+      .catch((err) => console.error('Failed to copy:', err));
+
+    input.classList.add('bg-white'); // Ensure background stays white
+  }
 
   openDashboard() {
     const ip = this.form.get('ip')?.value;
@@ -34,8 +69,6 @@ export class TierOneScreenComponent implements OnInit {
       window.open(url, '_blank');
     }
   }
-
-
 
   onSubmit() {
     if (this.form.valid) {

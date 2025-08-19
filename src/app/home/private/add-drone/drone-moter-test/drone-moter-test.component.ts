@@ -27,25 +27,28 @@ continue() {
 
 onSelectMotorResult(result: 'yes' | 'no' | 'some') {
   this.motorTestResult = result;
-  // YES/SOME -> results show (step 3). NO -> stay on step 2 for Retry
-  this.step = (result === 'no') ? 2 : 3;
+
+  if (result === 'yes' || result === 'some') {
+    this.step = 3; // ✅ show Step 3 immediately
+  } else {
+    this.step = 2; // stay on Step 2 if 'no'
+  }
 }
+
 
 handleMotorButtonClick() {
-  // Step 1 → Step 2
   if (this.step === 1 && this.propellersRemoved) {
+    this.step = 2;        // move to Step 2
+    this.motorTestResult = null; // reset motor test result
+  } else if (this.step === 2 && this.motorTestResult === 'no') {
+    this.motorTestResult = null; // retry
     this.step = 2;
-    this.motorTestResult = null; // fresh start for step 2
-    return;
-  }
-
-  // Step 2 + NO → Retry (stay on step 2, clear selection)
-  if (this.step === 2 && this.motorTestResult === 'no') {
-    this.motorTestResult = null;
-    this.step = 2;
-    return;
   }
 }
+
+
+
+
 
 
 

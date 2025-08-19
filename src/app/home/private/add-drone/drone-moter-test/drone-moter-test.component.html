@@ -116,12 +116,12 @@
         <div *ngIf="step === 3">
           <div *ngIf="motorTestResult === 'yes'"
             class="bg-[#ccf8e0] border border-[#1BAF5D] text-green-800 rounded-lg p-4">
-            <h3 class="font-semibold">Motors are spinning! ✅</h3>
+            <h3 class="font-semibold">Motors are spinning! </h3>
             <p class="text-sm">You’ve completed a big milestone. Your ESC minimum command has been confirmed!</p>
           </div>
 
           <!-- Step 2 Results (No case ke liye show karna hai yahin par) -->
-          <div *ngIf="step === 3 && motorTestResult === 'no'">
+          <div *ngIf="motorTestResult === 'no'">
             <div class="bg-[#ffedec] border border-[#EF5350] text-red-800 rounded-lg p-4 mt-4">
               <h3 class="font-semibold">⚠️ Motor Startup Incomplete</h3>
               <p class="text-sm">
@@ -177,8 +177,6 @@
   <div class="w-96 bg-[#cce9e1] p-6 flex flex-col justify-around">
     <app-add-drone-stepper [steps]="steps" [currentStepIndex]="currentStepIndex">
     </app-add-drone-stepper>
-
-
     <div class="mt-8">
       <h4 class="text-[22px] font-semibold text-gray-800 mb-1">Add A Drone</h4>
       <p class="text-[16px] text-gray-600">

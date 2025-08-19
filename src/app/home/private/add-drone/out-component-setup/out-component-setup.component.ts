@@ -16,7 +16,9 @@ export class OutComponentSetupComponent implements OnInit {
   @Output() next = new EventEmitter<void>();
   @Output() back = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
-
+  axisX = '0.0';
+  axisY = '0.0';
+  axisZ = '0.0';
   environmentName: string = '';
   rtkBaseStation: string = '';
   gpsModuleModel: string = '';

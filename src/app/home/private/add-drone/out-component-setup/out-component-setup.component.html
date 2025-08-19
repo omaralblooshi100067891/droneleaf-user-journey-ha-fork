@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-span-12 md:col-span-6">
-          <app-select-input [control]="form.controls['rtkBaseStation']" label="Which RTK Base Station*"
+          <app-select-input [control]="form.controls['rtkBaseStation']" label="Which RTK Base Station"
             [options]="rtkStations" placeholder="Select an answer" [required]="true">
           </app-select-input>
         </div>
@@ -36,20 +36,21 @@
 
         <!-- Row 3 -->
         <div class="col-span-12 md:col-span-6">
-          <app-select-input [control]="form.controls['gpsModuleModel']" label="GPS Module Model*" [options]="gpsModules"
+          <app-select-input [control]="form.controls['gpsModuleModel']" label="GPS Module Model" [options]="gpsModules"
             placeholder="Select an answer" [required]="true">
           </app-select-input>
         </div>
 
         <div class="col-span-12 md:col-span-6">
-          <label class="block text-sm font-medium mb-1">GPS module spatial offset*</label>
-          <div class="grid grid-cols-3 gap-2">
-            <app-text-input [control]="form.controls['gpsOffsetX']" placeholder="X: 0.0" type="number">
-            </app-text-input>
-            <app-text-input [control]="form.controls['gpsOffsetY']" placeholder="Y: 0.0" type="number">
-            </app-text-input>
-            <app-text-input [control]="form.controls['gpsOffsetZ']" placeholder="Z: 0.0" type="number">
-            </app-text-input>
+          <label class="text-sm font-medium mb-2 block">GPS module spatial offset*</label>
+
+          <div class="flex gap-2 border rounded-md overflow-hidden">
+            <input type="text" [value]="'X: ' + axisX"
+              class="px-3 py-2 w-1/3 border-0 focus:ring-0 focus:outline-none bg-white">
+            <input type="text" [value]="'Y: ' + axisY"
+              class="px-3 py-2 w-1/3  border-gray-300 focus:ring-0 focus:outline-none bg-white">
+            <input type="text" [value]="'Z: ' + axisZ"
+              class="px-3 py-2 w-1/3  border-gray-300 focus:ring-0 focus:outline-none bg-white">
           </div>
         </div>
 
@@ -61,14 +62,15 @@
         </div>
 
         <div class="col-span-12 md:col-span-6">
-          <label class="block text-sm font-medium mb-1">Distance sensor offset*</label>
-          <div class="grid grid-cols-3 gap-2">
-            <app-text-input [control]="form.controls['distanceOffsetX']" placeholder="X: 0.0" type="number">
-            </app-text-input>
-            <app-text-input [control]="form.controls['distanceOffsetY']" placeholder="Y: 0.0" type="number">
-            </app-text-input>
-            <app-text-input [control]="form.controls['distanceOffsetZ']" placeholder="Z: 0.0" type="number">
-            </app-text-input>
+          <label class="text-sm font-medium mb-2 block">Distance sensor offset*</label>
+
+          <div class="flex gap-2 border rounded-md overflow-hidden">
+            <input type="text" [value]="'X: ' + axisX"
+              class="px-3 py-2 w-1/3 border-0 focus:ring-0 focus:outline-none bg-white">
+            <input type="text" [value]="'Y: ' + axisY"
+              class="px-3 py-2 w-1/3  border-gray-300 focus:ring-0 focus:outline-none bg-white">
+            <input type="text" [value]="'Z: ' + axisZ"
+              class="px-3 py-2 w-1/3  border-gray-300 focus:ring-0 focus:outline-none bg-white">
           </div>
         </div>
       </form>
