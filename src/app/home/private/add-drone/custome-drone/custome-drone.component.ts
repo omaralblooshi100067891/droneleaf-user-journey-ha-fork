@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
+import { AddDroneWizardStateService } from 'src/app/core/services/add-drone-wizard-state.service';
 
 @Component({
   selector: 'app-custome-drone',
@@ -11,15 +12,21 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
 export class CustomeDroneComponent implements OnInit {
   @Output() next = new EventEmitter<void>();
   @Output() back = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
+
   @Input() steps: Step[] = [];
   @Input() currentStepIndex!: number;
-  cancelModalVisible = false;
 
+  cancelModalVisible = false;
   form!: FormGroup;
 
   applicationOptions: string[] = ['Agri', 'Survey'];
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private wizardStateService: AddDroneWizardStateService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -27,19 +34,33 @@ export class CustomeDroneComponent implements OnInit {
       application: ['', Validators.required],
       description: [''],
     });
+
+    // 🟢 Restore saved state if available
+    const saved = this.wizardStateService.getStepData(this.currentStepIndex);
+    if (saved) {
+      this.form.patchValue({
+        templateName: saved.templateName || '',
+        application: saved.application || '',
+        description: saved.description || '',
+      });
+    }
+
+    // 🟢 Auto-save on every change
+    this.form.valueChanges.subscribe((val) => {
+      this.wizardStateService.saveStepData(this.currentStepIndex, val);
+    });
   }
 
-  showCancelModal() {
+  // Cancel button clicked
+  onCancelClick() {
     this.cancelModalVisible = true;
   }
 
   cancelConfirmed() {
     this.cancelModalVisible = false;
-
-    // 🔥 Place your cancel logic here
-    // e.g. navigate, reset form, etc
-    console.log('Cancelled');
-    this.router.navigate(['/dashboard']); // Or whatever route
+    this.wizardStateService.clear(); // 🟢 clear full wizard state
+    this.cancel.emit();
+    this.router.navigate(['/dashboard']); // optional navigation
   }
 
   cancelDismissed() {
@@ -48,16 +69,11 @@ export class CustomeDroneComponent implements OnInit {
 
   submit(): void {
     if (this.form.valid) {
-      console.log('Form Value:', this.form.value);
+      // save final state explicitly
+      this.wizardStateService.saveStepData(this.currentStepIndex, this.form.value);
       this.next.emit();
     } else {
       this.form.markAllAsTouched();
     }
-  }
-
-  @Output() cancel = new EventEmitter<void>();
-
-  onCancelClick() {
-    this.cancel.emit();
   }
 }

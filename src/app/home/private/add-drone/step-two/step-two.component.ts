@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
+import { AddDroneWizardStateService } from 'src/app/core/services/add-drone-wizard-state.service';
 
 type EnvironmentOption = 'indoors' | 'outdoors';
 
@@ -9,30 +10,58 @@ type EnvironmentOption = 'indoors' | 'outdoors';
   templateUrl: './step-two.component.html',
   styleUrls: ['./step-two.component.scss'],
 })
-export class StepTwoComponent {
+export class StepTwoComponent implements OnInit {
   cancelModalVisible = false;
+
   @Input() steps!: Step[];
   @Input() currentStepIndex!: number;
   @Input() droneOption: 'yes' | 'no' | null = null;
-
+@Input() initialValue: any;
   @Output() next = new EventEmitter<EnvironmentOption>();
-
   @Output() back = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
   selectedOption: EnvironmentOption | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private wizardStateService: AddDroneWizardStateService
+  ) {}
 
-  selectOption(option: EnvironmentOption) {
-    this.selectedOption = option;
+ngOnInit() {
+  // Agar wizard state se already restore kar rahe ho,
+  // to initialValue ko fallback ke liye use kar sakte ho
+  const saved = this.wizardStateService.getStepData(this.currentStepIndex);
+
+  if (saved?.selectedOption) {
+    this.selectedOption = saved.selectedOption as EnvironmentOption;
+  } else if (this.initialValue?.selectedOption) {
+    this.selectedOption = this.initialValue.selectedOption;
   }
-
-continue() {
-  if (!this.selectedOption) return;
-  this.next.emit(this.selectedOption); // 'indoors' ya 'outdoors'
 }
 
 
+  selectOption(option: EnvironmentOption) {
+    this.selectedOption = option;
+
+    // 🟢 Save immediately when user selects
+    this.wizardStateService.saveStepData(this.currentStepIndex, {
+      selectedOption: this.selectedOption,
+    });
+  }
+
+  continue() {
+    if (!this.selectedOption) return;
+
+    // 🟢 Ensure latest selection saved
+    this.wizardStateService.saveStepData(this.currentStepIndex, {
+      selectedOption: this.selectedOption,
+    });
+
+    this.next.emit(this.selectedOption); // indoors/outdoors
+  }
+
+  // -------- UI Logic --------
   get shouldShowAlert(): boolean {
     if (this.isIndoorSelected) {
       return true;
@@ -52,23 +81,19 @@ continue() {
     return this.selectedOption === 'outdoors';
   }
 
+  // -------- Cancel Flow --------
   showCancelModal() {
     this.cancelModalVisible = true;
   }
 
-  // Called when user confirms cancel
   cancelConfirmed() {
     this.cancelModalVisible = false;
-    console.log('Cancelled');
-    this.router.navigate(['/dashboard']); // Or whatever route
+    this.router.navigate(['/dashboard']);
   }
 
-  // Called when user closes the modal
   cancelDismissed() {
     this.cancelModalVisible = false;
   }
-
-  @Output() cancel = new EventEmitter<void>();
 
   onCancelClick() {
     this.cancel.emit();

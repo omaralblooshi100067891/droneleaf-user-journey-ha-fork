@@ -8,10 +8,11 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { IonicModule } from '@ionic/angular';
 import { CoreModule } from "src/app/core/core.module";
 import { AddDroneStepperComponent } from '../component/add-drone-stepper/add-drone-stepper.component';
+import { ResumeSessionModalComponent } from '../component/resume-session-modal/resume-session-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent,NavbarComponent,AddDroneStepperComponent],
+  declarations: [SidebarComponent,NavbarComponent,AddDroneStepperComponent,ResumeSessionModalComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -19,6 +20,6 @@ import { AddDroneStepperComponent } from '../component/add-drone-stepper/add-dro
     IonicModule,
     CoreModule
 ],
-  exports:[SidebarComponent,NavbarComponent,AddDroneStepperComponent]
+  exports:[SidebarComponent,NavbarComponent,AddDroneStepperComponent,ResumeSessionModalComponent]
 })
 export class SharedModule { }
