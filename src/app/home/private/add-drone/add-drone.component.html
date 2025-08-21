@@ -1,122 +1,173 @@
 <!-- OUTER MODAL BACKDROP -->
-<div class="fixed inset-0 z-50 bg-black bg-opacity-30 backdrop-blur-sm p-5 flex items-center justify-center
-         transition-opacity duration-300 ease-out animate-fadeIn">
-
+<div
+  class="fixed inset-0 z-50 bg-black bg-opacity-30 backdrop-blur-sm p-5 flex items-center justify-center transition-opacity duration-300 ease-out animate-fadeIn"
+>
   <!-- WHITE MODAL BOX -->
-  <div class="w-full max-w-[110rem] h-full bg-white shadow-xl rounded-xl overflow-hidden flex flex-col
-           transform transition-all duration-300 ease-out animate-slideUp">
-
+  <div
+    class="w-full max-w-[110rem] h-full bg-white shadow-xl rounded-xl overflow-hidden flex flex-col transform transition-all duration-300 ease-out animate-slideUp"
+  >
     <!-- Step Layout -->
     <div class="flex flex-col md:flex-row flex-1">
       <div class="flex flex-col flex-1 overflow-y-auto">
-
-        <!-- STEP ONE -->
-        <ng-container *ngIf="!selectedFlow">
-          <app-step-one [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(0, $event)"
-            (cancel)="handleStepCancel()">
+        <!-- INITIAL STEP (STEP ONE) -->
+        <ng-container *ngIf="currentStep === 'initial'">
+          <app-step-one
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('environment', $event)"
+            (cancel)="handleStepCancel()"
+          >
           </app-step-one>
         </ng-container>
 
-        <!-- YES FLOW -->
-        <ng-container *ngIf="selectedFlow === 'yes'" [ngSwitch]="currentStepIndex">
-
-          <!-- Step Two -->
-          <app-step-two *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            [droneOption]="selectedFlow" (next)="goToStep(1, $event)"
+        <!-- ENVIRONMENT SELECTION (STEP TWO) -->
+        <ng-container *ngIf="currentStep === 'environment'">
+          <app-step-two
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            [initialValue]="getInitialValue('environment')"
+            (valueChange)="onStepValueChange('environment', $event)"
+            (next)="
+              navigateTo(
+                $event === 'indoors' ? 'indoors_setup' : 'outdoors_setup'
+              )
+            "
             (cancel)="handleStepCancel()"
-            (back)="goToStep(0)">
+            (back)="goBack()"
+          >
           </app-step-two>
-
-          <!-- Step Three -->
-          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(2, $event)"
-            (cancel)="handleStepCancel()"
-            (back)="goToStep(0)">
-          </app-step-three>
         </ng-container>
 
-        <!-- OUTDOORS YES Flow -->
-        <ng-container *ngIf="selectedFlow === 'outdoors_yes'" [ngSwitch]="currentStepIndex">
-          <app-out-component-setup *ngSwitchCase="100" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(101)" (cancel)="handleStepCancel()" (back)="goToStep(0)">
+        <!-- OUTDOORS SETUP -->
+        <ng-container *ngIf="currentStep === 'outdoors_setup'">
+          <app-out-component-setup
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('template_selection')"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
           </app-out-component-setup>
         </ng-container>
 
-        <!-- INDOORS YES Flow -->
-        <ng-container *ngIf="selectedFlow === 'indoors_yes'" [ngSwitch]="currentStepIndex">
-          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(2, $event)"
+        <!-- INDOORS SETUP -->
+        <ng-container *ngIf="currentStep === 'indoors_setup'">
+          <app-step-three
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('template_selection', $event)"
             (cancel)="handleStepCancel()"
-            (back)="goToStep(0)">
+            (back)="goBack()"
+          >
           </app-step-three>
         </ng-container>
 
-        <!-- NEW TEMPLATE Flow -->
-        <ng-container *ngIf="selectedFlow === 'new_template'" [ngSwitch]="currentStepIndex">
-          <app-step-four *ngSwitchCase="2" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(3,$event)"
+        <!-- TEMPLATE SELECTION -->
+        <ng-container *ngIf="currentStep === 'template_selection'">
+          <app-step-four
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('select_drone', $event)"
             (cancel)="handleStepCancel()"
-            (back)="goToStep(1)">
+            (back)="goBack()"
+          >
           </app-step-four>
+        </ng-container>
 
-          <app-select-drone-step *ngSwitchCase="3" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(4, $event)"
+        <!-- SELECT DRONE -->
+        <ng-container *ngIf="currentStep === 'select_drone'">
+          <app-select-drone-step
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('custom_drone', $event)"
             (cancel)="handleStepCancel()"
-            (back)="goToStep(2)">
+            (back)="goBack()"
+          >
           </app-select-drone-step>
         </ng-container>
 
-        <!-- CUSTOM Flow -->
-        <ng-container *ngIf="selectedFlow === 'custom'" [ngSwitch]="currentStepIndex">
-          <app-custome-drone *ngSwitchCase="4" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(5,$event)" (cancel)="handleStepCancel()" (back)="goToStep(3)">
+        <!-- CUSTOM DRONE -->
+        <ng-container *ngIf="currentStep === 'custom_drone'">
+          <app-custome-drone
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('drone_method', $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
           </app-custome-drone>
+        </ng-container>
 
-          <app-choose-your-drone-method *ngSwitchCase="5" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(6,$event)" (cancel)="handleStepCancel()" (back)="goToStep(4)">
+        <!-- DRONE METHOD -->
+        <ng-container *ngIf="currentStep === 'drone_method'">
+          <app-choose-your-drone-method
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('tier_one', $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
           </app-choose-your-drone-method>
         </ng-container>
 
-        <!-- TIER1 Flow -->
-        <ng-container *ngIf="selectedFlow === 'tier1'" [ngSwitch]="currentStepIndex">
-          <app-tier-one-screen *ngSwitchCase="6" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(7,$event)" (cancel)="handleStepCancel()" (back)="goToStep(5)">
-          </app-tier-one-screen>
-
-          <app-existing-and-new-template-step *ngSwitchCase="7" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(8, $event)"
+        <!-- TIER ONE -->
+        <ng-container *ngIf="currentStep === 'tier_one'">
+          <app-tier-one-screen
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('template_type', $event)"
             (cancel)="handleStepCancel()"
-            (back)="goToStep(6)">
-          </app-existing-and-new-template-step>
-
-          <app-create-new-template-step *ngSwitchCase="8" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(9)" (cancel)="handleStepCancel()" (back)="goToStep(7)">
-          </app-create-new-template-step>
-
-          <app-create-new-template-form-step *ngSwitchCase="9" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(10)" (cancel)="handleStepCancel()" (back)="goToStep(8)">
-          </app-create-new-template-form-step>
-
-          <app-drone-moter-test *ngSwitchCase="10" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(11)" (cancel)="handleStepCancel()" (back)="goToStep(9)">
-          </app-drone-moter-test>
+            (back)="goBack()"
+          >
+          </app-tier-one-screen>
         </ng-container>
 
-        <!-- NO Flow -->
-        <ng-container *ngIf="selectedFlow === 'no'" [ngSwitch]="currentStepIndex">
-          <app-step-two *ngSwitchCase="0" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(1)"
-            (cancel)="handleStepCancel()" (back)="goToStep(0)">
-          </app-step-two>
+        <!-- TEMPLATE TYPE SELECTION -->
+        <ng-container *ngIf="currentStep === 'template_type'">
+          <app-existing-and-new-template-step
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('create_template', $event)"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
+          </app-existing-and-new-template-step>
+        </ng-container>
 
-          <app-step-three *ngSwitchCase="1" [steps]="steps" [currentStepIndex]="currentStepIndex" (next)="goToStep(2)"
-            (cancel)="handleStepCancel()" (back)="goToStep(0)">
-          </app-step-three>
+        <!-- CREATE TEMPLATE -->
+        <ng-container *ngIf="currentStep === 'create_template'">
+          <app-create-new-template-step
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('template_form')"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
+          </app-create-new-template-step>
+        </ng-container>
 
-          <app-step-four *ngSwitchCase="2" [steps]="steps" [currentStepIndex]="currentStepIndex"
-            (next)="goToStep(3)" (cancel)="handleStepCancel()" (back)="goToStep(1)">
-          </app-step-four>
+        <!-- TEMPLATE FORM -->
+        <ng-container *ngIf="currentStep === 'template_form'">
+          <app-create-new-template-form-step
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="navigateTo('motor_test')"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
+          </app-create-new-template-form-step>
+        </ng-container>
 
-
+        <!-- MOTOR TEST -->
+        <ng-container *ngIf="currentStep === 'motor_test'">
+          <app-drone-moter-test
+            [steps]="steps"
+            [currentStepIndex]="getCurrentStepIndex()"
+            (next)="closeWizard()"
+            (cancel)="handleStepCancel()"
+            (back)="goBack()"
+          >
+          </app-drone-moter-test>
         </ng-container>
       </div>
     </div>
@@ -124,5 +175,14 @@
 </div>
 
 <!-- Cancel Modal -->
-<app-confirm-cancel-model [show]="cancelModalVisible" (confirm)="cancelConfirmed()" (cancel)="cancelDismissed()">
+<app-confirm-cancel-model
+  [show]="cancelModalVisible"
+  (confirm)="cancelConfirmed()"
+  (cancel)="cancelDismissed()"
+>
 </app-confirm-cancel-model>
+<app-resume-session-modal
+  [show]="showResumeModal"
+  (resume)="onResume()"
+  (discard)="onDiscard()"
+></app-resume-session-modal>

@@ -2,7 +2,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
 import { AddDroneWizardStateService } from 'src/app/core/services/add-drone-wizard-state.service';
-import { AddDroneWizardState } from 'src/app/core/models/add-drone-wizard-state.model';
+import {
+  AddDroneWizardState,
+  WizardFlow,
+  StepType,
+} from 'src/app/core/models/add-drone-wizard-state.model';
 
 @Component({
   selector: 'app-add-drone',
@@ -10,136 +14,213 @@ import { AddDroneWizardState } from 'src/app/core/models/add-drone-wizard-state.
   styleUrls: ['./add-drone.component.scss'],
 })
 export class AddDroneComponent implements OnInit {
-  currentStepIndex = 0;
-  selectedFlow: any = null;
-
+  @Output() closeModal = new EventEmitter<void>(); // Renamed from 'close' to 'closeModal'
+  showResumeModal = false;
+  currentStep: StepType = 'initial';
+  selectedFlow: WizardFlow = null;
   cancelModalVisible = false;
 
-  @Output() close = new EventEmitter<void>();
+  steps: Step[] = [
+    { title: 'Step One', completed: false },
+    { title: 'Step Two', completed: false },
+    { title: 'Step Three', completed: false },
+    { title: 'Step Four', completed: false },
+    { title: 'Step Five', completed: false },
+    { title: 'Step Six', completed: false },
+    { title: 'Step Seven', completed: false },
+    { title: 'Step Eight', completed: false },
+    { title: 'Step Nine', completed: false },
+    { title: 'Step Eleven', completed: false },
+    { title: 'Step Twelve', completed: false },
+    { title: 'Step Thirteen', completed: false },
+    { title: 'Step Fourteen', completed: false },
+  ];
 
   constructor(
     private router: Router,
     private wizardStateService: AddDroneWizardStateService
   ) {}
 
-steps: Step[] = [
-  { title: 'Step One', completed: false },
-  { title: 'Step Two', completed: false },
-  { title: 'Step Three', completed: false },
-  { title: 'Step Four', completed: false },
-  { title: 'Step Five', completed: false },
-  { title: 'Step Six', completed: false },
-  { title: 'Step Seven', completed: false },
-  { title: 'Step Eight', completed: false },
-  { title: 'Step Nine', completed: false },
-  { title: 'Step Ten', completed: false },
-];
-
-
-
-  ngOnInit() {
-    const savedState = this.wizardStateService.load();
-    if (savedState) {
-      this.currentStepIndex = savedState.currentStepIndex;
-      this.selectedFlow = savedState.selectedFlow;
-      this.steps = savedState.steps;
+  ngOnInit(): void {
+    const saved = this.wizardStateService.load();
+    if (saved) {
+      this.currentStep = saved.currentStep ?? 'initial';
+      this.selectedFlow = saved.selectedFlow ?? null;
+      this.showResumeModal = true;
+      // prefer saved steps if present (to keep completed flags)
+      if (saved.steps?.length === this.steps.length) {
+        this.steps = saved.steps;
+      }
+    } else {
+      // prime fresh state
+      this.saveWizardStatePartial();
     }
   }
 
-goToStep(stepIndex: number, option?: any) {
-  console.log('goToStep CALLED → stepIndex:', stepIndex, 'option:', option);
-
-  // Step One: Yes / No flow
-  if (option === 'yes' || option === 'no') {
-    this.selectedFlow = option;
-    this.steps = option === 'yes' ? [...this.steps] : [...this.steps];
-    this.currentStepIndex = 0;
-    this.saveWizardState();
-    return;
+  /** Helper to get the current step index based on step type */
+  getCurrentStepIndex(): number {
+    switch (this.currentStep) {
+      case 'initial':
+        return 0;
+      case 'environment':
+        return 0;
+      case 'indoors_setup':
+      case 'outdoors_setup':
+        return 1;
+      case 'template_selection':
+        return 2;
+      case 'select_drone':
+        return 3;
+      case 'custom_drone':
+        return 4;
+      case 'drone_method':
+        return 5;
+      case 'tier_one':
+        return 6;
+      case 'template_type':
+        return 7;
+      case 'create_template':
+        return 8;
+      case 'template_form':
+        return 9;
+      case 'motor_test':
+        return 10;
+      default:
+        return 0;
+    }
   }
 
-  // Step Two: Indoors / Outdoors
-  if (option === 'indoors') {
-    this.selectedFlow = this.selectedFlow === 'yes' ? 'indoors_yes' : 'indoors_no';
-    this.currentStepIndex = 1;
-    this.saveWizardState();
-    return;
+  /** Child steps will emit (valueChange) here so we persist instantly */
+  onStepValueChange(stepType: StepType, value: any): void {
+    this.wizardStateService.saveStepData(stepType, value);
+    // keep state too
+    this.saveWizardStatePartial();
   }
 
-  if (option === 'outdoors') {
-    this.selectedFlow = this.selectedFlow === 'yes' ? 'outdoors_yes' : 'outdoors_no';
-    this.currentStepIndex = 100; // adjust according to your flow
-    this.saveWizardState();
-    return;
+  private markStepCompleted(stepType: StepType) {
+    const index = this.getCurrentStepIndex();
+    if (index >= 0 && index < this.steps.length) {
+      this.steps[index] = { ...this.steps[index], completed: true };
+    }
   }
 
-  // Step Three: Template selection
-  if (option === 'new_template') {
-    this.selectedFlow = 'new_template';
-    this.currentStepIndex = 2;
-    this.saveWizardState();
-    return;
+  /** Helper for child to read initial values */
+  getInitialValue(stepType: StepType): any {
+    return this.wizardStateService.getStepData(stepType);
   }
 
-  // Drone selection step
-  if (option === 'custom') {
-    this.selectedFlow = 'custom';
-    this.currentStepIndex = 4;
-    this.saveWizardState();
-    return;
+  /** Navigate to a step with optional flow update */
+  navigateTo(stepType: StepType, flowOrOption?: any): void {
+    // Mark current step as completed
+    this.markStepCompleted(this.currentStep);
+
+    // Handle flow updates - check if the flowOrOption is a valid WizardFlow
+    if (this.isWizardFlow(flowOrOption)) {
+      this.selectedFlow = flowOrOption;
+    }
+
+    // Update current step
+    this.currentStep = stepType;
+
+    // Save state
+    this.wizardStateService.goToStep(stepType, this.selectedFlow);
+    this.saveWizardStatePartial();
   }
 
-  if (option === 'tier1' || option === 'tier2' || option === 'already') {
-    this.selectedFlow = option;
-    this.currentStepIndex = 6;
-    this.saveWizardState();
-    return;
+  /** Type guard to check if a value is a valid WizardFlow */
+  private isWizardFlow(value: any): value is WizardFlow {
+    if (value === null) return true;
+
+    const validFlows = [
+      'yes',
+      'no',
+      'indoors_yes',
+      'outdoors_yes',
+      'indoors_no',
+      'outdoors_no',
+      'new_template',
+      'existing_template',
+      'custom',
+      'organization',
+      'marketplaceTemplate',
+      'droneMarketplace',
+      'tier1',
+      'tier2',
+      'already',
+    ];
+
+    return typeof value === 'string' && validFlows.includes(value);
   }
 
-  // Step Seven branching
-  if (option === 'existing' || option === 'new') {
-    this.currentStepIndex = 8;
-    this.saveWizardState();
-    return;
+  /** Handle back navigation */
+  goBack(): void {
+    const previousStep = this.wizardStateService.goBack();
+    if (previousStep) {
+      this.currentStep = previousStep;
+      // We may need to update the selectedFlow based on step type
+      const state = this.wizardStateService.load();
+      if (state) {
+        this.selectedFlow = state.selectedFlow;
+      }
+      this.saveWizardStatePartial();
+    }
   }
 
-  // Fallback: Normal step progression
-  if (this.steps.length > 0 && stepIndex > this.currentStepIndex) {
-    this.steps[this.currentStepIndex].completed = true;
+  private saveWizardStatePartial(): void {
+    this.wizardStateService.partialUpdate({
+      currentStep: this.currentStep,
+      selectedFlow: this.selectedFlow,
+      steps: this.steps,
+    });
   }
 
-  this.currentStepIndex = stepIndex;
-  this.saveWizardState();
-}
-
-// Helper function to save state in service
-private saveWizardState() {
-  this.wizardStateService.save({
-    currentStepIndex: this.currentStepIndex,
-    selectedFlow: this.selectedFlow,
-    steps: this.steps,
-  });
-}
-
-
-
-
-  handleStepCancel() {
+  handleStepCancel(): void {
     this.cancelModalVisible = true;
   }
 
-  cancelConfirmed() {
+  cancelConfirmed(): void {
     this.cancelModalVisible = false;
-    this.close.emit();
+    this.closeModal.emit(); // Updated to use the renamed output
     this.wizardStateService.clear();
   }
 
-  cancelDismissed() {
+  cancelDismissed(): void {
     this.cancelModalVisible = false;
+  }
+
+  onResume() {
+    const saved = this.wizardStateService.getSavedSession();
+
+    if (saved) {
+      try {
+        this.currentStep = saved.currentStep ?? 'initial';
+        this.selectedFlow = saved.selectedFlow ?? null;
+
+        if (saved.steps?.length === this.steps.length) {
+          this.steps = saved.steps;
+        }
+      } catch (err) {
+        console.error('Resume restore failed', err);
+        this.onDiscard();
+        return;
+      }
+    } else {
+      this.onDiscard();
+      return;
+    }
+
+    this.showResumeModal = false;
+  }
+
+  onDiscard() {
+    this.wizardStateService.clearSession();
+    this.currentStep = 'initial';
+    this.selectedFlow = null;
+    this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
+    this.showResumeModal = false;
   }
 
   closeWizard(): void {
     this.router.navigate(['/dashboard']);
-    this.wizardStateService.clear();
   }
 }

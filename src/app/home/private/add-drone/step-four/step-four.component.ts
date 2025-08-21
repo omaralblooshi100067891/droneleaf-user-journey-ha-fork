@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
+import { AddDroneWizardStateService } from 'src/app/core/services/add-drone-wizard-state.service';
 
 @Component({
   selector: 'app-step-four',
@@ -10,11 +11,15 @@ import { Step } from 'src/app/core/models/add-drone-stepper.model';
 })
 export class StepFourComponent implements OnInit {
   cancelModalVisible = false;
+
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
+
   @Output() next = new EventEmitter<number>();
   @Output() back = new EventEmitter<void>();
- axisX = '0.0';
+  @Output() cancel = new EventEmitter<void>();
+
+  axisX = '0.0';
   axisY = '0.0';
   axisZ = '0.0';
 
@@ -23,7 +28,11 @@ export class StepFourComponent implements OnInit {
   indoorPositioningTypes = ['OptiTrack', 'Vicon', 'Qualisys'];
   positioningSystemMakes = ['Make 1', 'Make 2', 'Make 3'];
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private wizardStateService: AddDroneWizardStateService
+  ) {}
 
   ngOnInit(): void {
     this.environmentForm = this.fb.group({
@@ -39,36 +48,51 @@ export class StepFourComponent implements OnInit {
       axisX: [''],
       axisZ: [''],
     });
+
+    // 🟢 Restore saved state if exists
+    const saved = this.wizardStateService.getStepData(this.currentStepIndex);
+    if (saved) {
+      this.environmentForm.patchValue(saved);
+    }
+
+    // 🟢 Auto-save whenever form changes
+    this.environmentForm.valueChanges.subscribe((val) => {
+      this.wizardStateService.saveStepData(this.currentStepIndex, val);
+    });
   }
 
+  // -------- Cancel Flow --------
   showCancelModal() {
     this.cancelModalVisible = true;
   }
 
   cancelConfirmed() {
     this.cancelModalVisible = false;
-    console.log('Cancelled');
-    this.router.navigate(['/dashboard']); // Or whatever route
+    this.router.navigate(['/dashboard']);
   }
 
-  onContinue() {
-    if (this.environmentForm.valid) {
-      this.next.emit(4);
-    } else {
-      this.environmentForm.markAllAsTouched();
-    }
-  }
   cancelDismissed() {
     this.cancelModalVisible = false;
   }
 
-  onBack() {
-    this.back.emit();
-  }
-
-  @Output() cancel = new EventEmitter<void>();
-
   onCancelClick() {
     this.cancel.emit();
+  }
+
+  // -------- Navigation --------
+  onContinue() {
+    if (this.environmentForm.valid) {
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.environmentForm.value
+      );
+      this.next.emit(this.currentStepIndex + 1); // 🔥 next step index bhejo
+    } else {
+      this.environmentForm.markAllAsTouched();
+    }
+  }
+
+  onBack() {
+    this.back.emit();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Step } from 'src/app/core/models/add-drone-stepper.model';
+import { AddDroneWizardStateService } from 'src/app/core/services/add-drone-wizard-state.service';
 
 interface GeometryOption {
   name: string;
@@ -17,23 +18,38 @@ export class CreateNewTemplateStepComponent implements OnInit {
   @Output() next = new EventEmitter<void>();
   @Output() back = new EventEmitter<void>();
 
-
-
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
+
   selectedGeometry: string | null = null;
+  selectedOption: string | null = null;
+
   geometryOptions: GeometryOption[] = [
-    { name: 'Quadrotor', image: '../../../../../assets/svgs/private/Quadrotor.svg' },
-    { name: 'Hexarotor', image: '../../../../../assets/svgs/private/Hexarotor.svg' },
-    { name: 'Octorotor', image: '../../../../../assets/svgs/private/Octorotor.svg' },
-    { name: 'Octorotor Coaxial', image: '../../../../../assets/svgs/private/Octorotor Coaxial .svg' },
+    {
+      name: 'Quadrotor',
+      image: '../../../../../assets/svgs/private/Quadrotor.svg',
+    },
+    {
+      name: 'Hexarotor',
+      image: '../../../../../assets/svgs/private/Hexarotor.svg',
+    },
+    {
+      name: 'Octorotor',
+      image: '../../../../../assets/svgs/private/Octorotor.svg',
+    },
+    {
+      name: 'Octorotor Coaxial',
+      image: '../../../../../assets/svgs/private/Octorotor Coaxial .svg',
+    },
   ];
 
-  selectedOption: string | null = null; // ✅ for button disable state
   form: FormGroup;
-  cancelModalVisible = false; // ✅ for modal
+  cancelModalVisible = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private wizardStateService: AddDroneWizardStateService
+  ) {
     this.form = this.fb.group({
       geometry: [null, Validators.required],
       motorDistance: [null, Validators.required],
@@ -42,18 +58,42 @@ export class CreateNewTemplateStepComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    // 🟢 Restore state if available
+    const saved = this.wizardStateService.getStepData(this.currentStepIndex);
+    if (saved) {
+      this.form.patchValue(saved);
 
-selectGeometry(option: GeometryOption) {
-  this.selectedGeometry = option.name;   // 👈 active card ke liye
-  this.selectedOption = option.name;     // 👈 button ke liye
-  this.form.patchValue({ geometry: option.name });
-}
+      if (saved.geometry) {
+        this.selectedGeometry = saved.geometry;
+        this.selectedOption = saved.geometry;
+      }
+    }
 
+    // 🟢 Auto-save on form changes
+    this.form.valueChanges.subscribe((val) => {
+      this.wizardStateService.saveStepData(this.currentStepIndex, val);
+    });
+  }
+
+  selectGeometry(option: GeometryOption) {
+    this.selectedGeometry = option.name;
+    this.selectedOption = option.name;
+    this.form.patchValue({ geometry: option.name });
+
+    // 🟢 Save immediately
+    this.wizardStateService.saveStepData(
+      this.currentStepIndex,
+      this.form.value
+    );
+  }
 
   continue() {
     if (this.form.valid && this.selectedOption) {
-      console.log('Form Data:', this.form.value);
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.form.value
+      );
       this.next.emit();
     } else {
       this.form.markAllAsTouched();
@@ -64,9 +104,9 @@ selectGeometry(option: GeometryOption) {
     this.cancelModalVisible = true;
   }
 
-
   cancelConfirmed() {
     this.cancelModalVisible = false;
+    this.wizardStateService.clear(); // 🟢 full wizard reset
     this.cancel.emit();
   }
 
