@@ -14,7 +14,7 @@ export class StepThreeComponent implements OnInit {
   cancelModalVisible = false;
 
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
 
   @Output() next = new EventEmitter<StepThreeOption>();
   @Output() back = new EventEmitter<void>();

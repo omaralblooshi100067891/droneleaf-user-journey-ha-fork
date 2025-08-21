@@ -13,7 +13,7 @@ export class StepFourComponent implements OnInit {
   cancelModalVisible = false;
 
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
 
   @Output() next = new EventEmitter<number>();
   @Output() back = new EventEmitter<void>();
@@ -80,17 +80,17 @@ export class StepFourComponent implements OnInit {
   }
 
   // -------- Navigation --------
-onContinue() {
-  if (this.environmentForm.valid) {
-    this.wizardStateService.saveStepData(
-      this.currentStepIndex,
-      this.environmentForm.value
-    );
-    this.next.emit(this.currentStepIndex + 1); // 🔥 next step index bhejo
-  } else {
-    this.environmentForm.markAllAsTouched();
+  onContinue() {
+    if (this.environmentForm.valid) {
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.environmentForm.value
+      );
+      this.next.emit(this.currentStepIndex + 1); // 🔥 next step index bhejo
+    } else {
+      this.environmentForm.markAllAsTouched();
+    }
   }
-}
 
   onBack() {
     this.back.emit();

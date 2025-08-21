@@ -18,9 +18,32 @@ export type WizardFlow =
   | 'already'
   | null;
 
+export type StepType =
+  | 'initial'
+  | 'environment'
+  | 'indoors_setup'
+  | 'outdoors_setup'
+  | 'template_selection'
+  | 'select_drone'
+  | 'custom_drone'
+  | 'drone_method'
+  | 'tier_one'
+  | 'template_type'
+  | 'create_template'
+  | 'template_form'
+  | 'motor_test';
+
+export interface StepNode {
+  type: StepType;
+  flow: WizardFlow;
+  parent?: StepType; // For back navigation
+  data?: any; // Step-specific data
+}
+
 export interface AddDroneWizardState {
-  currentStepIndex: number;
+  currentStep: StepType;
+  stepHistory: StepType[]; // For back navigation
   selectedFlow: WizardFlow;
   steps: Step[];
-  stepData: { [stepIndex: number]: any };
+  stepData: { [stepType: string]: any };
 }

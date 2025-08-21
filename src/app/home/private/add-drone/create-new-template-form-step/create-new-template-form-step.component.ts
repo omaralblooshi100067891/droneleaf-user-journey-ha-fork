@@ -14,12 +14,20 @@ export class CreateNewTemplateFormStepComponent implements OnInit {
   @Output() back = new EventEmitter<void>();
 
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
 
   powerSystemForm!: FormGroup;
   cancelModalVisible = false;
 
-  batteryManufacturers = ['Acehe', 'Bonka Power', 'CNHL (China Hobby Line)','Desire Power','Dinogy','E-Flite','Floureon'];
+  batteryManufacturers = [
+    'Acehe',
+    'Bonka Power',
+    'CNHL (China Hobby Line)',
+    'Desire Power',
+    'Dinogy',
+    'E-Flite',
+    'Floureon',
+  ];
   batteryChemistries = ['LiPo', 'Li-ion', 'NiMH'];
   escManufacturers = ['Hobbywing', 'DJI', 'T-Motor'];
   escVoltages = ['6V', '12V', '24V', '48V'];
@@ -69,7 +77,7 @@ export class CreateNewTemplateFormStepComponent implements OnInit {
     }
 
     // 🟢 Auto-save on form change
-    this.powerSystemForm.valueChanges.subscribe(val => {
+    this.powerSystemForm.valueChanges.subscribe((val) => {
       this.wizardStateService.saveStepData(this.currentStepIndex, val);
     });
   }
@@ -77,7 +85,10 @@ export class CreateNewTemplateFormStepComponent implements OnInit {
   continue() {
     if (this.powerSystemForm.valid) {
       // 🟢 Save latest before moving next
-      this.wizardStateService.saveStepData(this.currentStepIndex, this.powerSystemForm.value);
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.powerSystemForm.value
+      );
       this.next.emit();
     } else {
       this.powerSystemForm.markAllAsTouched();

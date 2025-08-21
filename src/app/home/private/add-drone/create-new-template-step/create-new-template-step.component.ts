@@ -19,16 +19,28 @@ export class CreateNewTemplateStepComponent implements OnInit {
   @Output() back = new EventEmitter<void>();
 
   @Input() steps!: Step[];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
 
   selectedGeometry: string | null = null;
   selectedOption: string | null = null;
 
   geometryOptions: GeometryOption[] = [
-    { name: 'Quadrotor', image: '../../../../../assets/svgs/private/Quadrotor.svg' },
-    { name: 'Hexarotor', image: '../../../../../assets/svgs/private/Hexarotor.svg' },
-    { name: 'Octorotor', image: '../../../../../assets/svgs/private/Octorotor.svg' },
-    { name: 'Octorotor Coaxial', image: '../../../../../assets/svgs/private/Octorotor Coaxial .svg' },
+    {
+      name: 'Quadrotor',
+      image: '../../../../../assets/svgs/private/Quadrotor.svg',
+    },
+    {
+      name: 'Hexarotor',
+      image: '../../../../../assets/svgs/private/Hexarotor.svg',
+    },
+    {
+      name: 'Octorotor',
+      image: '../../../../../assets/svgs/private/Octorotor.svg',
+    },
+    {
+      name: 'Octorotor Coaxial',
+      image: '../../../../../assets/svgs/private/Octorotor Coaxial .svg',
+    },
   ];
 
   form: FormGroup;
@@ -70,12 +82,18 @@ export class CreateNewTemplateStepComponent implements OnInit {
     this.form.patchValue({ geometry: option.name });
 
     // 🟢 Save immediately
-    this.wizardStateService.saveStepData(this.currentStepIndex, this.form.value);
+    this.wizardStateService.saveStepData(
+      this.currentStepIndex,
+      this.form.value
+    );
   }
 
   continue() {
     if (this.form.valid && this.selectedOption) {
-      this.wizardStateService.saveStepData(this.currentStepIndex, this.form.value);
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.form.value
+      );
       this.next.emit();
     } else {
       this.form.markAllAsTouched();

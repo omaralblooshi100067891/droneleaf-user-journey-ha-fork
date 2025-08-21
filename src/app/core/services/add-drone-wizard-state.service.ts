@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AddDroneWizardState } from '../models/add-drone-wizard-state.model';
+import {
+  AddDroneWizardState,
+  StepType,
+  WizardFlow,
+} from '../models/add-drone-wizard-state.model';
 
 @Injectable({ providedIn: 'root' })
 export class AddDroneWizardStateService {
-  private STORAGE_KEY = 'droneWizard';   // ✅ Single consistent key
+  private STORAGE_KEY = 'droneWizard';
   private wizardActive = false;
 
   // ---- Core Save/Load ----
@@ -17,7 +21,8 @@ export class AddDroneWizardStateService {
     try {
       const parsed = JSON.parse(data) as AddDroneWizardState;
       return {
-        currentStepIndex: parsed.currentStepIndex ?? 0,
+        currentStep: parsed.currentStep ?? 'initial',
+        stepHistory: parsed.stepHistory ?? [],
         selectedFlow: parsed.selectedFlow ?? null,
         steps: parsed.steps ?? [],
         stepData: parsed.stepData ?? {},
@@ -34,7 +39,8 @@ export class AddDroneWizardStateService {
 
   private defaultState(): AddDroneWizardState {
     return {
-      currentStepIndex: 0,
+      currentStep: 'initial',
+      stepHistory: [],
       selectedFlow: null,
       steps: [],
       stepData: {},
@@ -53,24 +59,59 @@ export class AddDroneWizardStateService {
     return merged;
   }
 
+  // ---- Step Navigation ----
+  goToStep(stepType: StepType, flow?: WizardFlow): void {
+    const current = this.load() ?? this.defaultState();
+
+    // Save history for back navigation
+    const stepHistory = [...current.stepHistory];
+    if (current.currentStep) {
+      stepHistory.push(current.currentStep);
+    }
+
+    this.partialUpdate({
+      currentStep: stepType,
+      stepHistory,
+      selectedFlow: flow ?? current.selectedFlow,
+    });
+  }
+
+  goBack(): StepType | null {
+    const current = this.load() ?? this.defaultState();
+    if (current.stepHistory.length === 0) {
+      return null;
+    }
+
+    // Pop the last step from history
+    const stepHistory = [...current.stepHistory];
+    const previousStep = stepHistory.pop() || 'initial';
+
+    this.partialUpdate({
+      currentStep: previousStep,
+      stepHistory,
+    });
+
+    return previousStep;
+  }
+
   // ---- Per-step Form Data ----
-  saveStepData(stepIndex: number, data: any): void {
+  saveStepData(stepType: StepType, data: any): void {
     const current = this.load() ?? this.defaultState();
     const stepData = { ...(current.stepData ?? {}) };
-    stepData[stepIndex] = data;
+    stepData[stepType] = data;
     this.partialUpdate({ stepData });
   }
 
-  getStepData<T = any>(stepIndex: number): T | null {
+  getStepData<T = any>(stepType: StepType): T | null {
     const state = this.load();
-    return state?.stepData ? (state.stepData[stepIndex] as T) ?? null : null;
+    return state?.stepData ? (state.stepData[stepType] as T) ?? null : null;
   }
 
-  clearStepData(stepIndex: number): void {
+  clearStepData(stepType: StepType): void {
     const state = this.load();
     if (!state?.stepData) return;
     const stepData = { ...state.stepData };
-    delete stepData[stepIndex];
+    delete stepData[stepType];
     this.partialUpdate({ stepData });
   }
 

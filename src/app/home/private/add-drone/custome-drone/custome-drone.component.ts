@@ -15,7 +15,7 @@ export class CustomeDroneComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   @Input() steps: Step[] = [];
-  @Input() currentStepIndex!: number;
+  @Input() currentStepIndex!: any;
 
   cancelModalVisible = false;
   form!: FormGroup;
@@ -70,7 +70,10 @@ export class CustomeDroneComponent implements OnInit {
   submit(): void {
     if (this.form.valid) {
       // save final state explicitly
-      this.wizardStateService.saveStepData(this.currentStepIndex, this.form.value);
+      this.wizardStateService.saveStepData(
+        this.currentStepIndex,
+        this.form.value
+      );
       this.next.emit();
     } else {
       this.form.markAllAsTouched();
