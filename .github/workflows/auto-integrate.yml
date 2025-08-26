@@ -1,9 +1,10 @@
 name: Auto-integrate to DroneLeaf/DroneLeaf_WebClient
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
-      - main
+      - feat/autointegrate-ghaction
 
 concurrency:
   group: auto-integrate-${{ github.ref_name }}
@@ -13,6 +14,7 @@ jobs:
   sync-and-pr:
     name: Sync mapped files to target repo and open PR
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
 
     # GITHUB_TOKEN is used to read this repo; a PAT is required for the private target repo
     permissions:
@@ -48,7 +50,7 @@ jobs:
 
       - name: Clone target repo and create/update branch from base
         env:
-          GH_PAT: ${{ secrets.TARGET_REPO_TOKEN }}
+          GH_PAT: ${{ secrets.TOKEN }}
         run: |
           set -euo pipefail
           : "${OWNER:?}"
