@@ -151,7 +151,7 @@ jobs:
 
       - name: Commit and push changes to target branch
         env:
-          GH_PAT: ${{ secrets.TARGET_REPO_TOKEN }}
+          GH_PAT: ${{ secrets.TOKEN }}
         run: |
           set -euo pipefail
           cd target_repo
@@ -170,7 +170,7 @@ jobs:
       - name: Create or update PR in target repo
         if: env.NO_CHANGES != 'true'
         env:
-          GH_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
         run: |
           set -euo pipefail
           : "${OWNER:?}${TARGET_REPO:?}${TARGET_BASE:?}${TARGET_BRANCH:?}"
