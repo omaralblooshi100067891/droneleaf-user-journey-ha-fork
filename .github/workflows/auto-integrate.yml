@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [closed]
     branches:
-      - feat/autointegrate-ghaction
+      - main
 
 concurrency:
   group: auto-integrate-${{ github.ref_name }}
