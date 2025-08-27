@@ -167,19 +167,36 @@ jobs:
                           shutil.copy2(match, dst)
                           print(f"  Copied file: {rel_path} -> {dst.relative_to(TGT_ROOT)}")
                       elif match.is_dir():
-                          if dst.exists():
-                              if dst.is_dir():
-                                  shutil.rmtree(dst)
-                              else:
-                                  dst.unlink()
-                          if recursive:
-                              shutil.copytree(match, dst)
-                          else:
-                              dst.mkdir(parents=True, exist_ok=True)
-                              for item in match.iterdir():
-                                  if item.is_file():
-                                      shutil.copy2(item, dst / item.name)
-                          print(f"  Copied dir: {rel_path} -> {dst.relative_to(TGT_ROOT)}")
+                          # For wildcard matches, use additive/merge behavior for directories
+                          def copy_dir_additive(src_dir, dst_dir, recursive_flag):
+                              """Copy directory contents additively (merge, don't replace)"""
+                              dst_dir.mkdir(parents=True, exist_ok=True)
+                              
+                              for item in src_dir.iterdir():
+                                  src_item = item
+                                  dst_item = dst_dir / item.name
+                                  
+                                  if src_item.is_file():
+                                      # Always overwrite files
+                                      if dst_item.exists() and dst_item.is_file():
+                                          dst_item.unlink()
+                                      elif dst_item.exists() and dst_item.is_dir():
+                                          # Remove conflicting directory
+                                          shutil.rmtree(dst_item)
+                                      shutil.copy2(src_item, dst_item)
+                                  elif src_item.is_dir() and recursive_flag:
+                                      # Recursively merge subdirectories
+                                      copy_dir_additive(src_item, dst_item, recursive_flag)
+                                  elif src_item.is_dir() and not recursive_flag:
+                                      # Non-recursive: only create empty directory
+                                      dst_item.mkdir(exist_ok=True)
+                          
+                          # Remove conflicting file if destination exists as file
+                          if dst.exists() and dst.is_file():
+                              dst.unlink()
+                          
+                          copy_dir_additive(match, dst, recursive)
+                          print(f"  Merged dir: {rel_path} -> {dst.relative_to(TGT_ROOT)}")
               else:
                   # Original non-wildcard logic (unchanged for compatibility)
                   src = (SRC_ROOT / src_rel).resolve()
