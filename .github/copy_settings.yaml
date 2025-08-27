@@ -2,9 +2,8 @@
 # This file defines which files/directories to copy from this repo to the target repo
 
 mappings:
-  - from: "src/assets"
-    to: "src/assets"
-    type: "dir"
+  - from: "src/assets/*"
+    to: "src/assets/"
     recursive: true
 
   - from: "src/app/auth"
@@ -65,53 +64,56 @@ mappings:
     recursive: true
 
   # core new components
-  # core button
-  - from: "src/app/core/components/button"
-    to: "src/app/core/components/button"
-    type: "dir"
+  - from: "src/app/core/components/*"
+    to: "src/app/core/components/"
     recursive: true
+  # # core button
+  # - from: "src/app/core/components/button"
+  #   to: "src/app/core/components/button"
+  #   type: "dir"
+  #   recursive: true
 
-  # core confirm-cancel-model
-  - from: "src/app/core/components/confirm-cancel-model"
-    to: "src/app/core/components/confirm-cancel-model"
-    type: "dir"
-    recursive: true
+  # # core confirm-cancel-model
+  # - from: "src/app/core/components/confirm-cancel-model"
+  #   to: "src/app/core/components/confirm-cancel-model"
+  #   type: "dir"
+  #   recursive: true
 
-  # core help button
-  - from: "src/app/core/components/help-button"
-    to: "src/app/core/components/help-button"
-    type: "dir"
-    recursive: true
+  # # core help button
+  # - from: "src/app/core/components/help-button"
+  #   to: "src/app/core/components/help-button"
+  #   type: "dir"
+  #   recursive: true
 
-  # core input
-  - from: "src/app/core/components/input"
-    to: "src/app/core/components/input"
-    type: "dir"
-    recursive: true
+  # # core input
+  # - from: "src/app/core/components/input"
+  #   to: "src/app/core/components/input"
+  #   type: "dir"
+  #   recursive: true
 
-  # core inputs
-  - from: "src/app/core/components/inputs"
-    to: "src/app/core/components/inputs"
-    type: "dir"
-    recursive: true
+  # # core inputs
+  # - from: "src/app/core/components/inputs"
+  #   to: "src/app/core/components/inputs"
+  #   type: "dir"
+  #   recursive: true
 
-  # core phone-input
-  - from: "src/app/core/components/phone-input"
-    to: "src/app/core/components/phone-input"
-    type: "dir"
-    recursive: true
+  # # core phone-input
+  # - from: "src/app/core/components/phone-input"
+  #   to: "src/app/core/components/phone-input"
+  #   type: "dir"
+  #   recursive: true
 
-  # core select-input
-  - from: "src/app/core/components/select-input"
-    to: "src/app/core/components/select-input"
-    type: "dir"
-    recursive: true
+  # # core select-input
+  # - from: "src/app/core/components/select-input"
+  #   to: "src/app/core/components/select-input"
+  #   type: "dir"
+  #   recursive: true
 
-  # core toast
-  - from: "src/app/core/components/toast"
-    to: "src/app/core/components/toast"
-    type: "dir"
-    recursive: true
+  # # core toast
+  # - from: "src/app/core/components/toast"
+  #   to: "src/app/core/components/toast"
+  #   type: "dir"
+  #   recursive: true
 
   # core data
   - from: "src/app/core/data"
