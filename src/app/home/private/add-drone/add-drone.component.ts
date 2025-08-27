@@ -214,7 +214,7 @@ export class AddDroneComponent implements OnInit {
 
   onDiscard() {
     this.wizardStateService.clearSession();
-    this.currentStep = 'meowmeowe';
+    this.currentStep = 'meowmeowae';
     this.selectedFlow = null;
     this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
     this.showResumeModal = false;
