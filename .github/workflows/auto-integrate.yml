@@ -24,9 +24,9 @@ jobs:
     env:
       OWNER: ${{ github.repository_owner }} # override if target repo lives under a different owner
       TARGET_REPO: DroneLeaf_WebClient
-      TARGET_BASE: env/prod
+      TARGET_BASE: feat/migration-new
       SOURCE_BRANCH: ${{ github.ref_name }}
-      TARGET_BRANCH: auto-integrate-br/${{ github.ref_name }}
+      TARGET_BRANCH: auto-integrate-br
 
     steps:
       - name: Checkout source repo
@@ -71,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
           python << 'PY'
-          import os, sys, shutil, yaml, pathlib
+          import os, sys, shutil, yaml, pathlib, glob
 
           SRC_ROOT = pathlib.Path(os.getenv('GITHUB_WORKSPACE', '.')).resolve()
           TGT_ROOT = pathlib.Path('target_repo').resolve()
@@ -90,6 +90,29 @@ jobs:
           def ensure_parent(p: pathlib.Path):
               p.parent.mkdir(parents=True, exist_ok=True)
 
+          # Utility: check if path contains wildcards
+          def has_wildcards(path_str):
+              return '*' in path_str or '?' in path_str or '[' in path_str
+
+          # Utility: safely resolve glob patterns
+          def safe_glob(pattern, root):
+              """Safely resolve glob patterns relative to root directory"""
+              try:
+                  # Use glob with root_dir parameter for safer globbing
+                  matches = list(pathlib.Path(root).glob(pattern))
+                  # Filter to ensure all matches are within the root
+                  safe_matches = []
+                  for match in matches:
+                      try:
+                          resolved = match.resolve()
+                          if str(resolved).startswith(str(root)):
+                              safe_matches.append(resolved)
+                      except (OSError, ValueError):
+                          continue
+                  return safe_matches
+              except (OSError, ValueError):
+                  return []
+
           # Copy logic
           for i, entry in enumerate(mappings, 1):
               src_rel = entry.get('from') or entry.get('src')
@@ -101,50 +124,108 @@ jobs:
                   print(f"Mapping #{i} missing 'from'/'to'.", file=sys.stderr)
                   sys.exit(1)
 
-              src = (SRC_ROOT / src_rel).resolve()
-              dst = (TGT_ROOT / dst_rel).resolve()
-
-              if not str(src).startswith(str(SRC_ROOT)):
-                  print(f"Source path escapes repo: {src}", file=sys.stderr)
-                  sys.exit(1)
-              if not str(dst).startswith(str(TGT_ROOT)):
-                  print(f"Destination path escapes target: {dst}", file=sys.stderr)
-                  sys.exit(1)
-
-              if not src.exists():
-                  print(f"Source does not exist: {src}", file=sys.stderr)
-                  sys.exit(1)
-
-              # Infer mode if omitted
-              if not mode:
-                  mode = 'dir' if src.is_dir() else 'file'
-
-              print(f"[{i}] {mode}: {src_rel} -> {dst_rel} (recursive={recursive})")
-
-              if mode == 'file':
-                  ensure_parent(dst)
-                  # Remove existing file if present to avoid stale content
-                  if dst.exists() and dst.is_file():
-                      dst.unlink()
-                  shutil.copy2(src, dst)
-              elif mode == 'dir':
-                  if dst.exists():
-                      # Remove existing destination to get a clean mirror
-                      if dst.is_dir():
-                          shutil.rmtree(dst)
+              # Handle wildcard patterns in source
+              if has_wildcards(src_rel):
+                  print(f"[{i}] glob: {src_rel} -> {dst_rel} (recursive={recursive})")
+                  
+                  # Find all matching files/dirs
+                  matches = safe_glob(src_rel, SRC_ROOT)
+                  
+                  if not matches:
+                      print(f"Warning: No matches found for glob pattern: {src_rel}")
+                      continue
+                  
+                  for match in matches:
+                      # Calculate relative path from source root
+                      try:
+                          rel_path = match.relative_to(SRC_ROOT)
+                      except ValueError:
+                          print(f"Skipping match outside source root: {match}")
+                          continue
+                      
+                      # Determine destination path
+                      if dst_rel.endswith('/') or pathlib.Path(dst_rel).suffix == '':
+                          # Destination is a directory, preserve source filename/dirname
+                          dst = (TGT_ROOT / dst_rel / match.name).resolve()
                       else:
-                          dst.unlink()
-                  if recursive:
-                      shutil.copytree(src, dst)
-                  else:
-                      # non-recursive: copy only immediate children files
-                      dst.mkdir(parents=True, exist_ok=True)
-                      for item in src.iterdir():
-                          if item.is_file():
-                              shutil.copy2(item, dst / item.name)
+                          # Direct mapping - only works if single match
+                          if len(matches) > 1:
+                              print(f"Error: Multiple glob matches but destination is not a directory: {dst_rel}", file=sys.stderr)
+                              sys.exit(1)
+                          dst = (TGT_ROOT / dst_rel).resolve()
+                      
+                      # Security check
+                      if not str(dst).startswith(str(TGT_ROOT)):
+                          print(f"Destination path escapes target: {dst}", file=sys.stderr)
+                          sys.exit(1)
+                      
+                      # Perform copy based on source type
+                      if match.is_file():
+                          ensure_parent(dst)
+                          if dst.exists() and dst.is_file():
+                              dst.unlink()
+                          shutil.copy2(match, dst)
+                          print(f"  Copied file: {rel_path} -> {dst.relative_to(TGT_ROOT)}")
+                      elif match.is_dir():
+                          if dst.exists():
+                              if dst.is_dir():
+                                  shutil.rmtree(dst)
+                              else:
+                                  dst.unlink()
+                          if recursive:
+                              shutil.copytree(match, dst)
+                          else:
+                              dst.mkdir(parents=True, exist_ok=True)
+                              for item in match.iterdir():
+                                  if item.is_file():
+                                      shutil.copy2(item, dst / item.name)
+                          print(f"  Copied dir: {rel_path} -> {dst.relative_to(TGT_ROOT)}")
               else:
-                  print(f"Unsupported type in mapping #{i}: {mode}", file=sys.stderr)
-                  sys.exit(1)
+                  # Original non-wildcard logic (unchanged for compatibility)
+                  src = (SRC_ROOT / src_rel).resolve()
+                  dst = (TGT_ROOT / dst_rel).resolve()
+
+                  if not str(src).startswith(str(SRC_ROOT)):
+                      print(f"Source path escapes repo: {src}", file=sys.stderr)
+                      sys.exit(1)
+                  if not str(dst).startswith(str(TGT_ROOT)):
+                      print(f"Destination path escapes target: {dst}", file=sys.stderr)
+                      sys.exit(1)
+
+                  if not src.exists():
+                      print(f"Source does not exist: {src}", file=sys.stderr)
+                      sys.exit(1)
+
+                  # Infer mode if omitted
+                  if not mode:
+                      mode = 'dir' if src.is_dir() else 'file'
+
+                  print(f"[{i}] {mode}: {src_rel} -> {dst_rel} (recursive={recursive})")
+
+                  if mode == 'file':
+                      ensure_parent(dst)
+                      # Remove existing file if present to avoid stale content
+                      if dst.exists() and dst.is_file():
+                          dst.unlink()
+                      shutil.copy2(src, dst)
+                  elif mode == 'dir':
+                      if dst.exists():
+                          # Remove existing destination to get a clean mirror
+                          if dst.is_dir():
+                              shutil.rmtree(dst)
+                          else:
+                              dst.unlink()
+                      if recursive:
+                          shutil.copytree(src, dst)
+                      else:
+                          # non-recursive: copy only immediate children files
+                          dst.mkdir(parents=True, exist_ok=True)
+                          for item in src.iterdir():
+                              if item.is_file():
+                                  shutil.copy2(item, dst / item.name)
+                  else:
+                      print(f"Unsupported type in mapping #{i}: {mode}", file=sys.stderr)
+                      sys.exit(1)
 
           print('Copy operations completed.')
           PY
@@ -183,7 +264,7 @@ jobs:
             --base "${TARGET_BASE}" \
             --json number --jq '.[0].number') || true
 
-          PR_TITLE="Auto integrate: ${SOURCE_BRANCH} → ${TARGET_BASE}"
+          PR_TITLE="Auto integrate: droneleaf-user-journey-ha/${SOURCE_BRANCH} → ${TARGET_BASE}"
           PR_BODY=$(cat <<'EOB'
           This PR was auto-created by the **Auto-integrate** workflow.
 
