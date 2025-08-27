@@ -67,6 +67,8 @@ mappings:
   - from: "src/app/core/*"
     to: "src/app/core/"
     recursive: true
+    ignore:
+      - "src/app/core/core.module.ts"
   # # core button
   # - from: "src/app/core/components/button"
   #   to: "src/app/core/components/button"

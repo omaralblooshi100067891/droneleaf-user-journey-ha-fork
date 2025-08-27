@@ -24,7 +24,7 @@ jobs:
     env:
       OWNER: ${{ github.repository_owner }} # override if target repo lives under a different owner
       TARGET_REPO: DroneLeaf_WebClient
-      TARGET_BASE: dev-new-uj
+      TARGET_BASE: auto-migration-br
       SOURCE_BRANCH: ${{ github.ref_name }}
       TARGET_BRANCH: auto-migration-br
 
@@ -113,12 +113,42 @@ jobs:
               except (OSError, ValueError):
                   return []
 
+          # Utility: check if path should be ignored based on ignore patterns
+          def should_ignore(path, ignore_patterns, src_root):
+              """Check if a path should be ignored based on ignore patterns"""
+              if not ignore_patterns:
+                  return False
+              
+              try:
+                  rel_path = path.relative_to(src_root)
+                  rel_path_str = str(rel_path)
+                  
+                  for pattern in ignore_patterns:
+                      # Support both glob patterns and exact matches
+                      if has_wildcards(pattern):
+                          # Use glob matching
+                          import fnmatch
+                          if fnmatch.fnmatch(rel_path_str, pattern):
+                              return True
+                      else:
+                          # Exact path matching
+                          if rel_path_str == pattern or rel_path_str.startswith(pattern + '/'):
+                              return True
+              except ValueError:
+                  pass
+              return False
+
           # Copy logic
           for i, entry in enumerate(mappings, 1):
               src_rel = entry.get('from') or entry.get('src')
               dst_rel = entry.get('to') or entry.get('dest')
               mode = (entry.get('type') or entry.get('mode') or '').lower()
               recursive = entry.get('recursive', True)
+              ignore_patterns = entry.get('ignore') or entry.get('exclude') or []
+              
+              # Ensure ignore_patterns is a list
+              if isinstance(ignore_patterns, str):
+                  ignore_patterns = [ignore_patterns]
 
               if not src_rel or not dst_rel:
                   print(f"Mapping #{i} missing 'from'/'to'.", file=sys.stderr)
@@ -141,6 +171,11 @@ jobs:
                           rel_path = match.relative_to(SRC_ROOT)
                       except ValueError:
                           print(f"Skipping match outside source root: {match}")
+                          continue
+                      
+                      # Check if this match should be ignored
+                      if should_ignore(match, ignore_patterns, SRC_ROOT):
+                          print(f"  Ignoring: {rel_path}")
                           continue
                       
                       # Determine destination path
@@ -175,6 +210,10 @@ jobs:
                               for item in src_dir.iterdir():
                                   src_item = item
                                   dst_item = dst_dir / item.name
+                                  
+                                  # Check if this item should be ignored
+                                  if should_ignore(src_item, ignore_patterns, SRC_ROOT):
+                                      continue
                                   
                                   if src_item.is_file():
                                       # Always overwrite files
@@ -213,6 +252,11 @@ jobs:
                       print(f"Source does not exist: {src}", file=sys.stderr)
                       sys.exit(1)
 
+                  # Check if this source should be ignored
+                  if should_ignore(src, ignore_patterns, SRC_ROOT):
+                      print(f"[{i}] Ignoring: {src_rel}")
+                      continue
+
                   # Infer mode if omitted
                   if not mode:
                       mode = 'dir' if src.is_dir() else 'file'
@@ -238,6 +282,9 @@ jobs:
                           # non-recursive: copy only immediate children files
                           dst.mkdir(parents=True, exist_ok=True)
                           for item in src.iterdir():
+                              # Check if this item should be ignored
+                              if should_ignore(item, ignore_patterns, SRC_ROOT):
+                                  continue
                               if item.is_file():
                                   shutil.copy2(item, dst / item.name)
                   else:
