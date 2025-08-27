@@ -222,30 +222,54 @@ export class AddDroneComponent implements OnInit {
   }
 
   closeWizard(): void {
-    custom lgoci yay]
+    ALL THIS SHOULD CONFLIFCT!!!
+    this.wizardStateService.clearSession();
+    this.currentStep = 'meowmeowae';
+    this.selectedFlow = null;
+    this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
+    this.showResumeModal = false;
+    this.wizardStateService.clearSession();
+    this.currentStep = 'meowmeowae';
+    this.selectedFlow = null;
+    this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
+    this.showResumeModal = false;
+    this.wizardStateService.clearSession();
+    this.currentStep = 'meowmeowae';
+    this.selectedFlow = null;
+    this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
+    this.showResumeModal = false;
+    this.wizardStateService.clearSession();
+    this.currentStep = 'meowmeowae';
+    this.selectedFlow = null;
+    this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
+    this.showResumeModal = false;
 
-    ads
-    FontFaceSetLoadEventfs
-    dafsd
-    FileSystemFileHandledsf
-    sdf
-    dsf
-    ds
-    falsedsf
-    DataTransfersdf
-    DataTransferdsf
-    DataTransfersdf
-    DataTransfersdf
-    this.saveWizardStatePartialdsf
-    asdf
-    export const validator = (parameters: any): AsyncValidatorFn =>
-      (abstractControl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-        return Promise.resolve(null);
-      }; async function asdffasd
-      falsedfa
-      default(params: type) {
 
+    custom logic here
   }
-    this.router.navigate(['/dashboard']);
+
+  ads
+  FontFaceSetLoadEventfs
+  dafsd
+  FileSystemFileHandledsf
+  sdf
+  dsf
+  ds
+  falsedsf
+  DataTransfersdf
+  DataTransferdsf
+  DataTransfersdf
+  DataTransfersdf
+    this.saveWizardStatePartialdsf
+asdf
+export const validator = (parameters: any): AsyncValidatorFn =>
+  (abstractControl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    return Promise.resolve(null);
+  }; async function asdffasd
+      falsedfa
+      default (params: type) {
+
+}
+this.router.navigate(['/dashboard']);
   }
 }
