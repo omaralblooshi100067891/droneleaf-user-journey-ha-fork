@@ -210,7 +210,7 @@ export class AddDroneComponent implements OnInit {
     }
 
     this.showResumeModal = false;
-  }
+  } asdf
 
   onDiscard() {
     this.wizardStateService.clearSession();
