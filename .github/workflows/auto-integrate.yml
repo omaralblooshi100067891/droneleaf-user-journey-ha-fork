@@ -24,9 +24,9 @@ jobs:
     env:
       OWNER: ${{ github.repository_owner }} # override if target repo lives under a different owner
       TARGET_REPO: DroneLeaf_WebClient
-      TARGET_BASE: feat/migration-new
+      TARGET_BASE: dev-new-uj
       SOURCE_BRANCH: ${{ github.ref_name }}
-      TARGET_BRANCH: auto-integrate-br
+      TARGET_BRANCH: auto-migration-br
 
     steps:
       - name: Checkout source repo
@@ -261,48 +261,6 @@ jobs:
             git push -u origin "${TARGET_BRANCH}" --force-with-lease
             echo "NO_CHANGES=false" >> "$GITHUB_ENV"
           else
-            echo "No changes detected; skipping PR creation."
+            echo "No changes detected."
             echo "NO_CHANGES=true" >> "$GITHUB_ENV"
-          fi
-
-      - name: Create or update PR in target repo
-        if: env.NO_CHANGES != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.TOKEN }}
-        run: |
-          set -euo pipefail
-          : "${OWNER:?}${TARGET_REPO:?}${TARGET_BASE:?}${TARGET_BRANCH:?}"
-          cd target_repo
-
-          # If a PR already exists for this head->base, add a comment; else create it
-          PR_NUMBER=$(gh pr list \
-            --repo "${OWNER}/${TARGET_REPO}" \
-            --head "${TARGET_BRANCH}" \
-            --base "${TARGET_BASE}" \
-            --json number --jq '.[0].number') || true
-
-          PR_TITLE="Auto integrate: droneleaf-user-journey-ha/${SOURCE_BRANCH} → ${TARGET_BASE}"
-          PR_BODY=$(cat <<'EOB'
-          This PR was auto-created by the **Auto-integrate** workflow.
-
-          - **Source repo/branch:** ${{ github.repository }}@${{ env.SOURCE_BRANCH }}
-          - **Source commit:** ${{ github.sha }}
-          - **Target base:** ${{ env.TARGET_BASE }}
-          - **Target head:** ${{ env.TARGET_BRANCH }}
-
-          Changes were copied according to `.github/copy_settings.yaml` in the source repository.
-          EOB
-          )
-
-          if [ -z "$PR_NUMBER" ]; then
-            gh pr create \
-              --repo "${OWNER}/${TARGET_REPO}" \
-              --base "${TARGET_BASE}" \
-              --head "${TARGET_BRANCH}" \
-              --title "$PR_TITLE" \
-              --body  "$PR_BODY"
-          else
-            gh pr comment "${PR_NUMBER}" \
-              --repo "${OWNER}/${TARGET_REPO}" \
-              --body "Updated from source commit ${{ github.sha }}"
           fi
