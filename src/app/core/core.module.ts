@@ -5,7 +5,7 @@
 // This allows the frontend team to add components / directives / pipes / providers to the CoreModule
 // without modifying this file directly. This makes it easier to copy over the core module to
 // other projects without conflicts.
-
+//blah blah
 
 // Angular and Ionic Imports
 import { NgModule, Provider, ModuleWithProviders } from '@angular/core';
@@ -49,7 +49,9 @@ const BASE_PROVIDERS: Provider[] = [
 const DECLARATIONS = [
   ...BASE_DECLARATIONS,
   ...CORE_CONTRIB_DECLARATIONS
-];
+  //blah blah
+]; //blahblah
+//blah blah
 
 const IMPORTS = [
   ...BASE_IMPORTS,

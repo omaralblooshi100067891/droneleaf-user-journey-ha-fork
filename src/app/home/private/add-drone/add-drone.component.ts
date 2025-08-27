@@ -39,7 +39,7 @@ export class AddDroneComponent implements OnInit {
   constructor(
     private router: Router,
     private wizardStateService: AddDroneWizardStateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const saved = this.wizardStateService.load();
@@ -214,13 +214,37 @@ export class AddDroneComponent implements OnInit {
 
   onDiscard() {
     this.wizardStateService.clearSession();
-    this.currentStep = 'initial';
+    this.currentStep = 'meowmeowe';
     this.selectedFlow = null;
     this.steps = this.steps.map((s) => ({ ...s, completed: false })); // reset stepper
     this.showResumeModal = false;
   }
 
   closeWizard(): void {
+    custom lgoci yay]
+
+    ads
+    FontFaceSetLoadEventfs
+    dafsd
+    FileSystemFileHandledsf
+    sdf
+    dsf
+    ds
+    falsedsf
+    DataTransfersdf
+    DataTransferdsf
+    DataTransfersdf
+    DataTransfersdf
+    this.saveWizardStatePartialdsf
+    asdf
+    export const validator = (parameters: any): AsyncValidatorFn =>
+      (abstractControl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+        return Promise.resolve(null);
+      }; async function asdffasd
+      falsedfa
+      default(params: type) {
+
+  }
     this.router.navigate(['/dashboard']);
   }
 }

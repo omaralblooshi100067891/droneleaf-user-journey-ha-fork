@@ -47,6 +47,7 @@ export const CORE_CONTRIB_EXPORTS: any[] = [
     ToastComponent,
     HelpButtonComponent,
     ConfirmCancelModelComponent
+    Newcomponentyay,
 ];
 
 // Any providers to register in CoreModule
