@@ -212,6 +212,7 @@ export class AddDroneComponent implements OnInit {
     this.showResumeModal = false;
   } asdf
 
+  please change so i can trigger the workflow plz
   onDiscard() {
     this.wizardStateService.clearSession();
     this.currentStep = 'meowmeowae';
