@@ -64,8 +64,8 @@ mappings:
     recursive: true
 
   # core new components
-  - from: "src/app/core/components/*"
-    to: "src/app/core/components/"
+  - from: "src/app/core/*"
+    to: "src/app/core/"
     recursive: true
   # # core button
   # - from: "src/app/core/components/button"
@@ -115,34 +115,34 @@ mappings:
   #   type: "dir"
   #   recursive: true
 
-  # core data
-  - from: "src/app/core/data"
-    to: "src/app/core/data"
-    type: "dir"
-    recursive: true
+  # # core data
+  # - from: "src/app/core/data"
+  #   to: "src/app/core/data"
+  #   type: "dir"
+  #   recursive: true
 
-  # core guards
-  - from: "src/app/core/guards"
-    to: "src/app/core/guards"
-    type: "dir"
-    recursive: true
+  # # core guards
+  # - from: "src/app/core/guards"
+  #   to: "src/app/core/guards"
+  #   type: "dir"
+  #   recursive: true
 
-  # core models
-  - from: "src/app/core/models"
-    to: "src/app/core/models"
-    type: "dir"
-    recursive: true
+  # # core models
+  # - from: "src/app/core/models"
+  #   to: "src/app/core/models"
+  #   type: "dir"
+  #   recursive: true
 
-  # core services
-  - from: "src/app/core/services"
-    to: "src/app/core/services"
-    type: "dir"
-    recursive: true
+  # # core services
+  # - from: "src/app/core/services"
+  #   to: "src/app/core/services"
+  #   type: "dir"
+  #   recursive: true
 
-  # core contributed file
-  - from: "src/app/core/core.module.contributed.ts"
-    to: "src/app/core/core.module.contributed.ts"
-    type: "file"
+  # # core contributed file
+  # - from: "src/app/core/core.module.contributed.ts"
+  #   to: "src/app/core/core.module.contributed.ts"
+  #   type: "file"
 # Mapping structure:
 # - from: source path relative to this repo root
 #   to: destination path relative to target repo root
